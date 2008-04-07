@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if form.has_errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<form method="post" action=".">
+<fieldset>
+	<label for="id_username">Username:</label>
+		{{ form.username }}
+	<label for="id_password">Password:</label>
+		{{ form.password }}
+</fieldset>
+<fieldset>
+	<input type="submit" value="Login" />
+	<input type="hidden" name="next" value="{{ next }}" />
+</fieldset>
+</form>
+
+{% endblock %}

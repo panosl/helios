@@ -1,0 +1,323 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Panos Laganakos <panos.laganakos@gmail.com>, 2008.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-03-31 21:49+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: customers/forms.py:14
+msgid "Username"
+msgstr "Όνομα Χρήστη"
+
+#: customers/forms.py:15
+msgid "First name"
+msgstr "όνομα"
+
+#: customers/forms.py:16
+msgid "Last name"
+msgstr "επώνυμο"
+
+#: customers/forms.py:27
+msgid "Usernames can only contain letters, numbers and underscores"
+msgstr ""
+"Τα ονόματα χρηστών, μπορούν να περιέχουν μόνο γράμματα, αριθμούς και παύλες"
+
+#: customers/forms.py:32
+msgid "This username is already taken, please choose another."
+msgstr ""
+"Αυτό το όνομα χρήστη χρησιμοποιείται ήδη, παρακαλώ διαλέξτε κάποιο άλλο."
+
+#: customers/forms.py:39
+#, fuzzy
+msgid "This email is already being used, please use another."
+msgstr ""
+"Αυτό το όνομα χρήστη χρησιμοποιείται ήδη, παρακαλώ διαλέξτε κάποιο άλλο."
+
+#: customers/forms.py:45
+msgid "Your password is too short \t\t\t\t(4 characters at least)"
+msgstr "Ο κωδικός σας είναι πολύ μικρός (τουλάχιστον 4 χαρακτήρες)"
+
+#: customers/forms.py:58 customers/forms.py:62
+msgid "You should entered the same password \t\t\t\t\ttwice"
+msgstr "Πρέπει να εισάγετε τον ίδιο κωδικό δύο φορές"
+
+#: customers/models.py:12
+msgid "Phone number"
+msgstr "τηλέφωνο"
+
+#: customers/models.py:13
+msgid "Fax"
+msgstr "ΦΑΞ"
+
+#: customers/models.py:14
+msgid "Address"
+msgstr "Διεύθυνση"
+
+#: customers/models.py:15
+msgid "Postal code"
+msgstr "Ταχυδρομικός Κώδικας"
+
+#: customers/models.py:16
+msgid "City"
+msgstr "Πόλη"
+
+#: faq/models.py:13 faq/models.py:16
+msgid "question"
+msgstr "ερώτηση"
+
+#: faq/models.py:14 faq/models.py:17
+msgid "answer"
+msgstr "απάντηση"
+
+#: faq/models.py:22
+msgid "FAQ"
+msgstr ""
+
+#: faq/models.py:23
+msgid "FAQs"
+msgstr "Συχνές Ερωτήσεις"
+
+#: location/models.py:9 store/models.py:16 store/models.py:65
+#: store/models.py:68
+msgid "name"
+msgstr "όνομα"
+
+#: location/models.py:12
+msgid "country"
+msgstr "Χώρα"
+
+#: location/models.py:13
+msgid "countries"
+msgstr "χώρες"
+
+#: orders/models.py:11
+msgid "Creation Date"
+msgstr "Ημερομηνία Δημιουργίας"
+
+#: orders/models.py:15
+msgid "order"
+msgstr "παραγγελεία"
+
+#: orders/models.py:16
+msgid "orders"
+msgstr "παραγγελείες"
+
+#: orders/models.py:28
+msgid "quantity"
+msgstr "ποσότητα"
+
+#: store/models.py:15
+msgid "code"
+msgstr "κωδικός"
+
+#: store/models.py:17
+msgid "symbol"
+msgstr "σύμβολο"
+
+#: store/models.py:18
+msgid "factor"
+msgstr "παράγοντας"
+
+#: store/models.py:19
+msgid "Specifies the difference of the currency to Euro."
+msgstr "Καθορίζει τη διαφορά του νομίσματος ως προς το Ευρώ."
+
+#: store/models.py:22
+msgid "currency"
+msgstr "νόμισμα"
+
+#: store/models.py:23
+msgid "currencies"
+msgstr "νομίσματα"
+
+#: store/models.py:36 store/models.py:39 store/models.py:66 store/models.py:69
+msgid "description"
+msgstr "περιγραφή"
+
+#: store/models.py:45
+msgid "category"
+msgstr "κατηγορία"
+
+#: store/models.py:46
+msgid "categories"
+msgstr "κατηγορίες"
+
+#: store/models.py:74
+msgid "Is product active?"
+msgstr "Είναι ενεργό το προιόν;"
+
+#: store/models.py:75
+msgid "Determines if the product will appear in the store."
+msgstr "Καθορίζει εάν το προιόν εμφανίζεται στο κατάστημα."
+
+#: store/models.py:76
+msgid "Items in stock"
+msgstr "Κομμάτια στο stock"
+
+#: store/models.py:77
+msgid "weight"
+msgstr "βάρος"
+
+#: store/models.py:78
+msgid "Defined in Kilograms."
+msgstr "Δηλώνεται σε Κιλά."
+
+#: store/models.py:79
+msgid "price"
+msgstr "τιμή"
+
+#: store/models.py:83
+msgid "product"
+msgstr "προιόν"
+
+#: store/models.py:84
+msgid "products"
+msgstr "προιόντα"
+
+#: store/models.py:111
+msgid "picture"
+msgstr "εικόνα"
+
+#: store/models.py:114
+msgid "product image"
+msgstr "εικόνα προιόντος"
+
+#: store/models.py:115
+msgid "product images"
+msgstr "εικόνες προιόντων"
+
+#: templates/404.html:5
+msgid "Ooops"
+msgstr "Ουπς"
+
+#: templates/404.html:6
+msgid "This page is not available"
+msgstr "Η σελίδα δεν είναι διαθέσιμη"
+
+#: templates/404.html:7
+msgid "Go back to the"
+msgstr "Επιστρέψτε στο"
+
+#: templates/404.html:7
+msgid "shop"
+msgstr "κατάστημα"
+
+#: templates/base.html:28
+msgid "ManiShop"
+msgstr ""
+
+#: templates/base.html:38
+msgid "Preferences"
+msgstr "Προτιμήσεις"
+
+#: templates/base.html:41
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: templates/base.html:51
+msgid "Logged in as"
+msgstr "Σύνδεση"
+
+#: templates/base.html:51
+msgid "Logout"
+msgstr "Αποσύνδεση"
+
+#: templates/base.html:53
+msgid "Login"
+msgstr "Συνδεθείτε"
+
+#: templates/base.html:54
+msgid "Create Account"
+msgstr "Δημιουργήστε το λογαριασμό σας"
+
+#: templates/base.html:60 templates/cart.html:5 templates/cart.html.py:15
+msgid "My Shopping Cart"
+msgstr "Το Καρότσι μου"
+
+#: templates/base.html:67 templates/faq/faq_list.html:6
+#: templates/faq/faq_list.html.py:12
+msgid "Customer Support"
+msgstr "Εξυπηρέτηση Πελατών"
+
+#: templates/cart.html:17
+msgid "You haven't put anything in your cart, yet!"
+msgstr "Δεν έχετε βάλει κάτι στο καρότσι σας... προς το παρόν!"
+
+#: templates/cart.html:27
+msgid "Name"
+msgstr "όνομα"
+
+#: templates/cart.html:28
+msgid "Quantity"
+msgstr "ποσότητα"
+
+#: templates/cart.html:29
+msgid "Price"
+msgstr "τιμή"
+
+#: templates/cart.html:47
+msgid "Cart Total"
+msgstr "Σύνολο Αγορών"
+
+#: templates/categories.html:8
+msgid "All Products"
+msgstr "Όλα τα προιόντα"
+
+#: templates/checkout.html:5
+msgid "Checkout"
+msgstr ""
+
+#: templates/customer.html:16
+msgid "Create a customer account"
+msgstr "Δημιουργήστε το λογαριασμό σας"
+
+#: templates/customer.html:72
+msgid "Submit"
+msgstr ""
+
+#: templates/home.html:9
+msgid "Welcome to"
+msgstr "Καλωσήρθατε στο"
+
+#: templates/paginator.html:4
+msgid "Pages"
+msgstr "Σελίδες"
+
+#: templates/admin/base_site.html:4
+msgid "ManiShop.gr admin site"
+msgstr "Ιστοσελίδα διαχείρισης Δωρομάνης"
+
+#: templates/admin/base_site.html:7
+msgid "ManiShop.gr administration"
+msgstr "Διαχείρηση Δωρομάνης"
+
+#: templates/faq/faq_list.html:13
+msgid "How can we help you?"
+msgstr "Πώς μπορούμε να σας βοηθήσουμε;"
+
+#~ msgid "No products available in this category, yet!"
+#~ msgstr ""
+#~ "Δεν υπάρχουν διαθέσιμα προιόντα σ᾽αυτή την κατηγορία, προς το παρών!"
+
+#~ msgid "Please, correct the following errors"
+#~ msgstr "Διορθώστε τα παρακάτω λάθη, παρακαλώ"
+
+#~ msgid "cart"
+#~ msgstr "καλάθι"
+
+#~ msgid "carts"
+#~ msgstr "καλάθια"
+
+#~ msgid "Frequently Asked Questions"
+#~ msgstr "Συχνές Ερωτήσεις"

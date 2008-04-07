@@ -1,0 +1,729 @@
+- fields: {name: "United States"}
+  model: location.Country
+  pk: '1'
+- fields: {name: "Afghanistan"}
+  model: location.Country
+  pk: '2'
+- fields: {name: "Albania"}
+  model: location.Country
+  pk: '3'
+- fields: {name: "Algeria"}
+  model: location.Country
+  pk: '4'
+- fields: {name: "American Samoa"}
+  model: location.Country
+  pk: '5'
+- fields: {name: "Andorra"}
+  model: location.Country
+  pk: '6'
+- fields: {name: "Anguilla"}
+  model: location.Country
+  pk: '7'
+- fields: {name: "Antarctica"}
+  model: location.Country
+  pk: '8'
+- fields: {name: "Antigua And Barbuda"}
+  model: location.Country
+  pk: '9'
+- fields: {name: "Argentina"}
+  model: location.Country
+  pk: '10'
+- fields: {name: "Armenia"}
+  model: location.Country
+  pk: '11'
+- fields: {name: "Aruba"}
+  model: location.Country
+  pk: '12'
+- fields: {name: "Australia"}
+  model: location.Country
+  pk: '13'
+- fields: {name: "Austria"}
+  model: location.Country
+  pk: '14'
+- fields: {name: "Azerbaijan"}
+  model: location.Country
+  pk: '15'
+- fields: {name: "Bahamas"}
+  model: location.Country
+  pk: '16'
+- fields: {name: "Bahrain"}
+  model: location.Country
+  pk: '17'
+- fields: {name: "Bangladesh"}
+  model: location.Country
+  pk: '18'
+- fields: {name: "Barbados"}
+  model: location.Country
+  pk: '19'
+- fields: {name: "Belarus"}
+  model: location.Country
+  pk: '20'
+- fields: {name: "Belgium"}
+  model: location.Country
+  pk: '21'
+- fields: {name: "Belize"}
+  model: location.Country
+  pk: '22'
+- fields: {name: "Benin"}
+  model: location.Country
+  pk: '23'
+- fields: {name: "Bermuda"}
+  model: location.Country
+  pk: '24'
+- fields: {name: "Bhutan"}
+  model: location.Country
+  pk: '25'
+- fields: {name: "Bolivia"}
+  model: location.Country
+  pk: '26'
+- fields: {name: "Bosnia and Herzegovina"}
+  model: location.Country
+  pk: '27'
+- fields: {name: "Botswana"}
+  model: location.Country
+  pk: '28'
+- fields: {name: "Bouvet Island"}
+  model: location.Country
+  pk: '29'
+- fields: {name: "Brazil"}
+  model: location.Country
+  pk: '30'
+- fields: {name: "British Indian Ocean Territory"}
+  model: location.Country
+  pk: '31'
+- fields: {name: "Brunei Darussalam"}
+  model: location.Country
+  pk: '32'
+- fields: {name: "Bulgaria"}
+  model: location.Country
+  pk: '33'
+- fields: {name: "Burkina Faso"}
+  model: location.Country
+  pk: '34'
+- fields: {name: "Burundi"}
+  model: location.Country
+  pk: '35'
+- fields: {name: "Cambodia"}
+  model: location.Country
+  pk: '36'
+- fields: {name: "Cameroon"}
+  model: location.Country
+  pk: '37'
+- fields: {name: "Canada"}
+  model: location.Country
+  pk: '38'
+- fields: {name: "Cape Verde"}
+  model: location.Country
+  pk: '39'
+- fields: {name: "Cayman Islands"}
+  model: location.Country
+  pk: '40'
+- fields: {name: "Central African Republic"}
+  model: location.Country
+  pk: '41'
+- fields: {name: "Chad"}
+  model: location.Country
+  pk: '42'
+- fields: {name: "Chile"}
+  model: location.Country
+  pk: '43'
+- fields: {name: "China"}
+  model: location.Country
+  pk: '44'
+- fields: {name: "Christmas Island"}
+  model: location.Country
+  pk: '45'
+- fields: {name: "Cocos (Keeling) Islands"}
+  model: location.Country
+  pk: '46'
+- fields: {name: "Colombia"}
+  model: location.Country
+  pk: '47'
+- fields: {name: "Comoros"}
+  model: location.Country
+  pk: '48'
+- fields: {name: "Congo"}
+  model: location.Country
+  pk: '49'
+- fields: {name: "Congo, the Democratic Republic of the"}
+  model: location.Country
+  pk: '50'
+- fields: {name: "Cook Islands"}
+  model: location.Country
+  pk: '51'
+- fields: {name: "Costa Rica"}
+  model: location.Country
+  pk: '52'
+- fields: {name: "Cote d'Ivoire"}
+  model: location.Country
+  pk: '53'
+- fields: {name: "Croatia"}
+  model: location.Country
+  pk: '54'
+- fields: {name: "Cyprus"}
+  model: location.Country
+  pk: '55'
+- fields: {name: "Czech Republic"}
+  model: location.Country
+  pk: '56'
+- fields: {name: "Denmark"}
+  model: location.Country
+  pk: '57'
+- fields: {name: "Djibouti"}
+  model: location.Country
+  pk: '58'
+- fields: {name: "Dominica"}
+  model: location.Country
+  pk: '59'
+- fields: {name: "Dominican Republic"}
+  model: location.Country
+  pk: '60'
+- fields: {name: "East Timor"}
+  model: location.Country
+  pk: '61'
+- fields: {name: "Ecuador"}
+  model: location.Country
+  pk: '62'
+- fields: {name: "Egypt"}
+  model: location.Country
+  pk: '63'
+- fields: {name: "El Salvador"}
+  model: location.Country
+  pk: '64'
+- fields: {name: "England"}
+  model: location.Country
+  pk: '65'
+- fields: {name: "Equatorial Guinea"}
+  model: location.Country
+  pk: '66'
+- fields: {name: "Eritrea"}
+  model: location.Country
+  pk: '67'
+- fields: {name: "Espana"}
+  model: location.Country
+  pk: '68'
+- fields: {name: "Estonia"}
+  model: location.Country
+  pk: '69'
+- fields: {name: "Ethiopia"}
+  model: location.Country
+  pk: '70'
+- fields: {name: "Falkland Islands"}
+  model: location.Country
+  pk: '71'
+- fields: {name: "Faroe Islands"}
+  model: location.Country
+  pk: '72'
+- fields: {name: "Fiji"}
+  model: location.Country
+  pk: '73'
+- fields: {name: "Finland"}
+  model: location.Country
+  pk: '74'
+- fields: {name: "France"}
+  model: location.Country
+  pk: '75'
+- fields: {name: "French Guiana"}
+  model: location.Country
+  pk: '76'
+- fields: {name: "French Polynesia"}
+  model: location.Country
+  pk: '77'
+- fields: {name: "French Southern Territories"}
+  model: location.Country
+  pk: '78'
+- fields: {name: "Gabon"}
+  model: location.Country
+  pk: '79'
+- fields: {name: "Gambia"}
+  model: location.Country
+  pk: '80'
+- fields: {name: "Georgia"}
+  model: location.Country
+  pk: '81'
+- fields: {name: "Germany"}
+  model: location.Country
+  pk: '82'
+- fields: {name: "Ghana"}
+  model: location.Country
+  pk: '83'
+- fields: {name: "Gibraltar"}
+  model: location.Country
+  pk: '84'
+- fields: {name: "Great Britain"}
+  model: location.Country
+  pk: '85'
+- fields: {name: "Greece"}
+  model: location.Country
+  pk: '86'
+- fields: {name: "Greenland"}
+  model: location.Country
+  pk: '87'
+- fields: {name: "Grenada"}
+  model: location.Country
+  pk: '88'
+- fields: {name: "Guadeloupe"}
+  model: location.Country
+  pk: '89'
+- fields: {name: "Guam"}
+  model: location.Country
+  pk: '90'
+- fields: {name: "Guatemala"}
+  model: location.Country
+  pk: '91'
+- fields: {name: "Guinea"}
+  model: location.Country
+  pk: '92'
+- fields: {name: "Guinea-Bissau"}
+  model: location.Country
+  pk: '93'
+- fields: {name: "Guyana"}
+  model: location.Country
+  pk: '94'
+- fields: {name: "Haiti"}
+  model: location.Country
+  pk: '95'
+- fields: {name: "Heard and Mc Donald Islands"}
+  model: location.Country
+  pk: '96'
+- fields: {name: "Honduras"}
+  model: location.Country
+  pk: '97'
+- fields: {name: "Hong Kong"}
+  model: location.Country
+  pk: '98'
+- fields: {name: "Hungary"}
+  model: location.Country
+  pk: '99'
+- fields: {name: "Iceland"}
+  model: location.Country
+  pk: '100'
+- fields: {name: "India"}
+  model: location.Country
+  pk: '101'
+- fields: {name: "Indonesia"}
+  model: location.Country
+  pk: '102'
+- fields: {name: "Ireland"}
+  model: location.Country
+  pk: '103'
+- fields: {name: "Israel"}
+  model: location.Country
+  pk: '104'
+- fields: {name: "Italy"}
+  model: location.Country
+  pk: '105'
+- fields: {name: "Jamaica"}
+  model: location.Country
+  pk: '106'
+- fields: {name: "Japan"}
+  model: location.Country
+  pk: '107'
+- fields: {name: "Jordan"}
+  model: location.Country
+  pk: '108'
+- fields: {name: "Kazakhstan"}
+  model: location.Country
+  pk: '109'
+- fields: {name: "Kenya"}
+  model: location.Country
+  pk: '110'
+- fields: {name: "Kiribati"}
+  model: location.Country
+  pk: '111'
+- fields: {name: "Korea, Republic of"}
+  model: location.Country
+  pk: '112'
+- fields: {name: "Korea (South)"}
+  model: location.Country
+  pk: '113'
+- fields: {name: "Kuwait"}
+  model: location.Country
+  pk: '114'
+- fields: {name: "Kyrgyzstan"}
+  model: location.Country
+  pk: '115'
+- fields: {name: "Lao People's Democratic Republic"}
+  model: location.Country
+  pk: '116'
+- fields: {name: "Latvia"}
+  model: location.Country
+  pk: '117'
+- fields: {name: "Lebanon"}
+  model: location.Country
+  pk: '118'
+- fields: {name: "Lesotho"}
+  model: location.Country
+  pk: '119'
+- fields: {name: "Liberia"}
+  model: location.Country
+  pk: '120'
+- fields: {name: "Libya"}
+  model: location.Country
+  pk: '121'
+- fields: {name: "Liechtenstein"}
+  model: location.Country
+  pk: '122'
+- fields: {name: "Lithuania"}
+  model: location.Country
+  pk: '123'
+- fields: {name: "Luxembourg"}
+  model: location.Country
+  pk: '124'
+- fields: {name: "Macau"}
+  model: location.Country
+  pk: '125'
+- fields: {name: "Macedonia"}
+  model: location.Country
+  pk: '126'
+- fields: {name: "Madagascar"}
+  model: location.Country
+  pk: '127'
+- fields: {name: "Malawi"}
+  model: location.Country
+  pk: '128'
+- fields: {name: "Malaysia"}
+  model: location.Country
+  pk: '129'
+- fields: {name: "Maldives"}
+  model: location.Country
+  pk: '130'
+- fields: {name: "Mali"}
+  model: location.Country
+  pk: '131'
+- fields: {name: "Malta"}
+  model: location.Country
+  pk: '132'
+- fields: {name: "Marshall Islands"}
+  model: location.Country
+  pk: '133'
+- fields: {name: "Martinique"}
+  model: location.Country
+  pk: '134'
+- fields: {name: "Mauritania"}
+  model: location.Country
+  pk: '135'
+- fields: {name: "Mauritius"}
+  model: location.Country
+  pk: '136'
+- fields: {name: "Mayotte"}
+  model: location.Country
+  pk: '137'
+- fields: {name: "Mexico"}
+  model: location.Country
+  pk: '138'
+- fields: {name: "Micronesia, Federated States of"}
+  model: location.Country
+  pk: '139'
+- fields: {name: "Moldova, Republic of"}
+  model: location.Country
+  pk: '140'
+- fields: {name: "Monaco"}
+  model: location.Country
+  pk: '141'
+- fields: {name: "Mongolia"}
+  model: location.Country
+  pk: '142'
+- fields: {name: "Montserrat"}
+  model: location.Country
+  pk: '143'
+- fields: {name: "Morocco"}
+  model: location.Country
+  pk: '144'
+- fields: {name: "Mozambique"}
+  model: location.Country
+  pk: '145'
+- fields: {name: "Myanmar"}
+  model: location.Country
+  pk: '146'
+- fields: {name: "Namibia"}
+  model: location.Country
+  pk: '147'
+- fields: {name: "Nauru"}
+  model: location.Country
+  pk: '148'
+- fields: {name: "Nepal"}
+  model: location.Country
+  pk: '149'
+- fields: {name: "Netherlands"}
+  model: location.Country
+  pk: '150'
+- fields: {name: "Netherlands Antilles"}
+  model: location.Country
+  pk: '151'
+- fields: {name: "New Caledonia"}
+  model: location.Country
+  pk: '152'
+- fields: {name: "New Zealand"}
+  model: location.Country
+  pk: '153'
+- fields: {name: "Nicaragua"}
+  model: location.Country
+  pk: '154'
+- fields: {name: "Niger"}
+  model: location.Country
+  pk: '155'
+- fields: {name: "Nigeria"}
+  model: location.Country
+  pk: '156'
+- fields: {name: "Niue"}
+  model: location.Country
+  pk: '157'
+- fields: {name: "Norfolk Island"}
+  model: location.Country
+  pk: '158'
+- fields: {name: "Northern Ireland"}
+  model: location.Country
+  pk: '159'
+- fields: {name: "Northern Mariana Islands"}
+  model: location.Country
+  pk: '160'
+- fields: {name: "Norway"}
+  model: location.Country
+  pk: '161'
+- fields: {name: "Oman"}
+  model: location.Country
+  pk: '162'
+- fields: {name: "Pakistan"}
+  model: location.Country
+  pk: '163'
+- fields: {name: "Palau"}
+  model: location.Country
+  pk: '164'
+- fields: {name: "Panama"}
+  model: location.Country
+  pk: '165'
+- fields: {name: "Papua New Guinea"}
+  model: location.Country
+  pk: '166'
+- fields: {name: "Paraguay"}
+  model: location.Country
+  pk: '167'
+- fields: {name: "Peru"}
+  model: location.Country
+  pk: '168'
+- fields: {name: "Philippines"}
+  model: location.Country
+  pk: '169'
+- fields: {name: "Pitcairn"}
+  model: location.Country
+  pk: '170'
+- fields: {name: "Poland"}
+  model: location.Country
+  pk: '171'
+- fields: {name: "Portugal"}
+  model: location.Country
+  pk: '172'
+- fields: {name: "Puerto Rico"}
+  model: location.Country
+  pk: '173'
+- fields: {name: "Qatar"}
+  model: location.Country
+  pk: '174'
+- fields: {name: "Reunion"}
+  model: location.Country
+  pk: '175'
+- fields: {name: "Romania"}
+  model: location.Country
+  pk: '176'
+- fields: {name: "Russia"}
+  model: location.Country
+  pk: '177'
+- fields: {name: "Russian Federation"}
+  model: location.Country
+  pk: '178'
+- fields: {name: "Rwanda"}
+  model: location.Country
+  pk: '179'
+- fields: {name: "Saint Kitts and Nevis"}
+  model: location.Country
+  pk: '180'
+- fields: {name: "Saint Lucia"}
+  model: location.Country
+  pk: '181'
+- fields: {name: "Saint Vincent and the Grenadines"}
+  model: location.Country
+  pk: '182'
+- fields: {name: "Samoa (Independent)"}
+  model: location.Country
+  pk: '183'
+- fields: {name: "San Marino"}
+  model: location.Country
+  pk: '184'
+- fields: {name: "Sao Tome and Principe"}
+  model: location.Country
+  pk: '185'
+- fields: {name: "Saudi Arabia"}
+  model: location.Country
+  pk: '186'
+- fields: {name: "Scotland"}
+  model: location.Country
+  pk: '187'
+- fields: {name: "Senegal"}
+  model: location.Country
+  pk: '188'
+- fields: {name: "Serbia and Montenegro"}
+  model: location.Country
+  pk: '189'
+- fields: {name: "Seychelles"}
+  model: location.Country
+  pk: '190'
+- fields: {name: "Sierra Leone"}
+  model: location.Country
+  pk: '191'
+- fields: {name: "Singapore"}
+  model: location.Country
+  pk: '192'
+- fields: {name: "Slovakia"}
+  model: location.Country
+  pk: '193'
+- fields: {name: "Slovenia"}
+  model: location.Country
+  pk: '194'
+- fields: {name: "Solomon Islands"}
+  model: location.Country
+  pk: '195'
+- fields: {name: "Somalia"}
+  model: location.Country
+  pk: '196'
+- fields: {name: "South Africa"}
+  model: location.Country
+  pk: '197'
+- fields: {name: "South Georgia and the South Sandwich Islands"}
+  model: location.Country
+  pk: '198'
+- fields: {name: "South Korea"}
+  model: location.Country
+  pk: '199'
+- fields: {name: "Spain"}
+  model: location.Country
+  pk: '200'
+- fields: {name: "Sri Lanka"}
+  model: location.Country
+  pk: '201'
+- fields: {name: "St. Helena"}
+  model: location.Country
+  pk: '202'
+- fields: {name: "St. Pierre and Miquelon"}
+  model: location.Country
+  pk: '203'
+- fields: {name: "Suriname"}
+  model: location.Country
+  pk: '204'
+- fields: {name: "Svalbard and Jan Mayen Islands"}
+  model: location.Country
+  pk: '205'
+- fields: {name: "Swaziland"}
+  model: location.Country
+  pk: '206'
+- fields: {name: "Sweden"}
+  model: location.Country
+  pk: '207'
+- fields: {name: "Switzerland"}
+  model: location.Country
+  pk: '208'
+- fields: {name: "Taiwan"}
+  model: location.Country
+  pk: '209'
+- fields: {name: "Tajikistan"}
+  model: location.Country
+  pk: '210'
+- fields: {name: "Tanzania"}
+  model: location.Country
+  pk: '211'
+- fields: {name: "Thailand"}
+  model: location.Country
+  pk: '212'
+- fields: {name: "Togo"}
+  model: location.Country
+  pk: '213'
+- fields: {name: "Tokelau"}
+  model: location.Country
+  pk: '214'
+- fields: {name: "Tonga"}
+  model: location.Country
+  pk: '215'
+- fields: {name: "Trinidad"}
+  model: location.Country
+  pk: '216'
+- fields: {name: "Trinidad and Tobago"}
+  model: location.Country
+  pk: '217'
+- fields: {name: "Tunisia"}
+  model: location.Country
+  pk: '218'
+- fields: {name: "Turkey"}
+  model: location.Country
+  pk: '219'
+- fields: {name: "Turkmenistan"}
+  model: location.Country
+  pk: '220'
+- fields: {name: "Turks and Caicos Islands"}
+  model: location.Country
+  pk: '221'
+- fields: {name: "Tuvalu"}
+  model: location.Country
+  pk: '222'
+- fields: {name: "Uganda"}
+  model: location.Country
+  pk: '223'
+- fields: {name: "Ukraine"}
+  model: location.Country
+  pk: '224'
+- fields: {name: "United Arab Emirates"}
+  model: location.Country
+  pk: '225'
+- fields: {name: "United Kingdom"}
+  model: location.Country
+  pk: '226'
+- fields: {name: "United States"}
+  model: location.Country
+  pk: '227'
+- fields: {name: "United States Minor Outlying Islands"}
+  model: location.Country
+  pk: '228'
+- fields: {name: "Uruguay"}
+  model: location.Country
+  pk: '229'
+- fields: {name: "USA"}
+  model: location.Country
+  pk: '230'
+- fields: {name: "Uzbekistan"}
+  model: location.Country
+  pk: '231'
+- fields: {name: "Vanuatu"}
+  model: location.Country
+  pk: '232'
+- fields: {name: "Vatican City State (Holy See)"}
+  model: location.Country
+  pk: '233'
+- fields: {name: "Venezuela"}
+  model: location.Country
+  pk: '234'
+- fields: {name: "Viet Nam"}
+  model: location.Country
+  pk: '235'
+- fields: {name: "Virgin Islands (British)"}
+  model: location.Country
+  pk: '236'
+- fields: {name: "Virgin Islands (U.S.)"}
+  model: location.Country
+  pk: '237'
+- fields: {name: "Wales"}
+  model: location.Country
+  pk: '238'
+- fields: {name: "Wallis and Futuna Islands"}
+  model: location.Country
+  pk: '239'
+- fields: {name: "Western Sahara"}
+  model: location.Country
+  pk: '240'
+- fields: {name: "Yemen"}
+  model: location.Country
+  pk: '241'
+- fields: {name: "Zambia"}
+  model: location.Country
+  pk: '242'
+- fields: {name: "Zimbabwe"}
+  model: location.Country
+  pk: '243'

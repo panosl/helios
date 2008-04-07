@@ -1,0 +1,24 @@
+ManiShop
+========
+
+ * cosmoliva.com - check out the products
+ * change currency
+ * set product amount on /store/cart/
+
+
+Long Term Goals
+===============
+
+ * Split apps of the project and make em more generic for individual usage.
+ * Search.
+ * Credit card support.
+ * Paypal support.
+ * SMS updates of new (approved) checkouts.
+ * Newsletter.
+ * Wishlist.
+ * RSS feed of new products added.
+ * Customer section.
+ * Registered users, should be able to:
+ 	comment on a product,
+ 	rate a product,
+	mark a product as insultive.

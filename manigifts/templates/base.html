@@ -1,0 +1,98 @@
+{% load i18n %}
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="el" lang="el">
+<head>
+	<title>{% block title %}ManiShop{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/manishop.css" />
+	<script type="text/javascript" src="/static/js/jquery.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#preferences").hide();
+		$("a.pref-button").click(function () {
+			$("#preferences").slideToggle();
+			return false;
+		});
+
+		$("span.note").fadeOut().fadeIn().fadeOut().fadeIn();
+		$("span.message").fadeOut().fadeIn().fadeOut().fadeIn().fadeOut(5000);
+	});
+	</script>
+	{% block extra-head %}
+	{% endblock %}
+</head>
+<body class="{% block section-id %}{% endblock %}">
+
+<div id="left-container">
+	<h1><a href="/" title="{% trans 'ManiShop' %}"></a></h1>
+	{% block left-content %}
+		{% load category_tree %}
+		{% show_categories %}
+	{% endblock %}
+</div>
+
+<div id="right-container">
+	<div id="header">
+		<div id="status-bar">
+			<a class="pref-button" href="">&raquo; {% trans "Preferences" %}</a>
+			<div id="preferences">
+			<ul style="text-align:left">
+				<li>{% trans "Language" %}:</li>
+				<ul>
+				{% for lang in LANGUAGES %}
+					<li><a href="/i18n/setlang/?language={{ lang.0 }}">{{ lang.1 }}</a></li>
+				{% endfor %}
+				</ul>
+			</ul>
+			<ul style="text-align:left">
+				<li>{% trans "Currency" %}:</li>
+				<ul>
+				{% for curr in CURRENCIES %}
+					<li><a href="/store/setcurrency/?currency={{ curr.code }}">{{ curr.symbol }} {{ curr.name }}</a></li>
+				{% endfor %}
+				</ul>
+			</ul>
+			</div>
+			{% if user.is_authenticated %}
+			<p>{% trans "Logged in as" %}: <a href="/customer"><span>{{ user.username }}</span></a> | <a href="/customer/logout">{% trans "Logout" %}</a></p>
+			{% else %}
+				<p><a href="/customer/login/?next=/">{% trans 'Login' %}</a> | 
+				<a href="/customer/register/">{% trans "Create Account" %}</a></p>
+			{% endif %}
+		</div>
+
+		<div id="menu-bar">
+			<ul>
+				<li id="nav-cart"><a class="cart" href="/store/cart" title="{% trans 'My Shopping Cart' %}"></a>
+				{% ifnotequal cart|length 0  %}
+				{#<p class="cart-count">{{ cart|length }}</p>#}
+				<p class="cart-count">{{ cart.get_product_count }}</p>
+				{% endifnotequal %}
+				</li>
+				<li class="separator"></li>
+				<li id="nav-help"><a class="help" href="/help" title="{% trans 'Customer Support' %}"></a></li>
+				<li class="separator"></li>
+				<li><a href="/store"></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div id="content">
+		{% if messages %}
+		{% for message in messages %}
+			<p><span class="message">{{ message }}</note></p>
+		{% endfor %}
+		{% endif %}
+		{{ currency.code }}
+		{% block content %}
+		{% endblock %}
+	</div>
+
+	<div id="footer">
+		<p>&copy; ManiShop.gr {% now "Y" %}.</p>
+	</div>
+</div>
+
+</body>
+</html>

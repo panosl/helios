@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+	{{ block.super }}: {% trans "Checkout" %}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+	<h2>Your Order</h2>
+	<h3>Products</h3>
+	<ul class="order">
+	{% for item in cart.itervalues %}
+		<li class="product">
+			{{ item.get_product.name }}
+			<ul>
+			<li>Quantity: {{ item.quantity }}</li>
+			<li class="price">Price: &euro;{{ item.get_price }}</li>
+			</ul>
+		</li>
+	{% endfor %}
+	</ul>
+	<h3>Taxes/VAT</h3>
+	<h3>Your order will be shipped to:</h3>
+	<ul>
+		<li>Name: {{ user.get_full_name }}</li>
+		<li>Email: {{ user.email }}</li>
+		<li>Address: {{ user.get_profile.address }}</li>
+		<li>City: {{ user.get_profile.city }}</li>
+		<li>Country: {{ user.get_profile.country }}</li>
+	</ul>
+{% endif %}
+{% endblock %}

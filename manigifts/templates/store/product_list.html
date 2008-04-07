@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load paginator %}
+{% load markup %}
+
+{% block title %}
+	{{ block.super }}{% if category %}: {{ category.name }}{% endif %}
+{% endblock %}
+
+{% block content %}
+	{% if is_paginated %}<div class="paginator">{% paginator %}</div>{% endif %}
+	{% if category %}
+		<h2>{{ category }}</h2>
+		<div id="category-desc">
+			{{ category.desc|markdown }}
+		</div>
+	{% endif %}
+	{% load product %}
+	{% show_products product_list %}
+	{% if is_paginated %}<div class="paginator" id="bottom">{% paginator %}</div>{% endif %}
+{% endblock %}

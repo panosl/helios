@@ -1,0 +1,19 @@
+{% load currency %}
+
+{% for product in product_list %}
+	{% if product.is_active %}
+		<div class="product">
+			{% if not product.get_images.0 %}
+			<a class="prod" href="{{ product.get_absolute_url }}" title="{{ product.name }}">
+				<img src="/static/img/no-image.png" alt="no image available" /></a>
+			{% else %}
+			<a class="prod" href="{{ product.get_absolute_url }}" title="{{ product.name }}">
+				<img src="{{ product.get_images.0.thumbnail }}" alt="" /></a>
+			{% endif %}
+			<h3>{{ product.name|truncatewords:"3" }}</h3>
+			<a class="category" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
+			<p class="price"><span>{{ currency.symbol }}{{ product.price|currency:"EUR" }}</span></p>
+			<a class="add-to-cart-small" href="{% url store.views.product_add product.slug %}" title="Add {{ product.name }} to cart"></a>
+		</div>
+	{% endif %}
+{% endfor %}

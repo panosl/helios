@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load markup %}
+
+{% block extra-head %}
+	<script type="text/javascript" src="/static/js/jquery.lightbox-0.4.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/jquery.lightbox-0.4.css" />
+
+	<script type="text/javascript">
+	$(function() {
+		$('#content a.thumbnail').lightBox();
+	});
+	</script>
+{% endblock%}
+
+{% block content %}
+	<div id="product-gallery">
+	{% for image in product.get_images %}
+		<a class="thumbnail" href="{{ image.get_picture_url }}"><img src="{{ image.thumbnail }}" /></a>
+	{% endfor %}
+	</div>
+
+	<div id="product-desc">
+		<h2>{{ product.name }}</h2>
+		<h3><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h3>
+		<p>{{ product.desc|markdown }}</p>
+		<p class="price">&euro;{{ product.price }}</p>
+		<a class="add-to-cart" href="{% url store.views.product_add product.slug %}">Add to Cart</a>
+	</div>
+{% endblock %}
