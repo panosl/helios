@@ -22,3 +22,17 @@ Long Term Goals
  	comment on a product,
  	rate a product,
 	mark a product as insultive.
+
+Documentation Goals
+===================
+ * Development documentation
+ 	What each app does.
+ * HOWTO documentation
+ 	Extend a specific application of helios or helios itself. Add a new app, how to
+	integrate it to your own site.
+ * User documentation
+ 	Actually this is intented as admin/manager documents. Explaining how a user can
+	work with helios, adding/removing stuff through the admin section.
+	This might be extended in the feature. Keep in mind that we should not be lead
+	astray from the admin app. Each addition should be done there, and not through
+	individual generic or not forms.

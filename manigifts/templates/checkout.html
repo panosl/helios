@@ -29,5 +29,8 @@
 		<li>City: {{ user.get_profile.city }}</li>
 		<li>Country: {{ user.get_profile.country }}</li>
 	</ul>
+	<form id="order-submit" action="{% url orders.views.create %}">
+		<input type="submit" value="Submit Order" />
+	</form>
 {% endif %}
 {% endblock %}

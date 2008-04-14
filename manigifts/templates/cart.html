@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency %}
 
 {% block title %}
 	{{ block.super }}: {% trans "My Shopping Cart" %}
@@ -36,19 +37,20 @@
 						<input type="submit" value="Remove" />
 					</form>
 				</td>
-				<td class="name">{{ item.get_product.name }} {{ item.get_product.price }}</td>
-				<td class="price"><form class="price" action="" method="post">
+				<td class="name">{{ item.get_product.name }} {% change_currency item.get_product.price currency.code %}</td>
+				<td class="price">
+					<form class="price" action="" method="post">
 					<input type="text" value="{{ item.quantity }}" />
-				</form></td>
-				<td>&euro;{{ item.get_price }}</td>
+					</form></td>
+				<td>{{ currency.symbol }}{% change_currency item.get_price currency.code %}</td>
 			</tr>
 			{% endfor %}
 			<tr>
-				<td class="total" colspan="4">{% trans "Cart Total" %}: &euro;{{ cart.get_price }}</td>
+				<td class="total" colspan="4">{% trans "Cart Total" %}: {{ currency.symbol }}{% change_currency cart.get_price currency.code %}</td>
 			</tr>
 		</table>
 		<form id="cart-checkout" action="{% url store.views.checkout %}" method="LINK">
 			<input type="submit" value="Proceed to Checkout" />
 		</form>
 	{% endif %}
-{% endblock %}
+{% endblo

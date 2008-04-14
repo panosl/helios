@@ -1,5 +1,10 @@
-# Helios, a Phaethon-Designs, e-commerce software.
-# Copyright (C) 2008 Panos Laganakos <panos.laganakos@gmail.com>
+# -*- coding: utf-8 -*-
+'''
+    customers.views
+    ~~~~~~~~~~~~~~~
+
+    :copyright: 2007-2008 by Panos Laganakos.
+'''
 
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -39,7 +44,10 @@ def customer(request, template_name='customer.html'):
 			user = authenticate(username=form.clean_data['username'], password=form.clean_data['password1'])
 			login(request, user)
 			request.user.message_set.create(message='Thanks for registering %s!' % (request.user.first_name,))
-			return HttpResponseRedirect('/')
+			if request.session['checkout']:
+				return HttpResponseRedirect('/store/checkout')
+			else:
+				return HttpResponseRedirect('/')
 	else:
 		form = CustomerForm()
 

@@ -97,7 +97,6 @@ INSTALLED_APPS = (
     'manigifts.store',
     'manigifts.location',
     'manigifts.customers',
-    'manigifts.orders',
     'manigifts.faq',
 )
 

@@ -131,6 +131,7 @@ def checkout(request, template_name='checkout.html'):
 		return HttpResponseRedirect('/store/cart')
 
 	if not request.user.is_authenticated():
+		request.session['checkout'] = 'True'
 		return HttpResponseRedirect('/customer')
 
 	return render_to_response(template_name, context_instance=RequestContext(request))

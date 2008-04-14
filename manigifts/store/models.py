@@ -11,6 +11,7 @@ import Image
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
+from customers.models import CustomerProfile
 from store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
@@ -73,8 +74,8 @@ class Product(models.Model):
 		name = models.CharField(_('name'), maxlength=80)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(unique=True, prepopulate_from=('name',))
-	category = models.ForeignKey(Category, blank=True)
+	slug = models.SlugField(unique=True, prepopulate_from=('producttranslation.0.name',), editable=False)
+	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
 	is_active = models.BooleanField(_('Is product active?'), default=True,
 		help_text=_('Determines if the product will appear in the store.'))
@@ -149,3 +150,28 @@ class ProductImage(models.Model):
 		except OSError:
 			pass
 		super(ProductImage, self).delete()
+
+class Order(models.Model):
+	date_time_created = models.DateTimeField(_('Creation Date'))
+	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
+
+	class Meta:
+		verbose_name = _('order')
+		verbose_name_plural = _('orders')
+
+	class Admin:
+		list_display = ['date_time_created']
+
+	def __str__(self):
+		return 'Order %s' % self.date_time_created
+
+class OrderLine(models.Model):
+	order = models.ForeignKey(Order)
+	product = models.ForeignKey(Product)
+	quantity = models.IntegerField(_('quantity'))
+
+	class Admin:
+		pass
+
+	def __str__(self):
+		return '%s %s' % (self.quantity, self.product)

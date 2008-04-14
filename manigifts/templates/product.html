@@ -12,7 +12,7 @@
 			{% endif %}
 			<h3>{{ product.name|truncatewords:"3" }}</h3>
 			<a class="category" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
-			<p class="price"><span>{{ currency.symbol }}{{ product.price|currency:"EUR" }}</span></p>
+			<p class="price"><span>{{ currency.symbol }}{% change_currency product.price currency.code %}</span></p>
 			<a class="add-to-cart-small" href="{% url store.views.product_add product.slug %}" title="Add {{ product.name }} to cart"></a>
 		</div>
 	{% endif %}

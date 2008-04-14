@@ -1,5 +1,10 @@
-# Helios, a Phaethon-Designs, e-commerce software.
-# Copyright (C) 2008 Panos Laganakos <panos.laganakos@gmail.com>
+# -*- coding: utf-8 -*-
+'''
+    customers.forms
+    ~~~~~~~~~~~~~~~
+
+    :copyright: 2007-2008 by Panos Laganakos.
+'''
 
 #TODO when we move up from 0.96.1, change form.clean_data to form.cleaned_data
 

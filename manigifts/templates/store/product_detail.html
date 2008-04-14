@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load currency %}
 {% load markup %}
 
 {% block extra-head %}
@@ -23,7 +24,7 @@
 		<h2>{{ product.name }}</h2>
 		<h3><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h3>
 		<p>{{ product.desc|markdown }}</p>
-		<p class="price">&euro;{{ product.price }}</p>
+		<p class="price"><span>{{ currency.symbol }}{% change_currency product.price currency.code %}</span></p>
 		<a class="add-to-cart" href="{% url store.views.product_add product.slug %}">Add to Cart</a>
 	</div>
 {% endblock %}
