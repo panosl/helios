@@ -38,6 +38,7 @@ DEFAULT_LANGUAGE = 1
 
 SITE_ID = 1
 
+LOGIN_URL = '/customer/login/'
 LOGIN_REDIRECT_URL = '/store/'
 
 # If you set this to False, Django will make some optimizations so as not

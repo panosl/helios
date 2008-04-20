@@ -15,15 +15,41 @@ from customers.forms import CustomerForm, CreateCustomerForm
 from customers.models import CustomerProfile
 
 
-#def customer(request):
-#	if request.method == 'POST':
-#		form = CustomerForm(request.POST)
-#	#if request.user.is_authenticated():
-#		#form = CustomerForm(request.user.get_profile())
-#	else:
-#		form = CustomerForm()
+def model_to_dict(instance, fields=None, exclude=None):
+    """
+    Returns a dict containing the data in ``instance`` suitable for passing as
+    a Form's ``initial`` keyword argument.
 
-#	return render_to_response('customer.html', {'form': form}, context_instance=RequestContext(request))
+    ``fields`` is an optional list of field names. If provided, only the named
+    fields will be included in the returned dict.
+
+    ``exclude`` is an optional list of field names. If provided, the named
+    fields will be excluded from the returned dict, even if they are listed in
+    the ``fields`` argument.
+    """
+    # avoid a circular import
+    from django.db.models.fields.related import ManyToManyField
+    opts = instance._meta
+    data = {}
+    for f in opts.fields + opts.many_to_many:
+        if not f.editable:
+            continue
+        if fields and not f.name in fields:
+            continue
+        if exclude and f.name in exclude:
+            continue
+        if isinstance(f, ManyToManyField):
+            # If the object doesn't have a primry key yet, just use an empty
+            # list for its m2m fields. Calling f.value_from_object will raise
+            # an exception.
+            if instance.id is None:
+                data[f.name] = []
+            else:
+                # MultipleChoiceWidget needs a list of pks, not object instances.
+                data[f.name] = [obj.id for obj in f.value_from_object(instance)]
+        else:
+            data[f.name] = f.value_from_object(instance)
+    return data
 
 def customer(request, template_name='customer.html'):
 	if request.method == 'POST':
@@ -49,6 +75,9 @@ def customer(request, template_name='customer.html'):
 			else:
 				return HttpResponseRedirect('/')
 	else:
-		form = CustomerForm()
+		if request.user.is_authenticated():
+			customer = CustomerProfile.objects.get(user__exact=request.user)
+			initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
+		form = CustomerForm(initial=initial_data)
 
 	return render_to_response(template_name, {'form': form}, context_instance=RequestContext(request))

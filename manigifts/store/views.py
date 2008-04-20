@@ -7,13 +7,15 @@
 '''
 
 import pickle
+from datetime import datetime
+from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.core import urlresolvers
+from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.models import User
-from store.models import Product, Category, Currency
-from orders.models import Order
+from store.models import Product, Category, Currency, Order, OrderLine
+from customers.models import CustomerProfile
 
 
 class Cart(dict):
@@ -119,6 +121,21 @@ def category_list(request, category, **kwargs):
 	kwargs['extra_context']['category'] = Category.objects.get(slug__exact=category)
 	return object_list(request, queryset=product_list, **kwargs)
 
+def set_currency(request):
+	currency_code = request.GET.get('currency', None)
+	next = request.GET.get('next', None)
+	if not next:
+		next = request.META.get('HTTP_REFERER', None)
+	if not next:
+		next = '/'
+	response = HttpResponseRedirect(next)
+	if currency_code:
+		if hasattr(request, 'session'):
+			request.session['currency'] = Currency.objects.get(code__exact=currency_code)
+		else:
+			response.set_cookie('currency', currency_code)
+	return response
+
 def checkout(request, template_name='checkout.html'):
 	from django.template import RequestContext
 	from customers.forms import CustomerForm
@@ -137,41 +154,20 @@ def checkout(request, template_name='checkout.html'):
 	return render_to_response(template_name, context_instance=RequestContext(request))
 
 def submit_order(request, template_name='submit_order.html'):
-	if not request.session['cart']:
-		return HttpResponse('No cart amigo...')
+	if not request.user.is_authenticated():
+		return HttpResponseRedirect(reverse(customer))
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
 		return HttpResponseRedirect('/store/cart')
 
+	order = Order(date_time_created=datetime.today(), customer=CustomerProfile.objects.get(user__exact=request.user))
+	order.save()
+	for item in session_cart.values():
+		order_line = OrderLine.objects.create(order=order, product=item.get_product(), quantity=item.get_quantity())
+	return HttpResponseRedirect(reverse(success))
+
+def success(request, template_name='order_success.html'):
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect('/customer')
-
-#def set_currency(request):
-#	from store.models import Currency
-
-#	currency_code = request.GET.get('currency', None)
-#	next = request.GET.get('next', None)
-#	if not next:
-#		next = request.META.get('HTTP_REFERER', None)
-#	if not next:
-#		next = '/'
-#	response = HttpResponseRedirect(next)
-#	currency = Currency.objects.get(code__exact=request.POST.get('currency', 'DOL'))
-#	if currency:
-#		if hasattr(request, 'session'):
-#			request.session['currency'] = currency
-def set_currency(request):
-	currency_code = request.GET.get('currency', None)
-	next = request.GET.get('next', None)
-	if not next:
-		next = request.META.get('HTTP_REFERER', None)
-	if not next:
-		next = '/'
-	response = HttpResponseRedirect(next)
-	if currency_code:
-		if hasattr(request, 'session'):
-			request.session['currency'] = Currency.objects.get(code__exact=currency_code)
-		else:
-			response.set_cookie('currency', currency_code)
-	return response
+		return HttpResponseRedirect('/')
+	return render_to_response(template_name, context_instance=RequestContext(request))

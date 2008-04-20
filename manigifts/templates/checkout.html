@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency %}
 
 {% block title %}
 	{{ block.super }}: {% trans "Checkout" %}
@@ -7,21 +8,21 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-	<h2>Your Order</h2>
-	<h3>Products</h3>
+	<h2>{% trans "Your Order" %}</h2>
+	<h3>{% trans "Products" %}</h3>
 	<ul class="order">
 	{% for item in cart.itervalues %}
 		<li class="product">
 			{{ item.get_product.name }}
 			<ul>
 			<li>Quantity: {{ item.quantity }}</li>
-			<li class="price">Price: &euro;{{ item.get_price }}</li>
+			<li class="price">{% trans "Price" %}: {{ currency.symbol }}{% change_currency item.get_price currency.code %}</li>
 			</ul>
 		</li>
 	{% endfor %}
 	</ul>
 	<h3>Taxes/VAT</h3>
-	<h3>Your order will be shipped to:</h3>
+	<h3>{% trans "Your order will be shipped to" %}:</h3>
 	<ul>
 		<li>Name: {{ user.get_full_name }}</li>
 		<li>Email: {{ user.email }}</li>
@@ -29,8 +30,8 @@
 		<li>City: {{ user.get_profile.city }}</li>
 		<li>Country: {{ user.get_profile.country }}</li>
 	</ul>
-	<form id="order-submit" action="{% url orders.views.create %}">
-		<input type="submit" value="Submit Order" />
+	<form id="order-submit" action="{% url store.views.submit_order %}">
+		<input type="submit" value="{% trans "Submit Order" %}" />
 	</form>
 {% endif %}
 {% endblock %}
