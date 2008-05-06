@@ -65,6 +65,10 @@ class Category(models.Model):
 	def get_absolute_url(self):
 		return '/store/' + self.slug
 
+class ActiveProductManager(models.Manager):
+	def get_query_set(self):
+		return super(ActiveProductManager).get_query_set().filter(is_active=True)
+
 class Product(models.Model):
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
@@ -74,7 +78,7 @@ class Product(models.Model):
 		name = models.CharField(_('name'), maxlength=80)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(unique=True, prepopulate_from=('producttranslation.0.name',), editable=False)
+	slug = models.SlugField(unique=True, prepopulate_from=('producttranslation.0.name',))
 	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
 	is_active = models.BooleanField(_('Is product active?'), default=True,
@@ -83,7 +87,6 @@ class Product(models.Model):
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in Kilograms.'))
 	price = models.FloatField(_('price'), max_digits=6, decimal_places=2)
-
 
 	class Meta:
 		verbose_name = _('product')
@@ -100,7 +103,6 @@ class Product(models.Model):
 
 	@models.permalink	
 	def get_absolute_url(self):
-		#return '/store/products/%s' % self.slug
 		return ('django.views.generic.list_detail.object_detail', (), {
 			'slug': self.slug,
 		})
@@ -168,6 +170,7 @@ class Order(models.Model):
 class OrderLine(models.Model):
 	order = models.ForeignKey(Order)
 	product = models.ForeignKey(Product)
+	#TODO
 	quantity = models.IntegerField(_('quantity'))
 
 	class Admin:

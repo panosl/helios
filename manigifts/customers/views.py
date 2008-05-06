@@ -78,6 +78,7 @@ def customer(request, template_name='customer.html'):
 		if request.user.is_authenticated():
 			customer = CustomerProfile.objects.get(user__exact=request.user)
 			initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
-		form = CustomerForm(initial=initial_data)
+		#form = CustomerForm(initial=initial_data)
+		form = CustomerForm()
 
 	return render_to_response(template_name, {'form': form}, context_instance=RequestContext(request))

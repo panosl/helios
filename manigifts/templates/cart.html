@@ -39,8 +39,8 @@
 				</td>
 				<td class="name">{{ item.get_product.name }} {% change_currency item.get_product.price currency.code %}</td>
 				<td class="price">
-					<form class="price" action="" method="post">
-					<input type="text" value="{{ item.quantity }}" />
+					<form class="price" action="{% url store.views.cart_set_quantity item.id %}" method="post">
+						<input type="text" name="quantity" value="{{ item.quantity }}" />
 					</form></td>
 				<td>{{ currency.symbol }}{% change_currency item.get_price currency.code %}</td>
 			</tr>

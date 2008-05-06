@@ -1,0 +1,1 @@
+Dear {{ order.customer.user.fist_name }} {{ order.customer.user.last_name }}

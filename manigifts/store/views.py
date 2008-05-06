@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
     store.views
-    ~~~~~~~~~~~~
+    ~~~~~~~~~~~
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
@@ -62,6 +62,9 @@ class CartLine(dict):
 	def get_quantity(self):
 		return self['quantity']
 
+	def set_quantity(self, quantity):
+		self['quantity'] = quantity
+
 	def get_price(self):
 		price = self.get_product().price * self['quantity']
 		return price
@@ -77,6 +80,26 @@ def cart_clear(request):
 	session_cart.clear() 
 	request.session['cart'] = pickle.dumps(session_cart)
 	return HttpResponse('Done')
+
+def cart_set_quantity(request, product_id):
+	if not request.method == 'POST' or int(request.POST.get('quantity')) < 0:
+		return HttpResponseRedirect('/store/cart')
+
+	if not request.session.get('cart'):
+		session_cart = Cart()
+		pcart = pickle.dumps(session_cart)
+		request.session['cart'] = pcart
+
+	session_cart = pickle.loads(request.session.get('cart'))
+
+	if int(request.POST.get('quantity')) == 0:
+		del session_cart[int(product_id)]
+	else:
+		session_cart[int(product_id)]['quantity'] = int(request.POST.get('quantity'))
+
+	request.session['cart'] = pickle.dumps(session_cart)
+
+	return HttpResponseRedirect('/store/cart')
 
 def product_add(request, slug=''):
 	if not request.session.get('cart'):
@@ -154,20 +177,35 @@ def checkout(request, template_name='checkout.html'):
 	return render_to_response(template_name, context_instance=RequestContext(request))
 
 def submit_order(request, template_name='submit_order.html'):
+	from django.core.exceptions import ObjectDoesNotExist
+
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect(reverse(customer))
+
+	try:
+		request.user.get_profile()
+	except ObjectDoesNotExist:
+		request.user.message_set.create(message='%s does not have a customer profile.' % (request.user.username,))
+		return HttpResponseRedirect('/store')
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
 		return HttpResponseRedirect('/store/cart')
 
-	order = Order(date_time_created=datetime.today(), customer=CustomerProfile.objects.get(user__exact=request.user))
+	order = Order(date_time_created=datetime.today(), customer=User.objects.get(username__exact=request.user.username).get_profile())
 	order.save()
 	for item in session_cart.values():
 		order_line = OrderLine.objects.create(order=order, product=item.get_product(), quantity=item.get_quantity())
+	session_cart = pickle.loads(request.session.get('cart'))
+	session_cart.clear() 
+	request.session['cart'] = pickle.dumps(session_cart)
+
 	return HttpResponseRedirect(reverse(success))
 
 def success(request, template_name='order_success.html'):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
 	return render_to_response(template_name, context_instance=RequestContext(request))
+
+def orders_report(request, template_name='admin/store/orders_report.html'):
+	return render_to_response(template_name, {'order_list': Order.objects.all()}, RequestContext(request))

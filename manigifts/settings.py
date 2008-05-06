@@ -1,4 +1,5 @@
 # Django settings for manishop project.
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -47,7 +48,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/Users/panosl/web-projects/manishop.gr/manishop/manigifts/static/'
+MEDIA_ROOT = os.path.join(os.path.abspath(os.path.curdir), 'static')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
@@ -82,7 +83,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    '/Users/panosl/web-projects/manishop.gr/manishop/manigifts/templates',
+    os.path.join(os.path.abspath(os.path.curdir), 'templates'),
 )
 
 INSTALLED_APPS = (

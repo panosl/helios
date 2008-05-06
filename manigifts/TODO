@@ -1,15 +1,26 @@
+====
+TODO
+====
+
+
 ManiShop
 ========
 
- * cosmoliva.com - check out the products
- * change currency
- * set product amount on /store/cart/
+ * Email customer the order he put out.
+        - make the template.
+ * Admin/managers should be able to purchase?
+ * IE6 support.
+ * Locale in URLs, ie: `manishop.gr/el/store/cart`.
+ * Quantity of a product in cart, should limit to the store's stock?
+ * Customer Section:
+        - `/customer` does not accept users with no CustomerProfile.
+        - change information and shipping address.
+        - list orders.
 
 
 Long Term Goals
 ===============
 
- * Split apps of the project and make em more generic for individual usage.
  * Search.
  * Credit card support.
  * Paypal support.
@@ -19,12 +30,14 @@ Long Term Goals
  * RSS feed of new products added.
  * Customer section.
  * Registered users, should be able to:
- 	comment on a product,
- 	rate a product,
-	mark a product as insultive.
+ 	- comment on a product,
+ 	- rate a product,
+	- mark a product as insultive.
+
 
 Documentation Goals
 ===================
+
  * Development documentation
  	What each app does.
  * HOWTO documentation
@@ -36,3 +49,5 @@ Documentation Goals
 	This might be extended in the feature. Keep in mind that we should not be lead
 	astray from the admin app. Each addition should be done there, and not through
 	individual generic or not forms.
+
+# vim:ft=rst:
