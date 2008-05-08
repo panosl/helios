@@ -1,11 +1,12 @@
 # Django settings for manishop project.
 import os
 
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    ('Panos Laganakos', 'panos.laganakos@gmail.com'),
+	('Panos Laganakos', 'panos.laganakos@gmail.com'),
 )
 
 MANAGERS = ADMINS
