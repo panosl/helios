@@ -77,7 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.doc.XViewMiddleware',
 )
 
-ROOT_URLCONF = 'manigifts.urls'
+ROOT_URLCONF = 'manishop.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -96,10 +96,10 @@ INSTALLED_APPS = (
     'multilingual',
     'template_utils',
 
-    'manigifts.store',
-    'manigifts.location',
-    'manigifts.customers',
-    'manigifts.faq',
+    'manishop.store',
+    'manishop.location',
+    'manishop.customers',
+    'manishop.faq',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -108,8 +108,8 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.i18n',
     'multilingual.context_processors.multilingual',
     'django.core.context_processors.request',
-    'manigifts.store.context_processors.cart',
-    'manigifts.store.context_processors.currency',
+    'manishop.store.context_processors.cart',
+    'manishop.store.context_processors.currency',
 )
 
 AUTH_PROFILE_MODULE = "customers.CustomerProfile"

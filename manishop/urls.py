@@ -17,9 +17,9 @@ urlpatterns = patterns('',
 	(r'^$', redirect_to, {'url': 'store'}),
 	(r'^i18n/', include('django.conf.urls.i18n')),
 
-	(r'^store/', include('manigifts.store.urls')),
+	(r'^store/', include('store.urls')),
 	(r'^customer/', include('customers.urls')),
-	(r'^help/', include('manigifts.faq.urls')),
+	(r'^help/', include('faq.urls')),
 	(r'^admin/store/order/report', orders_report),
 	(r'^admin/', include('django.contrib.admin.urls')),
 

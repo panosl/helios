@@ -20,7 +20,7 @@ product_dict = {
 	'extra_context': {'productimage_list': ProductImage.objects.all()},
 }
 
-urlpatterns = patterns('manigifts.store.views',
+urlpatterns = patterns('store.views',
 	(r'^setcurrency/$', 'set_currency'),
 	(r'^cart/clear/$', 'cart_clear'),
 	#(r'^cart/set/$', 'cart_set_quantity'),
