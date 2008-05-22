@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.contrib.auth.models import User
 from store.models import Product, Category, Currency, Order, OrderLine
+from store.decorators import cart_required
 from customers.models import CustomerProfile
 
 
@@ -73,18 +74,22 @@ def cart_debug(request):
 	return HttpResponse('%s' % request.session.keys())
 
 def cart_clear(request):
-	if not request.session.get('cart'):
-		return HttpResponse('Nothing to clear.')
-
 	session_cart = pickle.loads(request.session.get('cart'))
 	session_cart.clear() 
 	request.session['cart'] = pickle.dumps(session_cart)
 	return HttpResponse('Done')
 
 def cart_set_quantity(request, product_id):
-	if not request.method == 'POST' or int(request.POST.get('quantity')) < 0:
+	if not request.method == 'POST':
 		return HttpResponseRedirect('/store/cart')
+		
+	product_id = int(product_id)
 
+	try:
+		quantity = int(request.POST.get('quantity'))
+	except ValueError:
+		return HttpResponseRedirect('/store/cart')
+		
 	if not request.session.get('cart'):
 		session_cart = Cart()
 		pcart = pickle.dumps(session_cart)
@@ -92,21 +97,18 @@ def cart_set_quantity(request, product_id):
 
 	session_cart = pickle.loads(request.session.get('cart'))
 
-	if int(request.POST.get('quantity')) == 0:
-		del session_cart[int(product_id)]
+	if quantity < 0:
+		return HttpResponseRedirect('/store/cart')
+	elif quantity == 0:
+		del session_cart[product_id]
 	else:
-		session_cart[int(product_id)]['quantity'] = int(request.POST.get('quantity'))
+		session_cart[product_id]['quantity'] = quantity
 
 	request.session['cart'] = pickle.dumps(session_cart)
 
 	return HttpResponseRedirect('/store/cart')
 
 def product_add(request, slug=''):
-	if not request.session.get('cart'):
-		session_cart = Cart()
-		pcart = pickle.dumps(session_cart)
-		request.session['cart'] = pcart
-
 	session_cart = pickle.loads(request.session.get('cart'))
 	
 	try:
@@ -162,9 +164,6 @@ def set_currency(request):
 def checkout(request, template_name='checkout.html'):
 	from django.template import RequestContext
 	from customers.forms import CustomerForm
-
-	if not request.session['cart']:
-		return HttpResponse('No cart amigo...')
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
