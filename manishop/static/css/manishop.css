@@ -198,9 +198,9 @@ input[type='submit'] {
 }
 #menu-bar li {
 	float: right;
-	height: 48px;
-	margin: 5px;
-	width: 48px;
+	height: 58px;
+	margin: 0;
+	width: 64px;
 }
 #menu-bar li.separator {
 	background-image: url('../img/menu-bar-separator.png');
@@ -210,8 +210,8 @@ input[type='submit'] {
 }
 #menu-bar a {
 	display: block;
-	height: 48px;
-	width: 48px;
+	height: 58px;
+	width: 64px;
 }
 #menu-bar a.cart {
 	background-image: url('../img/cart.png');
@@ -380,8 +380,8 @@ p.cart-count {
 	color: #000;
 	font-weight: bold;
 	position: relative;
-	top: -14px;
-	right: -2px;
+	top: -18px;
+	right: 4px;
 	float: right;
 
 }

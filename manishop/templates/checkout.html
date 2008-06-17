@@ -15,7 +15,7 @@
 		<li class="product">
 			{{ item.get_product.name }}
 			<ul>
-			<li>Quantity: {{ item.quantity }}</li>
+			<li>{% trans "Quantity" %}: {{ item.quantity }}</li>
 			<li class="price">{% trans "Price" %}: {{ currency.symbol }}{% change_currency item.get_price currency.code %}</li>
 			</ul>
 		</li>

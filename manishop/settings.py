@@ -75,6 +75,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'multilingual.middleware.DefaultLanguageMiddleware',
     'django.middleware.doc.XViewMiddleware',
 )
 

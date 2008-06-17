@@ -2,7 +2,7 @@
 # Copyright (C) 2007 Panos Laganakos <panos.laganakos@gmail.com>
 
 from django.conf.urls.defaults import *
-from manigifts.faq.models import FAQ
+from faq.models import FAQ
 
 
 faq_dict = {

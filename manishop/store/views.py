@@ -13,6 +13,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from store.models import Product, Category, Currency, Order, OrderLine
 from store.decorators import cart_required
@@ -184,7 +185,7 @@ def submit_order(request, template_name='submit_order.html'):
 	try:
 		request.user.get_profile()
 	except ObjectDoesNotExist:
-		request.user.message_set.create(message='%s does not have a customer profile.' % (request.user.username,))
+		request.user.message_set.create(message=_('%s does not have a customer profile.') % (request.user.username,))
 		return HttpResponseRedirect('/store')
 
 	session_cart = pickle.loads(request.session.get('cart'))
