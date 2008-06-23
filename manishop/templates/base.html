@@ -9,14 +9,8 @@
 	<script type="text/javascript" src="/static/js/jquery.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$("#preferences").hide();
-		$("a.pref-button").click(function () {
-			$("#preferences").slideToggle();
-			return false;
-		});
-
 		$("span.note").fadeOut().fadeIn().fadeOut().fadeIn();
-		$("span.message").fadeOut().fadeIn().fadeOut().fadeIn().fadeOut(5000);
+		$("p.message span").fadeOut().fadeIn().fadeOut().fadeIn().fadeOut(5000);
 	});
 	</script>
 	{% block extra-head %}
@@ -35,25 +29,30 @@
 <div id="right-container">
 	<div id="header">
 		<div id="status-bar">
-			<a class="pref-button" href="">&raquo; {% trans "Preferences" %}</a>
 			<div id="preferences">
-			<ul style="text-align:left">
-				<li>{% trans "Language" %}:</li>
-				<ul>
-				{% for lang in LANGUAGES %}
-					<li><a href="/i18n/setlang/?language={{ lang.0 }}">{{ lang.1 }}</a></li>
-				{% endfor %}
-				</ul>
-			</ul>
-			<ul style="text-align:left">
-				<li>{% trans "Currency" %}:</li>
-				<ul>
-				{% for curr in CURRENCIES %}
-					<li><a href="/store/setcurrency/?currency={{ curr.code }}">{{ curr.symbol }} {{ curr.name }}</a></li>
-				{% endfor %}
-				</ul>
-			</ul>
+				<form id="locale_switcher" method="POST" action="{% url store.views.set_language %}">
+					<select name="language" onchange="$('#locale_switcher').submit()">
+					{% for lang in LANGUAGES %}
+						<option value="{{ lang.0 }}" {% ifequal lang.0 LANGUAGE_CODE %}selected="selected"{% endifequal %}>{{ lang.1 }}</option>
+					{% endfor %}
+					</select>
+					<noscript>
+						<input type="submit" value="Set" />
+					</noscript>
+				</form>
+
+				<form id="currency_switcher" method="POST" action="{% url store.views.set_currency %}">
+					<select name="currency" onchange="$('#currency_switcher').submit()">
+					{% for curr in CURRENCIES %}
+						<option value="{{ curr.code }}" {% ifequal curr.code currency.code %}selected="selected"{% endifequal %}>{{ curr.name }}</option>
+					{% endfor %}
+					</select>
+					<noscript>
+						<input type="submit" value="Set" />
+					</noscript>
+				</form>
 			</div>
+
 			{% if user.is_authenticated %}
 			<p>{% trans "Logged in as" %}: <a href="/customer"><span>{{ user.username }}</span></a> | <a href="/customer/logout">{% trans "Logout" %}</a></p>
 			{% else %}
@@ -66,30 +65,26 @@
 			<ul>
 				<li id="nav-cart"><a class="cart" href="/store/cart" title="{% trans 'My Shopping Cart' %}"></a>
 				{% ifnotequal cart|length 0  %}
-				{#<p class="cart-count">{{ cart|length }}</p>#}
-				<p class="cart-count">{{ cart.get_product_count }}</p>
+					<p class="cart-count">{{ cart.get_product_count }}</p>
 				{% endifnotequal %}
 				</li>
-				<li class="separator"></li>
 				<li id="nav-help"><a class="help" href="/help" title="{% trans 'Customer Support' %}"></a></li>
-				<li class="separator"></li>
-				<li><a href="/store"></a></li>
 			</ul>
 		</div>
 	</div>
 
 	<div id="content">
 		{% if messages %}
-		{% for message in messages %}
-			<p><span class="message">{{ message }}</note></p>
-		{% endfor %}
+			{% for message in messages %}
+				<p class="message"><span>{{ message }}</span></p>
+			{% endfor %}
 		{% endif %}
 		{% block content %}
 		{% endblock %}
 	</div>
 
 	<div id="footer">
-		<p>&copy; ManiShop.gr {% now "Y" %}.</p>
+		<p>&copy; ManiShop.gr {% now "Y" %} | Code of Conduct</p>
 	</div>
 </div>
 

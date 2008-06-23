@@ -22,6 +22,7 @@ product_dict = {
 
 urlpatterns = patterns('store.views',
 	(r'^setcurrency/$', 'set_currency'),
+	(r'^setlang/$', 'set_language'),
 	(r'^cart/clear/$', 'cart_clear'),
 	#(r'^cart/set/$', 'cart_set_quantity'),
 	(r'^cart/set/(?P<product_id>\d+)/$', 'cart_set_quantity'),

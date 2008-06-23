@@ -16,57 +16,66 @@
 		<h2>{% trans "Create a customer account" %}</h2>
 	{% endif %}
 
-	<form action="/customer/" method="POST">
+	<form id="customer_form" action="/customer/" method="POST">
 	<fieldset>
 		{# form.as_p #}
 
-		<label for="id_username">Username:</label>
+		<p><label for="id_username">Username:</label>
 		{{ form.username }}
 		{% if form.username.errors %}
 			<span class="error">{{ form.username.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_first_name">First name:</label>
+		</p>
+		<p><label for="id_first_name">First name:</label>
 		{{ form.first_name }}
 		{% if form.first_name.errors %}
 			<span class="error">{{ form.first_name.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_last_name">Last name:</label>
+		</p>
+		<p><label for="id_last_name">Last name:</label>
 		{{ form.last_name }}
 		{% if form.last_name.errors %}
 			<span class="error">{{ form.last_name.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_email">Email:</label>
+		</p>
+		<p><label for="id_email">Email:</label>
 		{{ form.email }}
 		{% if form.email.errors %}
 			<span class="error">{{ form.email.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_password1">Password1:</label>
+		</p>
+		<p><label for="id_password1">Password1:</label>
 		{{ form.password1 }}
 		{% if form.password1.errors %}
 			<span class="error">{{ form.password1.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_password2">Password2:</label>
+		</p>
+		<p><label for="id_password2">Password2:</label>
 		{{ form.password2 }}
 		{% if form.password2.errors %}
 			<span class="error">{{ form.password2.errors|join:", " }}</span>
 		{% endif %}
+		</p>
 	</fieldset>
 	<fieldset>
-		<label for="id_address">Address:</label>
+		<p><label for="id_address">Address:</label>
 		{{ form.address }}
 		{% if form.address.errors %}
 			<span class="error">{{ form.address.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_city">City:</label>
+		</p>
+		<p><label for="id_city">City:</label>
 		{{ form.city }}
 		{% if form.city.errors %}
 			<span class="error">{{ form.city.errors|join:", " }}</span>
 		{% endif %}
-		<label for="id_country">Country:</label>
+		</p>
+		<p><label for="id_country">Country:</label>
 		{{ form.country }}
 		{% if form.country.errors %}
 			<span class="error">{{ form.country.errors|join:", " }}</span>
 		{% endif %}
+		</p>
 	</fieldset>
 	<fieldset>
 		<input type="submit" value="{% trans "Submit" %}" />

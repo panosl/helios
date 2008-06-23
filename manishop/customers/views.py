@@ -70,15 +70,27 @@ def customer(request, template_name='customer.html'):
 			user = authenticate(username=form.clean_data['username'], password=form.clean_data['password1'])
 			login(request, user)
 			request.user.message_set.create(message='Thanks for registering %s!' % (request.user.first_name,))
-			if request.session['checkout']:
+			if request.session.get('checkout'):
 				return HttpResponseRedirect('/store/checkout')
 			else:
 				return HttpResponseRedirect('/')
 	else:
 		if request.user.is_authenticated():
-			customer = CustomerProfile.objects.get(user__exact=request.user)
-			initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
-		#form = CustomerForm(initial=initial_data)
-		form = CustomerForm()
+			try:
+				customer = request.user.get_profile()
+				initial_data = {}
+				initial_data['username'] = customer.user.username
+				initial_data['first_name'] = customer.user.first_name
+				initial_data['last_name'] = customer.user.last_name
+				initial_data['email'] = customer.user.email
+				initial_data['address'] = customer.address
+				initial_data['city'] = customer.city
+				initial_data['country'] = customer.country_id
+				#initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
+				form = CustomerForm(initial=initial_data)
+			except:
+				return HttpResponseRedirect('/')
 
+		else:
+			form = CustomerForm()
 	return render_to_response(template_name, {'form': form}, context_instance=RequestContext(request))

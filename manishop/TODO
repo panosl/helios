@@ -16,6 +16,7 @@ ManiShop
         - `/customer` does not accept users with no CustomerProfile.
         - change information and shipping address.
         - list orders.
+ * Arrange by price.
 
 
 Long Term Goals

@@ -64,25 +64,30 @@ form fieldset {
 }
 
 label {
+	display: block;
+	float: left;
 	clear: left;
-	display: block;
-	float: left;
-	line-height: 2.2em;
+	width: 9em;
+	padding-right: 1em;
 	text-align: right;
-	width: 8em;
-}
-input, select {
-	display: block;
-	float: left;
-	margin-left: 20px;
-	width: 250px;
+	line-height: 1.8em;
 }
 
-input[type='submit'] {
-	margin: auto;
-	padding: auto;
-	width: auto;
+input {
+	display: block;
+	float: left;
 }
+
+select {
+	display: block;
+	float: left;
+}
+
+input[type=radio], 
+input[type=submit], 
+input[type=checkbox] { 
+	width:  auto; 
+} 
 
 #cart-checkout {
 	margin-left: 300px;
@@ -162,6 +167,7 @@ input[type='submit'] {
 #status-bar p {
 	margin: 0em;
 	padding: 0em;
+	clear: right;
 }
 #status-bar a {
 	color: #dff7c6;
@@ -177,10 +183,14 @@ input[type='submit'] {
 /* }}} */
 /* {{{ preferences */
 #preferences {
-	text-align: right;
+	position: relative;
+	align: right;
 }
-#preferences ul {
-	float right;
+
+#preferences form {
+	float: right;
+	margin-left: 1em;
+	margin-bottom: 0.5em;
 }
 /* }}} */
 /* {{{ menu-bar */
@@ -201,12 +211,7 @@ input[type='submit'] {
 	height: 58px;
 	margin: 0;
 	width: 64px;
-}
-#menu-bar li.separator {
-	background-image: url('../img/menu-bar-separator.png');
-	margin-left: 0em;
-	margin-right: 0em;
-	width: 1px;
+	border-left: 1px dotted gray;
 }
 #menu-bar a {
 	display: block;
@@ -375,14 +380,14 @@ div.product a.add-to-cart-small:hover {
 /* }}} */
 /* }}} */
 /* {{{ Classes */
-
 p.cart-count {
 	color: #000;
 	font-weight: bold;
+	/*
 	position: relative;
 	top: -18px;
 	right: 4px;
-	float: right;
+	*/
 
 }
 
@@ -391,13 +396,16 @@ p.price {
 	font-weight: bold;
 }
 
+/*
 .cart #nav-cart {
+	background-color: black;
 	background-image: url('../img/cart-hover.png');
 }
 
 .help #nav-help {
 	background-image: url('../img/help-hover.png');
 }
+*/
 
 .debug {
 	color: #ff0000;
@@ -407,12 +415,15 @@ p.price {
 	background: #fffbda;
 }
 
-.message {
+p.message {
+	margin-bottom: 2em;
+}
+
+p.message span {
 	background: #729fcf;
 	border: 1px solid #3465a4;
 	color: #ffffff;
 	font-weight: bold;
-	margin-bottom: 1em;
 	padding: 1em;
 }
 

@@ -21,7 +21,6 @@ def cart(request):
 def currency(request):
 	currencies = Currency.objects.all()
 	if not request.session.get('currency'):
-		#request.session['currency'] = 'EUR'
 		request.session['currency'] = Currency.objects.get(code__exact='EUR')
 
 	return {

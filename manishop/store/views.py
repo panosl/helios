@@ -148,8 +148,12 @@ def category_list(request, category, **kwargs):
 	return object_list(request, queryset=product_list, **kwargs)
 
 def set_currency(request):
-	currency_code = request.GET.get('currency', None)
-	next = request.GET.get('next', None)
+	if request.method == 'POST':
+		currency_code = request.POST.get('currency', None)
+		next = request.POST.get('next', None)
+	else:
+		currency_code = request.GET.get('currency', None)
+		next = request.GET.get('next', None)
 	if not next:
 		next = request.META.get('HTTP_REFERER', None)
 	if not next:
@@ -209,3 +213,34 @@ def success(request, template_name='order_success.html'):
 
 def orders_report(request, template_name='admin/store/orders_report.html'):
 	return render_to_response(template_name, {'order_list': Order.objects.all()}, RequestContext(request))
+
+
+#TODO remove it when we update to 0.97+
+def set_language(request):
+	"""
+	Redirect to a given url while setting the chosen language in the
+	session or cookie. The url and the language code need to be
+	specified in the request parameters.
+
+	Since this view changes how the user will see the rest of the site, it must
+	only be accessed as a POST request. If called as a GET request, it will
+	redirect to the page in the request (the 'next' parameter) without changing
+	any state.
+	"""
+	next = request.REQUEST.get('next', None)
+	if not next:
+		next = request.META.get('HTTP_REFERER', None)
+	if not next:
+		next = '/'
+	response = HttpResponseRedirect(next)
+	print 'hello there'
+	if request.method == 'POST':
+		lang_code = request.POST.get('language', None)
+		print lang_code
+		#if lang_code and check_for_language(lang_code):
+		if lang_code:
+			if hasattr(request, 'session'):
+				request.session['django_language'] = lang_code
+			else:
+				response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+	return response

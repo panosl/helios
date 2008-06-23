@@ -42,6 +42,7 @@ table.cart td {
 	text-align: right;
 	margin: 0em;
 	padding: 0.4em 0.8em 0.4em 0.8em;
+	vertical-align: middle;
 }
 table.cart td.id {
 	width: 5%;
