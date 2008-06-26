@@ -3344,8 +3344,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="214.49203"
-     inkscape:cy="504.9837"
+     inkscape:cx="523.43319"
+     inkscape:cy="646.40506"
      inkscape:current-layer="layer2"
      inkscape:document-units="px"
      inkscape:window-width="1280"
@@ -3419,7 +3419,7 @@
        ry="0"
        transform="scale(-1,-1)" />
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#e5e5e5;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#939393;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 185.80795,79.5 L 901.61656,79.5"
        id="path10982" />
     <rect
@@ -3678,7 +3678,7 @@
    id="tspan2353">login</tspan> | create account</tspan></text>
     <path
        id="path2398"
-       d="M 125.80795,-76.5 L 841.61656,-76.5"
+       d="M 260.80795,-109.5 L 976.61656,-109.5"
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
     <path
        style="fill:#f46262;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -6202,7 +6202,8 @@
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
     <g
-       id="g6760">
+       id="g6760"
+       transform="translate(-2.5076779e-5,0)">
       <path
          id="path3280"
          d="M 734.98039,39.297202 C 734.97923,39.349663 734.98039,39.400726 734.98039,39.453452 C 734.98039,43.509843 738.41731,46.797202 742.66789,46.797202 C 746.91847,46.797202 750.38664,43.509843 750.38664,39.453452 C 750.38664,39.400726 750.3878,39.349663 750.38664,39.297202 L 747.85539,39.297202 C 747.85709,39.348858 747.85539,39.4014 747.85539,39.453452 C 747.85539,42.128944 745.58817,44.297202 742.76164,44.297202 C 739.93511,44.297201 737.63664,42.128944 737.63664,39.453452 C 737.63664,39.4014 737.63491,39.348858 737.63664,39.297202 L 734.98039,39.297202 z"
@@ -8290,6 +8291,25 @@
          style="opacity:0.8;fill:none;fill-opacity:1;stroke:url(#radialGradient7019);stroke-width:0.77645928;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:1.20000057;stroke-opacity:1"
          sodipodi:type="arc" />
     </g>
+    <rect
+       transform="scale(-1,-1)"
+       ry="0"
+       y="-23"
+       x="-902.13672"
+       height="1"
+       width="716.849"
+       id="rect4383"
+       style="fill:#fdfdfd;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+    <rect
+       style="opacity:0.45283024;fill:#fff373;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;display:inline"
+       id="rect4387"
+       width="616.25"
+       height="7"
+       x="284"
+       y="79"
+       inkscape:export-filename="/Users/panosl/web-projects/manishop.gr/manishop/manishop/static/img/menu-bar-bg.png"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -8309,7 +8329,7 @@
     <rect
        inkscape:export-ydpi="90"
        inkscape:export-xdpi="90"
-       inkscape:export-filename="/Users/panosl/web-projects/manishop.gr/manishop.multilingual/manigifts/static/img/menu-bar-bg.png"
+       inkscape:export-filename="/Users/panosl/web-projects/manishop.gr/manishop/manishop/static/img/menu-bar-bg.png"
        y="22"
        x="284"
        height="64"

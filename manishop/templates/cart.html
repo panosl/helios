@@ -34,7 +34,7 @@
 				<!-- <td class="id">#{{ product.id }}</td> -->
 				<td class="id">
 					<form class="remove" action="{% url store.views.product_remove item.get_product.slug %}" method="post">
-						<input type="submit" value="Remove" />
+						<input type="submit" value="{% trans "Remove" %}" />
 					</form>
 				</td>
 				<td class="name">{{ item.get_product.name }} {% change_currency item.get_product.price currency.code %}</td>

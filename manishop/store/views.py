@@ -15,7 +15,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from store.models import Product, Category, Currency, Order, OrderLine
+from store.models import Product, Category, Currency, Order, OrderLine, ORDER_STATUS
 from store.decorators import cart_required
 from customers.models import CustomerProfile
 
@@ -167,7 +167,6 @@ def set_currency(request):
 	return response
 
 def checkout(request, template_name='checkout.html'):
-	from django.template import RequestContext
 	from customers.forms import CustomerForm
 
 	session_cart = pickle.loads(request.session.get('cart'))
@@ -187,7 +186,7 @@ def submit_order(request, template_name='submit_order.html'):
 		return HttpResponseRedirect(reverse(customer))
 
 	try:
-		request.user.get_profile()
+		customer = request.user.get_profile()
 	except ObjectDoesNotExist:
 		request.user.message_set.create(message=_('%s does not have a customer profile.') % (request.user.username,))
 		return HttpResponseRedirect('/store')
@@ -196,10 +195,22 @@ def submit_order(request, template_name='submit_order.html'):
 	if len(session_cart) == 0:
 		return HttpResponseRedirect('/store/cart')
 
-	order = Order(date_time_created=datetime.today(), customer=User.objects.get(username__exact=request.user.username).get_profile())
+	order = Order(date_time_created=datetime.today(),
+		customer=customer,
+		currency=request.session['currency'],
+		status=ORDER_STATUS[0][0],
+		shipping_city=customer.city,
+		shipping_country=customer.country,
+		)
 	order.save()
 	for item in session_cart.values():
-		order_line = OrderLine.objects.create(order=order, product=item.get_product(), quantity=item.get_quantity())
+		order_line = OrderLine.objects.create(
+			order=order,
+			product=item.get_product(),
+			unit_price=item.get_product().price,
+			price=item.get_price(),
+			quantity=item.get_quantity()
+		)
 	session_cart = pickle.loads(request.session.get('cart'))
 	session_cart.clear() 
 	request.session['cart'] = pickle.dumps(session_cart)
@@ -209,6 +220,7 @@ def submit_order(request, template_name='submit_order.html'):
 def success(request, template_name='order_success.html'):
 	if not request.user.is_authenticated():
 		return HttpResponseRedirect('/')
+
 	return render_to_response(template_name, context_instance=RequestContext(request))
 
 def orders_report(request, template_name='admin/store/orders_report.html'):

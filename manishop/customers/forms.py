@@ -19,8 +19,8 @@ class CustomerForm(forms.Form):
 	username = forms.CharField(label=_('Username'), max_length=30)
 	first_name = forms.CharField(label=_('First name'), max_length=30)
 	last_name = forms.CharField(label=_('Last name'), max_length=30)
-	email = forms.EmailField()
-	address = forms.CharField(max_length=50)
+	email = forms.EmailField(label=_('Email'))
+	address = forms.CharField(label=_('Address'), max_length=50)
 	city = forms.CharField(max_length=30)
 	# zip_postal
 	country = forms.ModelChoiceField(queryset=Country.objects.all())

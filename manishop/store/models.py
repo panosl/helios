@@ -12,6 +12,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from customers.models import CustomerProfile
+from location.models import Country
 from store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
@@ -153,16 +154,27 @@ class ProductImage(models.Model):
 			pass
 		super(ProductImage, self).delete()
 
+ORDER_STATUS = (
+	('PENDING', _('Pending')),
+	('BILLED', _('Billed')),
+	('SHIPPED', _('Shipped')),
+)
+
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
+	currency = models.ForeignKey(Currency)
+	status = models.CharField(maxlength=10, choices=ORDER_STATUS, blank=True)
+	shipping_city = models.CharField(_('City'), maxlength=50, blank=True)
+	shipping_country = models.ForeignKey(Country, blank=True)
 
 	class Meta:
 		verbose_name = _('order')
 		verbose_name_plural = _('orders')
 
 	class Admin:
-		list_display = ['date_time_created']
+		list_display = ['date_time_created', 'customer', 'status']
+		list_filter = ('status',)
 
 	def __str__(self):
 		return 'Order %s' % self.date_time_created
@@ -170,7 +182,8 @@ class Order(models.Model):
 class OrderLine(models.Model):
 	order = models.ForeignKey(Order)
 	product = models.ForeignKey(Product)
-	#TODO
+	unit_price = models.FloatField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
+	price = models.FloatField(_('line price'), max_digits=6, decimal_places=2, blank=True)
 	quantity = models.IntegerField(_('quantity'))
 
 	class Admin:

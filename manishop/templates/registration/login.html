@@ -1,22 +1,29 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 
 {% if form.has_errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p class="error">{% trans "Your username and password didn't match. Please try again." %}</p>
 {% endif %}
+
+<p><a><span class="note">{% trans "Forgot your password?" %}</span></a></p>
+<br />
 
 <form method="post" action=".">
 <fieldset>
-	<label for="id_username">Username:</label>
+	<p><label for="id_username">Username:</label>
 		{{ form.username }}
-	<label for="id_password">Password:</label>
+	</p>
+	<p><label for="id_password">Password:</label>
 		{{ form.password }}
+	</p>
 </fieldset>
 <fieldset>
 	<input type="submit" value="Login" />
 	<input type="hidden" name="next" value="{{ next }}" />
 </fieldset>
 </form>
+
 
 {% endblock %}

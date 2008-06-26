@@ -6,20 +6,18 @@
 {% if user.is_authenticated %}
 	{{ user.get_profile }}
 {% else %}
-	Create Account
+	{% trans "Create Account" %}
 {% endif %}
 {% endblock %}
 
 {% block content %}
 	{% if not user.is_authenticated %}
-		<p><span class="note">Do you already have an account? <a href="/customer/login/?next=/store/checkout/">Login!</a></span></p>
+		<p><span class="note">{% trans "Do you already have an account?" %} <a href="/customer/login/?next=/store/checkout/">{% trans "Login!" %}</a></span></p>
 		<h2>{% trans "Create a customer account" %}</h2>
 	{% endif %}
 
 	<form id="customer_form" action="/customer/" method="POST">
 	<fieldset>
-		{# form.as_p #}
-
 		<p><label for="id_username">Username:</label>
 		{{ form.username }}
 		{% if form.username.errors %}
