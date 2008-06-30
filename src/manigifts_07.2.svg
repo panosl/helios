@@ -3344,8 +3344,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="523.43319"
-     inkscape:cy="646.40506"
+     inkscape:cx="260.70883"
+     inkscape:cy="668.83147"
      inkscape:current-layer="layer2"
      inkscape:document-units="px"
      inkscape:window-width="1280"
@@ -4496,13 +4496,13 @@
            id="tspan3889">Shop</tspan></text>
     </g>
     <rect
-       style="opacity:1;fill:#204a87;fill-opacity:1;fill-rule:nonzero;stroke:#1b3f73;stroke-width:0.93886197;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter11736)"
+       style="opacity:1;fill:#204a87;fill-opacity:1;fill-rule:nonzero;stroke:#1b3f73;stroke-width:0.83242422;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;filter:url(#filter11736)"
        id="rect9750"
        width="39.408134"
        height="39.408131"
        x="-49.132175"
        y="-136.57321"
-       transform="matrix(0.8881418,-0.6386814,0.8881418,0.6386814,168.63709,167.48245)" />
+       transform="matrix(1.0277069,-0.7021201,1.0277069,0.7021201,187.55508,175.52959)" />
     <rect
        style="opacity:1;fill:#c4a000;fill-opacity:1;fill-rule:nonzero;stroke:#fce94f;stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect16636"
@@ -5730,6 +5730,11 @@
            style="opacity:1;fill:url(#radialGradient6472);fill-opacity:1;fill-rule:nonzero;stroke:#eeeeec;stroke-width:1.05454254;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
       </g>
     </g>
+    <path
+       sodipodi:nodetypes="ccccc"
+       id="path4414"
+       d="M 40.198484,15.038 L 63.685474,31.948401 L 58.271261,35.88544 L 40.198484,23.087017 C 40.198484,18.692407 40.198484,19.432612 40.198484,15.038 z"
+       style="opacity:0.48258706;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
     <path
        style="opacity:1;fill:url(#radialGradient28571);fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dashoffset:0;stroke-opacity:1"
        d="M 119.5,-1.0000002 C 121.40693,8.86644 107.02,25.098 87.78,13.261 C 67.04,31.924 54.54,19.5 45.5,13 C 32.46,20.5 24.46,18.424 19.22,11.261 C 6.4800001,16.098 -2.5,6.848 -1.5,-5.0000002 C -0.43222,-17.65102 5.9200001,-30 28,-30 C 39.04,-30 69.0727,-26.60741 68.78,-18.261 C 93.43472,-28.64319 117.5,-11.348 119.5,-1.0000002 z"
@@ -8310,6 +8315,11 @@
        inkscape:export-filename="/Users/panosl/web-projects/manishop.gr/manishop/manishop/static/img/menu-bar-bg.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90" />
+    <path
+       style="opacity:0.60696519;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 10.5,33 L 41.5,55 C 41.5,90.333333 41.5,101.66667 41.5,137 L 10.5,115 C 10.5,79.66667 10.5,68.333333 10.5,33 z"
+       id="rect3611"
+       sodipodi:nodetypes="ccccc" />
   </g>
   <g
      inkscape:groupmode="layer"

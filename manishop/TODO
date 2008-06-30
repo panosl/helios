@@ -6,22 +6,34 @@ TODO
 ManiShop
 ========
 
+Short Term
+----------
+
  * Email customer the order he put out.
         - make the template.
- * Admin/managers should be able to purchase?
  * IE6 support.
  * Locale in URLs, ie: `manishop.gr/el/store/cart`.
  * Quantity of a product in cart, should limit to the store's stock?
  * Customer Section:
-        - `/customer` does not accept users with no CustomerProfile.
         - change information and shipping address.
         - list orders.
+
+Long Term
+---------
+
  * Arrange by price.
+ * Admin/managers should be able to purchase?
 
 
-Long Term Goals
-===============
+Helios
+======
 
+Long Term
+---------
+
+ * Standing of the customer:
+        How trustworthy is the customer? It should depend on a ratio of orders/payed_orders.
+        If he's standing is low, feature orders should be verified by phone.
  * Search.
  * Credit card support.
  * Paypal support.
@@ -34,6 +46,7 @@ Long Term Goals
  	- comment on a product,
  	- rate a product,
 	- mark a product as insultive.
+ * Move customer creation to a Wizard (Django 1.0)
 
 
 Documentation Goals

@@ -1,16 +1,17 @@
-insert into store_category (slug, parent_id) VALUES ('ceramics', null);
-insert into store_category (slug, parent_id) VALUES ('jewels', null);
-insert into store_category (slug, parent_id) VALUES ('paintings', null);
-insert into store_category (slug, parent_id) VALUES ('perfumes', null);
-insert into store_category (slug, parent_id) VALUES ('local-products', null);
-insert into store_category (slug, parent_id) VALUES ('various', null);
-INSERT INTO store_category (slug, parent_id) VALUES ('toys', null);
-INSERT INTO store_category (slug, parent_id) VALUES ('rag', 7);
-INSERT INTO store_category (slug, parent_id) VALUES ('wooden', 7);
-INSERT INTO store_category (slug, parent_id) VALUES ('metallic', 7);
-INSERT INTO store_category (slug, parent_id) VALUES ('cards', null);
-INSERT INTO store_category (slug, parent_id) VALUES ('porcelain', null);
-insert into store_category (slug, parent_id) values ('office-products', null);
+INSERT INTO store_category (slug, parent_id) VALUES ('ceramics', null);
+insert into store_category (slug, parent_id) VALUES ('jewels', null); 
+insert into store_category (slug, parent_id) VALUES ('paintings', null); 
+insert into store_category (slug, parent_id) VALUES ('perfumes', null); 
+insert into store_category (slug, parent_id) VALUES ('local-products', null); 
+insert into store_category (slug, parent_id) VALUES ('various', null); 
+INSERT INTO store_category (slug, parent_id) VALUES ('toys', null); 
+INSERT INTO store_category (slug, parent_id) VALUES ('rag', 7); 
+INSERT INTO store_category (slug, parent_id) VALUES ('wooden', 7); 
+INSERT INTO store_category (slug, parent_id) VALUES ('metallic', 7); 
+INSERT INTO store_category (slug, parent_id) VALUES ('cards', null); 
+INSERT INTO store_category (slug, parent_id) VALUES ('porcelain', null); 
+insert into store_category (slug, parent_id) values ('office-products', null); 
+
 
 insert into store_category_translation (name, desc, language_id, master_id) values ('Ceramics', '', 1, 1);
 insert into store_category_translation (name, desc, language_id, master_id) values ('Κεραμικά', '', 2, 1);

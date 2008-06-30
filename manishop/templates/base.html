@@ -63,13 +63,14 @@
 
 		<div id="menu-bar">
 			<ul>
-				<li id="nav-cart"><a class="cart" href="/store/cart" title="{% trans 'My Shopping Cart' %}"></a>
-				{% ifnotequal cart|length 0  %}
-					<p class="cart-count">{{ cart.get_product_count }}</p>
-				{% endifnotequal %}
+				<li id="nav-cart">
+				<a class="cart" href="/store/cart" title="{% trans 'My Shopping Cart' %}"></a>
 				</li>
 				<li id="nav-help"><a class="help" href="/help" title="{% trans 'Customer Support' %}"></a></li>
 			</ul>
+				{% ifnotequal cart|length 0  %}
+					<p class="cart-count">{{ cart.get_product_count }}</p>
+				{% endifnotequal %}
 		</div>
 	</div>
 

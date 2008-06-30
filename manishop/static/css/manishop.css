@@ -383,6 +383,11 @@ div.product a.add-to-cart-small:hover {
 p.cart-count {
 	color: #000;
 	font-weight: bold;
+	float: right;
+	position: relative;
+	right: -128px;
+	top: 35px;
+
 	/*
 	position: relative;
 	top: -18px;

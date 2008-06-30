@@ -1,0 +1,9 @@
+- fields: {slug: "small-vase", category: "1", date_added: "2007-09-18", is_active: "1", stock: "0", weight: "0", price: "10.50"}
+  model: store.Product
+  pk: '1'
+- fields: {name: "Small Vase", desc: "Test", language_id: "1", master: "1"} 
+  model: store.ProductTranslation
+  pk: '1'
+- fields: {name: "Βαζάκι", desc: "Δοκιμή", language_id: "2", master: "1"} 
+  model: store.ProductTranslation
+  pk: '2'

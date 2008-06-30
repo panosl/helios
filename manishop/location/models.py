@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Country(models.Model):
-	name = models.CharField(_('name'), maxlength=35)
+	name = models.CharField(_('name'), maxlength=45)
 
 	class Meta:
 		verbose_name = _('country')

@@ -139,6 +139,16 @@ class ProductImage(models.Model):
 		return os.path.splitext(self.get_picture_url())[0] + '_thumbnail.jpg'
 	thumbnail = property(_get_thumbnail)
 
+	def _delete(self):
+		try:
+			os.remove(self.get_picture_filename())
+		except OSError:
+			pass	
+		try:
+			os.remove(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg')
+		except OSError:
+			pass
+
 	def save(self):
 		super(ProductImage, self).save()
 		self._make_thumbnail()
@@ -164,6 +174,7 @@ class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
 	currency = models.ForeignKey(Currency)
+	#currency_factor = 
 	status = models.CharField(maxlength=10, choices=ORDER_STATUS, blank=True)
 	shipping_city = models.CharField(_('City'), maxlength=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True)

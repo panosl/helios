@@ -1,3 +1,4 @@
+from decimal import *
 from django import template
 from django.template import resolve_variable
 from store.models import Currency
@@ -20,8 +21,13 @@ class ChangeCurrencyNode(template.Node):
 		try:
 			price = resolve_variable(self.current_price, context)
 			currency = resolve_variable(self.new_currency, context)
-			new_price = price * Currency.objects.get(code__exact=currency).factor
-			return str(new_price)
+
+			price = Decimal(str(price))
+			factor = Decimal(str(Currency.objects.get(code__exact=currency).factor))
+			new_price = price * factor
+
+			#new_price = price * Currency.objects.get(code__exact=currency).factor
+			return str(new_price.quantize(Decimal('.01'), rounding=ROUND_UP))
 		except template.VariableDoesNotExist:
 			return ''
 
