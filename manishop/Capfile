@@ -1,0 +1,5 @@
+task :deploy, :hosts => "root@192.168.2.44" do
+    run "tar  -xzf /var/www/phaethon/manishop.tar.gz -C /var/www/phaethon/manishop.gr/"
+    run "ln -s /var/www/phaethon/manishop.gr/manishop/static/media /usr/local/lib/python2.5/site-packages/django/contrib/admin/media"
+    run "/etc/init.d/httpd restart"
+end

@@ -8,6 +8,7 @@
 
 import pickle
 from datetime import datetime
+from decimal import Decimal
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -21,6 +22,10 @@ from customers.models import CustomerProfile
 
 
 class Cart(dict):
+	"""
+	Cart({1, {'id': 1, quantity: 10}})
+	"""
+
 	def __init__(self, **products):
 		super(Cart, self).__init__(products)
 
@@ -48,7 +53,7 @@ class Cart(dict):
 		return count
 
 	def get_price(self):
-		total_price = 0.0
+		total_price = Decimal('0.00')
 		for cart_line in self.itervalues():
 			total_price = total_price + cart_line.get_price()
 		return total_price
@@ -69,7 +74,7 @@ class CartLine(dict):
 
 	def get_price(self):
 		price = self.get_product().price * self['quantity']
-		return price
+		return Decimal(str(price))
 
 def cart_debug(request):
 	return HttpResponse('%s' % request.session.keys())

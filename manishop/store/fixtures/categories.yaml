@@ -1,0 +1,47 @@
+- fields: {slug: "ceramics", parent: "0"}
+  model: store.Category
+  pk: '1'
+- fields: {slug: "jewels", parent: "0"}
+  model: store.Category
+  pk: '2'
+- fields: {slug: "paintings", parent: "0"}
+  model: store.Category
+  pk: '3'
+- fields: {slug: "perfumes", parent: "0"}
+  model: store.Category
+  pk: '4'
+- fields: {slug: "local-products", parent: "0"}
+  model: store.Category
+  pk: '5'
+- fields: {slug: "various", parent: "0"}
+  model: store.Category
+  pk: '6'
+- fields: {slug: "toys", parent: "0"}
+  model: store.Category
+  pk: '7'
+- fields: {slug: "rag", parent: "7"}
+  model: store.Category
+  pk: '8'
+- fields: {slug: "wooden", parent: "7"}
+  model: store.Category
+  pk: '9'
+- fields: {slug: "metallic", parent: "7"}
+  model: store.Category
+  pk: '10'
+- fields: {slug: "cards", parent: "0"}
+  model: store.Category
+  pk: '11'
+- fields: {slug: "porcelain", parent: "0"}
+  model: store.Category
+  pk: '12'
+- fields: {slug: "office-products", parent: "0"}
+  model: store.Category
+  pk: '13'
+
+
+- fields: {name: "Ceramics", desc: "", language_id: "1", master: "1"}
+  model: store.CategoryTranslation
+  pk: '1'
+- fields: {name: "Κεραμικά", desc: "", language_id: "2", master: "1"}
+  model: store.CategoryTranslation
+  pk: '2'
