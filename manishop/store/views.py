@@ -23,40 +23,47 @@ from customers.models import CustomerProfile
 
 class Cart(dict):
 	"""
-	Cart({1, {'id': 1, quantity: 10}})
+	A dict-like object, which stores ``Product.id``:``CartLine`` pairs, in the form of:
+	{ID: {'id': ID, 'quantity': QUANTITY}}
+
+	Examples:
+
+	>>> cart = Cart()
+	>>> cart.add_product(id=1, quantity=20)
 	"""
 
 	def __init__(self, **products):
 		super(Cart, self).__init__(products)
 
 	def add_product(self, product_id, quantity=1):
-		# TODO should it raise an exception instead of quantity
-		# increase?
+		"""
+		Add product to ``Cart``.
+
+		If product already in ``Cart`` add to the quantity.
+		"""
 		if self.has_key(product_id):
 			self[product_id]['quantity'] += quantity
 		else:
 			self[product_id] = CartLine(id=product_id, quantity=quantity)
-	
+
 	def remove_product(self, product_id):
 		del self[product_id]
 
 	def get_product_list(self):
-		'''Returns the product_list based on the currently stored IDs'''
+		"""
+		Return the product_list based on the currently stored IDs.
+		"""
 		product_list = Product.objects.in_bulk(self.keys())
 		return product_list.values()
 
 	def get_product_count(self):
-		count = 0
-		#[(count += product['quantity']) for product in self.itervalues()]
-		for product in self.itervalues():
-			count += product['quantity']
-		return count
+		return sum((product['quantity'] for product in self.itervalues()))
 
 	def get_price(self):
-		total_price = Decimal('0.00')
-		for cart_line in self.itervalues():
-			total_price = total_price + cart_line.get_price()
-		return total_price
+		"""
+		Sum and return the price of each ``CartLine``.
+		"""
+		return sum((cart_line.get_price() for cart_line in self.itervalues()), Decimal('0.00'))
 
 class CartLine(dict):
 	def __init__(self, **line):
@@ -85,16 +92,14 @@ def cart_clear(request):
 	request.session['cart'] = pickle.dumps(session_cart)
 	return HttpResponse('Done')
 
-def cart_set_quantity(request, product_id):
+def cart_set_quantity(request, product_id, success_url='/store/cart'):
 	if not request.method == 'POST':
-		return HttpResponseRedirect('/store/cart')
-		
-	product_id = int(product_id)
+		return HttpResponseRedirect(success_url)
 
 	try:
 		quantity = int(request.POST.get('quantity'))
 	except ValueError:
-		return HttpResponseRedirect('/store/cart')
+		return HttpResponseRedirect(success_url)
 		
 	if not request.session.get('cart'):
 		session_cart = Cart()
@@ -103,16 +108,22 @@ def cart_set_quantity(request, product_id):
 
 	session_cart = pickle.loads(request.session.get('cart'))
 
+	product_id = int(product_id)
+	items_in_stock = session_cart[product_id].get_product().stock
+
 	if quantity < 0:
-		return HttpResponseRedirect('/store/cart')
-	elif quantity == 0:
+		return HttpResponseRedirect(success_url)
+	elif quantity == 0 or items_in_stock == 0:
 		del session_cart[product_id]
 	else:
-		session_cart[product_id]['quantity'] = quantity
+		if quantity >= items_in_stock:
+			session_cart[product_id]['quantity'] = items_in_stock
+		else:
+			session_cart[product_id]['quantity'] = quantity
 
 	request.session['cart'] = pickle.dumps(session_cart)
 
-	return HttpResponseRedirect('/store/cart')
+	return HttpResponseRedirect(success_url)
 
 def product_add(request, slug=''):
 	session_cart = pickle.loads(request.session.get('cart'))
@@ -200,21 +211,25 @@ def submit_order(request, template_name='submit_order.html'):
 	if len(session_cart) == 0:
 		return HttpResponseRedirect('/store/cart')
 
-	order = Order(date_time_created=datetime.today(),
+	order = Order.objects.create(
+		date_time_created=datetime.today(),
 		customer=customer,
-		currency=request.session['currency'],
+		#currency_code=request.session['currency'].code,
+		#currency_factor=request.session['currency'].factor,
 		status=ORDER_STATUS[0][0],
 		shipping_city=customer.city,
 		shipping_country=customer.country,
 		)
-	order.save()
-	for item in session_cart.values():
+
+	for cart_line in session_cart.values():
+		print cart_line.get_product().price
+		print cart_line.get_price()
 		order_line = OrderLine.objects.create(
 			order=order,
-			product=item.get_product(),
-			unit_price=item.get_product().price,
-			price=item.get_price(),
-			quantity=item.get_quantity()
+			product=cart_line.get_product(),
+			unit_price=cart_line.get_product().price,
+			#price=cart_line.get_price(),
+			#quantity=item.get_quantity()
 		)
 	session_cart = pickle.loads(request.session.get('cart'))
 	session_cart.clear() 

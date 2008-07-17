@@ -45,7 +45,7 @@ class Category(models.Model):
 		name = models.CharField(maxlength=50)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(prepopulate_from=('name',))
+	slug = models.SlugField(prepopulate_from=('categorytranslation.0.name',))
 	parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
 
 	class Meta:
@@ -63,8 +63,15 @@ class Category(models.Model):
 			return pname + self.name
 		return self.name
 
+	
 	def get_absolute_url(self):
 		return '/store/' + self.slug
+
+	#@models.permalink
+	#def get_absolute_url(self):
+	#	return(category_list, (), {
+	#		'slug': self.slug
+	#	})
 
 class ActiveProductManager(models.Manager):
 	def get_query_set(self):
@@ -173,8 +180,8 @@ ORDER_STATUS = (
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
-	currency = models.ForeignKey(Currency)
-	#currency_factor = 
+	currency_code = models.CharField(_('code'), maxlength=3, blank=True, null=True)
+	currency_factor = models.FloatField(_('factor'), max_digits=10, decimal_places=4, blank=True, null=True)
 	status = models.CharField(maxlength=10, choices=ORDER_STATUS, blank=True)
 	shipping_city = models.CharField(_('City'), maxlength=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True)
