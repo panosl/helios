@@ -1,0 +1,3 @@
+Helios requires:
+ * template_utils
+ * installing `cart` and `currency` context processors

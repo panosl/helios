@@ -1,0 +1,10 @@
+{% load i18n %}
+<ul class="categories">
+	{% for category in categories %}
+	<li id="nav-{{ category.slug }}"><a href="{{ category.get_absolute_url }}" title="{{ category.name }}">{{ category.name }}
+		<span class="product-count">{{ category.product_set.count }}</span>
+		</a>
+	</li>
+	{% endfor %}
+	<li class="all"><a href="/products">{% trans "All Products" %}</a></li>
+</ul>
