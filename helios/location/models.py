@@ -1,5 +1,10 @@
-# Helios, a Phaethon-Designs, e-commerce software.
-# Copyright (C) 2008 Panos Laganakos <panos.laganakos@gmail.com>
+# -*- coding: utf-8 -*-
+'''
+    location.models
+    ~~~~~~~~~~~~~~~
+
+    :copyright: 2007-2008 by Panos Laganakos.
+'''
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _

@@ -182,8 +182,8 @@ ORDER_STATUS = (
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
-	currency_code = models.CharField(_('code'), maxlength=3, blank=True, null=True)
-	currency_factor = models.FloatField(_('factor'), max_digits=10, decimal_places=4, blank=True, null=True)
+	currency_code = models.CharField(_('currency code'), maxlength=3, blank=True, null=True)
+	currency_factor = models.FloatField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
 	status = models.CharField(maxlength=10, choices=ORDER_STATUS, blank=True)
 	shipping_city = models.CharField(_('City'), maxlength=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True)

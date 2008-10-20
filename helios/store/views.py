@@ -183,7 +183,7 @@ def set_currency(request):
 	return response
 
 def checkout(request, template_name='checkout.html'):
-	from customers.forms import CustomerForm
+	from helios.customers.forms import CustomerForm
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
@@ -228,8 +228,8 @@ def submit_order(request, template_name='submit_order.html'):
 			order=order,
 			product=cart_line.get_product(),
 			unit_price=cart_line.get_product().price,
-			#price=cart_line.get_price(),
-			#quantity=item.get_quantity()
+			price=float(cart_line.get_price()),
+			quantity=cart_line.get_quantity()
 		)
 	session_cart = pickle.loads(request.session.get('cart'))
 	session_cart.clear() 
