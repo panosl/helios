@@ -8,7 +8,7 @@
 
 import pickle
 from datetime import datetime
-from decimal import Decimal
+#from decimal import Decimal
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
@@ -63,7 +63,8 @@ class Cart(dict):
 		"""
 		Sum and return the price of each ``CartLine``.
 		"""
-		return sum((cart_line.get_price() for cart_line in self.itervalues()), Decimal('0.00'))
+		#return sum((cart_line.get_price() for cart_line in self.itervalues()), Decimal('0.00'))
+		return sum((cart_line.get_price() for cart_line in self.itervalues()))
 
 class CartLine(dict):
 	def __init__(self, **line):
@@ -81,7 +82,8 @@ class CartLine(dict):
 
 	def get_price(self):
 		price = self.get_product().price * self['quantity']
-		return Decimal(str(price))
+		#return Decimal(str(price))
+		return price
 
 def cart_debug(request):
 	return HttpResponse('%s' % request.session.keys())
@@ -191,7 +193,7 @@ def checkout(request, template_name='checkout.html'):
 
 	if not request.user.is_authenticated():
 		request.session['checkout'] = 'True'
-		return HttpResponseRedirect('/customer')
+		return HttpResponseRedirect(reverse('customer-register'))
 
 	return render_to_response(template_name, context_instance=RequestContext(request))
 
@@ -199,12 +201,12 @@ def submit_order(request, template_name='submit_order.html'):
 	from django.core.exceptions import ObjectDoesNotExist
 
 	if not request.user.is_authenticated():
-		return HttpResponseRedirect(reverse(customer))
+		return HttpResponseRedirect(reverse('customer-register'))
 
 	try:
 		customer = request.user.get_profile()
 	except ObjectDoesNotExist:
-		request.user.message_set.create(message=_('%s does not have a customer profile.') % (request.user.username,))
+		request.user.message_set.create(message=_(u'%s does not have a customer profile.') % (request.user.username,))
 		return HttpResponseRedirect('/store')
 
 	session_cart = pickle.loads(request.session.get('cart'))
@@ -222,13 +224,12 @@ def submit_order(request, template_name='submit_order.html'):
 		)
 
 	for cart_line in session_cart.values():
-		print cart_line.get_product().price
-		print cart_line.get_price()
+		print cart_line.get_quantity()
 		order_line = OrderLine.objects.create(
 			order=order,
 			product=cart_line.get_product(),
 			unit_price=cart_line.get_product().price,
-			price=float(cart_line.get_price()),
+			price=cart_line.get_price(),
 			quantity=cart_line.get_quantity()
 		)
 	session_cart = pickle.loads(request.session.get('cart'))

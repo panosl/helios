@@ -1,5 +1,10 @@
-# Helios, a Phaethon-Designs, e-commerce software.
-# Copyright (C) 2008 Panos Laganakos <panos.laganakos@gmail.com>
+# -*- coding: utf-8 -*-
+'''
+    customers.tests
+    ~~~~~~~~~~~~~~~
+
+    :copyright: 2007-2008 by Panos Laganakos.
+'''
 
 import unittest
 from django.test.client import Client
@@ -12,6 +17,7 @@ customer_data = {
 	'last_name': 'Laganakos',
 	'email': 'panos.laganakos@gmail.com',
 	'address': 'omirou 17',
+	'city': 'Kalamata',
 	'country': '1',
 	'password1': '12345',
 	'password2': '12345',
@@ -22,8 +28,8 @@ class CustomerCreationTest(unittest.TestCase):
 		self.client = Client()
 
 	def test_creation(self):
-		response = self.client.post('/customer/', customer_data)
-
+		response = self.client.get('/customer/register/')
 		self.failUnlessEqual(response.status_code, 200)
 
-		print response.context[0]
+		response = self.client.post('/customer/register', customer_data)
+		self.failUnlessEqual(response.status_code, 200)
