@@ -32,7 +32,9 @@ class ProductImageInline(admin.TabularInline):
 	#prepopulated_fields = {'slug': ('name',)}
 	#search_fields = ['slug', 'name']
 class ProductAdmin(admin.ModelAdmin):
+	inlines = [ProductImageInline,]
 	list_filter = ('category',)
+	list_display = ('name', 'price', 'stock')
 	class Translation(TranslationModelAdmin):
 		list_display = ('name', 'price', 'stock')
 
