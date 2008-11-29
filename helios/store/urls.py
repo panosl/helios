@@ -5,7 +5,6 @@
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
-
 from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.simple import direct_to_template
@@ -24,7 +23,6 @@ urlpatterns = patterns('helios.store.views',
 	(r'^setcurrency/$', 'set_currency'),
 	(r'^setlang/$', 'set_language'),
 	(r'^cart/clear/$', 'cart_clear'),
-	#(r'^cart/set/$', 'cart_set_quantity'),
 	(r'^cart/set/(?P<product_id>\d+)/$', 'cart_set_quantity'),
 	(r'^cart/debug/$', 'cart_debug'),
 	(r'^checkout/$', 'checkout'),

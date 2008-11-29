@@ -5,7 +5,6 @@
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
-
 import os
 import Image
 from django.db import models
@@ -35,11 +34,10 @@ class Currency(models.Model):
 class Category(models.Model):
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
-			name = models.CharField(max_length=50)
+			name = models.CharField(_('name'), max_length=50)
 			desc = models.TextField(_('description'), blank=True)
-		slug = models.SlugField(max_length=50)
 	else:
-		name = models.CharField(max_length=50)
+		name = models.CharField(_('name'), max_length=50)
 		desc = models.TextField(_('description'), blank=True)
 
 	slug = models.SlugField(max_length=50)
@@ -114,6 +112,7 @@ class Product(models.Model):
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, null=True, blank=True)
 	picture = models.ImageField(_('picture'), upload_to='./product_images')
+	suffix = '_thumbnail.jpg'
 
 	class Meta:
 		verbose_name = _('product image')
@@ -122,27 +121,16 @@ class ProductImage(models.Model):
 	def __unicode__(self):
 		return str(self.picture)
 
+
 	def _make_thumbnail(self):
 		thumbnail = Image.open(self.picture.path)
 		thumbnail.thumbnail((256, 256), Image.ANTIALIAS)
 		thumbnail = thumbnail.crop((0, 0, 190, 190))
-		thumbnail.save(os.path.splitext(self.picture.path)[0] + '_thumbnail.jpg', 'JPEG')
+		thumbnail.save(os.path.splitext(self.picture.path)[0] + self.suffix, 'JPEG')
 	
 	def _get_thumbnail(self):
-		return os.path.splitext(self.picture.url)[0] + '_thumbnail.jpg'
+		return os.path.splitext(self.picture.url)[0] + self.suffix
 	thumbnail = property(_get_thumbnail)
-
-	def _delete(self):
-		try:
-			#os.remove(self.get_picture_filename())
-			os.remove(self.picture.path)
-		except OSError:
-			pass	
-		try:
-			#os.remove(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg')
-			os.remove(os.path.splitext(self.picture.path)[0] + '_thumbnail.jpg')
-		except OSError:
-			pass
 
 	def save(self):
 		super(ProductImage, self).save()
@@ -150,13 +138,11 @@ class ProductImage(models.Model):
 
 	def delete(self):
 		try:
-			#os.remove(self.get_picture_filename())
 			os.remove(self.picture.path)
 		except OSError:
 			pass	
 		try:
-			#os.remove(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg')
-			os.remove(os.path.splitext(self.picture.path)[0] + '_thumbnail.jpg')
+			os.remove(os.path.splitext(self.picture.path)[0] + self.suffix)
 		except OSError:
 			pass
 		super(ProductImage, self).delete()
