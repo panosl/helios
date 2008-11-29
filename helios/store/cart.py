@@ -1,3 +1,5 @@
+from helios.store.models import Product
+
 class Cart(dict):
 	"""
 	A dict-like object, which stores ``Product.id``:``CartLine`` pairs, in the form of:
