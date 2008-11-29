@@ -14,7 +14,7 @@ class CategoryAdmin(admin.ModelAdmin):
 		#prepopulated_fields = {'slug': ('name',)}
 
 	list_display = ('name', 'desc', 'parent')
-	prepopulated_fields = {'slug': (get_name(),)}
+	#prepopulated_fields = {'slug': (get_name(),)}
 	#prepopulated_fields = {'slug': ('categorytranslation.0.name',)}
 
 	#prepopulated_fields = {'slug': ('name_en',)}
