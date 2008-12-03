@@ -32,6 +32,7 @@ class Currency(models.Model):
 		return self.code
 
 class Category(models.Model):
+
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
 			name = models.CharField(_('name'), max_length=50)
@@ -41,16 +42,16 @@ class Category(models.Model):
 		desc = models.TextField(_('description'), blank=True)
 
 	slug = models.SlugField(max_length=50)
-	parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
+	parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
 	class Meta:
 		verbose_name = _('category')
 		verbose_name_plural = _('categories')
 
 	def __unicode__(self):
-		pname = ''
+		pname = u''
 		if self.parent is not None:
-			pname = str(self.parent) + ': '
+			pname = str(self.parent) + u': '
 			return pname + self.name
 		return self.name
 
@@ -60,8 +61,8 @@ class Category(models.Model):
 
 	#@models.permalink
 	#def get_absolute_url(self):
-	#	return(category_list, (), {
-	#		'slug': self.slug
+	#	return('category_list', (), {
+	#		#'slug': self.slug,
 	#	})
 
 class ActiveProductManager(models.Manager):
