@@ -22,8 +22,9 @@ class ChangeCurrencyNode(template.Node):
 			price = resolve_variable(self.current_price, context)
 			currency = resolve_variable(self.new_currency, context)
 
-			price = Decimal(str(price))
-			factor = Decimal(str(Currency.objects.get(code__exact=currency).factor))
+			#price = Decimal(str(price))
+			#factor = Decimal(str(Currency.objects.get(code__exact=currency).factor))
+			factor = Currency.objects.get(code__exact=currency).factor
 			new_price = price * factor
 
 			#new_price = price * Currency.objects.get(code__exact=currency).factor

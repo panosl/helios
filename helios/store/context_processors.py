@@ -5,7 +5,6 @@
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
-
 import pickle
 from helios.store.models import Currency
 from helios.store.views import Cart, CartLine

@@ -5,7 +5,6 @@
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
-
 import os
 import Image
 from django.db import models
@@ -19,48 +18,40 @@ if settings.IS_MULTILINGUAL:
 
 
 class Currency(models.Model):
-	code = models.CharField(_('code'), maxlength=3)
-	name = models.CharField(_('name'), maxlength=25)
-	symbol = models.CharField(_('symbol'), maxlength=1)
-	factor = models.FloatField(_('factor'), max_digits=10, decimal_places=4,
+	code = models.CharField(_('code'), max_length=3)
+	name = models.CharField(_('name'), max_length=25)
+	symbol = models.CharField(_('symbol'), max_length=1)
+	factor = models.DecimalField(_('factor'), max_digits=10, decimal_places=4,
 		help_text=_('Specifies the difference of the currency to Euro.'))
 
 	class Meta:
 		verbose_name = _('currency')
 		verbose_name_plural = _('currencies')
 
-	class Admin:
-		list_display = ('code', 'name', 'symbol', 'factor')
-		list_display_links = ('name',)
-
-	def __str__(self):
+	def __unicode__(self):
 		return self.code
 
 class Category(models.Model):
+
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
-			name = models.CharField(maxlength=50)
+			name = models.CharField(_('name'), max_length=50)
 			desc = models.TextField(_('description'), blank=True)
-		slug = models.SlugField(prepopulate_from=('categorytranslation.0.name',))
 	else:
-		name = models.CharField(maxlength=50)
+		name = models.CharField(_('name'), max_length=50)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(prepopulate_from=('name',))
-	parent = models.ForeignKey('self', blank=True, null=True, related_name='child')
+	slug = models.SlugField(max_length=50)
+	parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
 	class Meta:
 		verbose_name = _('category')
 		verbose_name_plural = _('categories')
 
-	class Admin:
-		list_display = ('name', 'desc')
-		ordering = ['name']
-
-	def __str__(self):
-		pname = ''
+	def __unicode__(self):
+		pname = u''
 		if self.parent is not None:
-			pname = str(self.parent) + ': '
+			pname = str(self.parent) + u': '
 			return pname + self.name
 		return self.name
 
@@ -70,8 +61,8 @@ class Category(models.Model):
 
 	#@models.permalink
 	#def get_absolute_url(self):
-	#	return(category_list, (), {
-	#		'slug': self.slug
+	#	return('category_list', (), {
+	#		#'slug': self.slug,
 	#	})
 
 class ActiveProductManager(models.Manager):
@@ -79,16 +70,16 @@ class ActiveProductManager(models.Manager):
 		return super(ActiveProductManager).get_query_set().filter(is_active=True)
 
 class Product(models.Model):
+
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
-			name = models.CharField(_('name'), maxlength=80)
+			name = models.CharField(_('name'), max_length=80)
 			desc = models.TextField(_('description'), blank=True)
-		slug = models.SlugField(unique=True, prepopulate_from=('producttranslation.0.name',))
 	else:
-		name = models.CharField(_('name'), maxlength=80)
+		name = models.CharField(_('name'), max_length=80)
 		desc = models.TextField(_('description'), blank=True)
-		slug = models.SlugField(unique=True, prepopulate_from=('name',))
 
+	slug = models.SlugField(unique=True, max_length=80)
 	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
 	is_active = models.BooleanField(_('Is product active?'), default=True,
@@ -96,19 +87,14 @@ class Product(models.Model):
 	stock = models.IntegerField(_('Items in stock'), default=0)
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in Kilograms.'))
-	price = models.FloatField(_('price'), max_digits=6, decimal_places=2)
+	price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
 
 	class Meta:
 		verbose_name = _('product')
 		verbose_name_plural = _('products')
 		ordering = ['-date_added']
 
-	class Admin:
-		list_display = ('name', 'price', 'stock')
-		list_filter = ('category',)
-		search_fields = ['slug', 'name']
-
-	def __str__(self):
+	def __unicode__(self):
 		return self.name
 
 	@models.permalink	
@@ -127,36 +113,25 @@ class Product(models.Model):
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, null=True, blank=True)
 	picture = models.ImageField(_('picture'), upload_to='./product_images')
+	suffix = '_thumbnail.jpg'
 
 	class Meta:
 		verbose_name = _('product image')
 		verbose_name_plural= _('product images')
 
-	class Admin:
-		list_display = ['picture', 'product']
-
-	def __str__(self):
+	def __unicode__(self):
 		return str(self.picture)
 
+
 	def _make_thumbnail(self):
-		thumbnail = Image.open(self.get_picture_filename())
+		thumbnail = Image.open(self.picture.path)
 		thumbnail.thumbnail((256, 256), Image.ANTIALIAS)
 		thumbnail = thumbnail.crop((0, 0, 190, 190))
-		thumbnail.save(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg', 'JPEG')
+		thumbnail.save(os.path.splitext(self.picture.path)[0] + self.suffix, 'JPEG')
 	
 	def _get_thumbnail(self):
-		return os.path.splitext(self.get_picture_url())[0] + '_thumbnail.jpg'
+		return os.path.splitext(self.picture.url)[0] + self.suffix
 	thumbnail = property(_get_thumbnail)
-
-	def _delete(self):
-		try:
-			os.remove(self.get_picture_filename())
-		except OSError:
-			pass	
-		try:
-			os.remove(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg')
-		except OSError:
-			pass
 
 	def save(self):
 		super(ProductImage, self).save()
@@ -164,11 +139,11 @@ class ProductImage(models.Model):
 
 	def delete(self):
 		try:
-			os.remove(self.get_picture_filename())
+			os.remove(self.picture.path)
 		except OSError:
 			pass	
 		try:
-			os.remove(os.path.splitext(self.get_picture_filename())[0] + '_thumbnail.jpg')
+			os.remove(os.path.splitext(self.picture.path)[0] + self.suffix)
 		except OSError:
 			pass
 		super(ProductImage, self).delete()
@@ -182,32 +157,25 @@ ORDER_STATUS = (
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
-	currency_code = models.CharField(_('currency code'), maxlength=3, blank=True, null=True)
-	currency_factor = models.FloatField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
-	status = models.CharField(maxlength=10, choices=ORDER_STATUS, blank=True)
-	shipping_city = models.CharField(_('City'), maxlength=50, blank=True)
+	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
+	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
+	status = models.CharField(max_length=10, choices=ORDER_STATUS, blank=True)
+	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True)
 
 	class Meta:
 		verbose_name = _('order')
 		verbose_name_plural = _('orders')
 
-	class Admin:
-		list_display = ['date_time_created', 'customer', 'status']
-		list_filter = ('status',)
-
-	def __str__(self):
-		return 'Order %s' % self.date_time_created
+	def __unicode__(self):
+		return u'Order %s' % self.date_time_created
 
 class OrderLine(models.Model):
 	order = models.ForeignKey(Order)
 	product = models.ForeignKey(Product)
-	unit_price = models.FloatField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
-	price = models.FloatField(_('line price'), max_digits=6, decimal_places=2, blank=True)
+	unit_price = models.DecimalField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
+	price = models.DecimalField(_('line price'), max_digits=6, decimal_places=2, blank=True)
 	quantity = models.IntegerField(_('quantity'))
 
-	class Admin:
-		pass
-
-	def __str__(self):
-		return '%s %s' % (self.quantity, self.product)
+	def __unicode__(self):
+		return u'%s %s' % (self.quantity, self.product)

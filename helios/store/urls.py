@@ -5,7 +5,6 @@
 
     :copyright: 2007-2008 by Panos Laganakos.
 '''
-
 from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.simple import direct_to_template
@@ -24,14 +23,13 @@ urlpatterns = patterns('helios.store.views',
 	(r'^setcurrency/$', 'set_currency'),
 	(r'^setlang/$', 'set_language'),
 	(r'^cart/clear/$', 'cart_clear'),
-	#(r'^cart/set/$', 'cart_set_quantity'),
 	(r'^cart/set/(?P<product_id>\d+)/$', 'cart_set_quantity'),
 	(r'^cart/debug/$', 'cart_debug'),
 	(r'^checkout/$', 'checkout'),
 	(r'^success/$', 'success'),
 	(r'^submit-order/$', 'submit_order'),
-	(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add'),
-	(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove'),
+	url(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add', name='product_add'),
+	url(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove', name='product_remove'),
 )
 
 urlpatterns += patterns('',
@@ -39,5 +37,7 @@ urlpatterns += patterns('',
 	(r'^cart/$', direct_to_template, {'template': 'cart.html'}),
 	(r'^products/(?P<slug>[-\w]+)/$', object_detail, dict(product_dict, slug_field='slug')),
 	(r'^products/$', object_list, dict(product_dict, paginate_by=settings.PAGINATE_BY)),
-	(r'^(?P<category>[-\w]+)/$', category_list, dict(paginate_by=settings.PAGINATE_BY, template_object_name='product', extra_context={})),
+	url(r'^(?P<category>[-\w]+)/$', category_list,
+		dict(paginate_by=settings.PAGINATE_BY, template_object_name='product', extra_context={})
+		),
 )

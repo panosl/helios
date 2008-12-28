@@ -31,15 +31,9 @@ Helios
 Long Term
 ---------
 
- * Standing of the customer:
-        How trustworthy is the customer? It should depend on a ratio of orders/payed_orders.
-        If he's standing is low, feature orders should be verified by phone.
  * Search.
- * Credit card support.
- * Paypal support.
  * SMS updates of new (approved) checkouts.
  * Newsletter.
- * Wishlist.
  * RSS feed of new products added.
  * Customer section.
  * Registered users, should be able to:
