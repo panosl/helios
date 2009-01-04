@@ -1,15 +1,15 @@
 from django.contrib import admin
-#from multilingual.translation import TranslationModelAdmin
 import multilingual
 from helios.store.models import Currency, Category, Product, ProductImage, Order, OrderLine
-from helios.store.conf import settings
-
+from helios.store.forms import MyCategoryAdminForm
+		
 
 class CurrencyAdmin(admin.ModelAdmin):
 	list_display = ('code', 'name', 'symbol', 'factor')
 	list_display_links = ('name',)
 
 class CategoryAdmin(multilingual.ModelAdmin):
+	form = MyCategoryAdminForm
 	list_display = ('name', 'desc', 'parent')
 	prepopulated_fields = {'slug': ('name_en',)}
 

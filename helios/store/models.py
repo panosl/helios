@@ -41,7 +41,7 @@ class Category(models.Model):
 		name = models.CharField(_('name'), max_length=50)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(max_length=50)
+	slug = models.SlugField(max_length=50, unique=True)
 	parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
 	class Meta:
@@ -49,10 +49,10 @@ class Category(models.Model):
 		verbose_name_plural = _('categories')
 
 	def __unicode__(self):
-		pname = u''
-		if self.parent is not None:
-			pname = str(self.parent) + u': '
-			return pname + self.name
+		#pname = u''
+		#if self.parent is not None:
+		#	pname = str(self.parent) + u': '
+		#	return pname + self.name
 		return self.name
 
 	
