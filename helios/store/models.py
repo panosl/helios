@@ -32,7 +32,6 @@ class Currency(models.Model):
 		return self.code
 
 class Category(models.Model):
-
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
 			name = models.CharField(_('name'), max_length=50)
@@ -49,11 +48,12 @@ class Category(models.Model):
 		verbose_name_plural = _('categories')
 
 	def __unicode__(self):
-		#pname = u''
-		#if self.parent is not None:
-		#	pname = str(self.parent) + u': '
-		#	return pname + self.name
-		return self.name
+		pname = u''
+		if self.parent is not None:
+			pname = unicode(self.parent) + u': '
+			return pname + self.name
+		else:
+			return self.name
 
 	
 	def get_absolute_url(self):

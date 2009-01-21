@@ -1,4 +1,7 @@
-from helios.store.models import Product
+try:
+	from helios.store.models import Product
+except ImportError:
+	pass
 
 class Cart(dict):
 	"""
@@ -42,10 +45,11 @@ class Cart(dict):
 		"""
 		Sum and return the price of each ``CartLine``.
 		"""
-		#return sum((cart_line.get_price() for cart_line in self.itervalues()), Decimal('0.00'))
 		return sum((cart_line.get_price() for cart_line in self.itervalues()))
 
 class CartLine(dict):
+	"""
+	"""
 	def __init__(self, **line):
 		super(CartLine, self).__init__(line)
 	
@@ -61,5 +65,9 @@ class CartLine(dict):
 
 	def get_price(self):
 		price = self.get_product().price * self['quantity']
-		#return Decimal(str(price))
 		return price
+	
+	def _get_price(self):
+		price = self.get_product().price * self['quantity']
+		return price
+	price = property(_get_price)

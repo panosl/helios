@@ -6,8 +6,8 @@
     :copyright: 2007-2008 by Panos Laganakos.
 '''
 
-import unittest
-from django.test.client import Client
+#import unittest
+#from django.test.client import Client
 from django.test import TestCase
 
 
@@ -23,13 +23,14 @@ customer_data = {
 	'password2': '12345',
 }
 
-class CustomerCreationTest(unittest.TestCase):
-	def setUp(self):
-		self.client = Client()
+class CustomerCreationTest(TestCase):
+	fixtures = ['countries.yaml']
 
-	def test_creation(self):
+	def test_view(self):
 		response = self.client.get('/customer/register/')
 		self.failUnlessEqual(response.status_code, 200)
+		self.assertTemplateUsed(response, 'customer.html')
 
-		response = self.client.post('/customer/register', customer_data)
-		self.failUnlessEqual(response.status_code, 200)
+	def test_creation(self):
+		response = self.client.post('/customer/register/', customer_data)
+		self.assertRedirects(response, '/', status_code=302, target_status_code=301)

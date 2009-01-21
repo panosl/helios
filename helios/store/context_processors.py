@@ -24,5 +24,6 @@ def currency(request):
 
 	return {
 		'CURRENCIES': currencies,
-		'currency': request.session['currency']
+		'currency': request.session['currency'], # DEPRECATED
+		'CURRENCY': request.session['currency']
 	}

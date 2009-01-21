@@ -2,38 +2,18 @@
 TODO
 ====
 
-
-ManiShop
-========
-
-Short Term
-----------
-
- * Email customer the order he put out.
-        - make the template.
- * IE6 support.
- * Locale in URLs, ie: `manishop.gr/el/store/cart`.
- * Quantity of a product in cart, should limit to the store's stock?
- * Customer Section:
-        - change information and shipping address.
-        - list orders.
-
-Long Term
----------
-
- * Arrange by price.
- * Admin/managers should be able to purchase?
-
-
 Helios
 ======
 
 Long Term
 ---------
 
- * Search.
+ * Standing of the customer:
+        How trustworthy is the customer? It should depend on a ratio of orders/payed_orders.
+        If he's standing is low, feature orders should be verified by phone.
  * SMS updates of new (approved) checkouts.
  * Newsletter.
+ * Wishlist.
  * RSS feed of new products added.
  * Customer section.
  * Registered users, should be able to:

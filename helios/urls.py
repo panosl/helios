@@ -8,7 +8,6 @@ from store.views import orders_report
 
 urlpatterns = patterns('',
 	(r'^$', redirect_to, {'url': 'store'}),
-	#(r'^i18n/', include('django.conf.urls.i18n')),
 
 	(r'^store/', include('store.urls')),
 	(r'^customer/', include('customers.urls')),

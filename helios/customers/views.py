@@ -43,14 +43,15 @@ def customer(request, template_name='customer.html'):
 		if request.user.is_authenticated():
 			try:
 				customer = request.user.get_profile()
-				initial_data = {}
-				initial_data['username'] = customer.user.username
-				initial_data['first_name'] = customer.user.first_name
-				initial_data['last_name'] = customer.user.last_name
-				initial_data['email'] = customer.user.email
-				initial_data['address'] = customer.address
-				initial_data['city'] = customer.city
-				initial_data['country'] = customer.country_id
+				initial_data = {
+					'username': customer.user.username,
+					'first_name': customer.user.first_name,
+					'last_name': customer.user.last_name,
+					'email': customer.user.email,
+					'address': customer.address,
+					'city': customer.city,
+					'country': customer.country_id,
+				}
 				#initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
 				form = CustomerForm(initial=initial_data)
 			except:
