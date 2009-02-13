@@ -3,7 +3,7 @@
     store.templatetags.product
     ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    :copyright: 2007-2008 by Panos Laganakos.
+    :copyright: 2007-2009 by Panos Laganakos.
 '''
 
 from django.template import Library, Node
