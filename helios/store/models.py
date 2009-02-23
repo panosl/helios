@@ -70,7 +70,6 @@ class ActiveProductManager(models.Manager):
 		return super(ActiveProductManager).get_query_set().filter(is_active=True)
 
 class Product(models.Model):
-
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
 			name = models.CharField(_('name'), max_length=80)
