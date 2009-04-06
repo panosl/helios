@@ -106,6 +106,11 @@ class Product(models.Model):
 		images = self.productimage_set.all()
 		return images
 
+	def _get_images(self):
+		images = self.productimage_set.all()
+		return images
+	images = property(_get_images)
+
 	#TODO
 	#def get_price()
 
