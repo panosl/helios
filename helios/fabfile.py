@@ -23,4 +23,3 @@ def reboot():
 def deploy():
 	bzr_push()
 	bzr_pull()
-	reboot()
