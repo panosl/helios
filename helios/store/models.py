@@ -81,8 +81,10 @@ class Product(models.Model):
 	slug = models.SlugField(unique=True, max_length=80)
 	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
-	is_active = models.BooleanField(_('Is product active?'), default=True,
+	is_active = models.BooleanField(_('active'), default=True,
 		help_text=_('Determines if the product will appear in the store.'))
+	is_featured = models.BooleanField(_('featured'), default=False,
+		help_text=_('Determines if the product will be featured on the front page.'))
 	stock = models.IntegerField(_('Items in stock'), default=0)
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in Kilograms.'))
