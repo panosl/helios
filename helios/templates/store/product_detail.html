@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load currency %}
 {% load markup %}
+{% load thumbnail %}
 
 {% block extra-head %}
 	<script type="text/javascript" src="/static/js/jquery.lightbox-0.5.min.js"></script>
@@ -15,8 +16,8 @@
 
 {% block content %}
 	<div id="product-gallery">
-	{% for image in product.get_images %}
-		<a class="thumbnail" href="{{ image.get_picture_url }}"><img src="{{ image.thumbnail }}" /></a>
+	{% for image in product.images %}
+		<a class="thumbnail" href="{{ image.get_picture_url }}"><img src="{% thumbnail image %}" /></a>
 	{% endfor %}
 	</div>
 

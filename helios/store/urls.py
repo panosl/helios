@@ -28,9 +28,9 @@ urlpatterns = patterns('helios.store.views',
 	(r'^success/$', 'success'),
 	(r'^submit-order/$', 'submit_order'),
 	url(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add',
-		name='product_add'),
+		name='store_product_add'),
 	url(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove',
-		name='product_remove'),
+		name='store_product_remove'),
 )
 
 urlpatterns += patterns('',

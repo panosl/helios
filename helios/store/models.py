@@ -139,9 +139,9 @@ class ProductImage(models.Model):
 		return os.path.splitext(self.picture.url)[0] + self.suffix
 	thumbnail = property(_get_thumbnail)
 
-	def save(self):
-		super(ProductImage, self).save()
-		self._make_thumbnail()
+	#def save(self):
+	#	super(ProductImage, self).save()
+	#	self._make_thumbnail()
 
 	def delete(self):
 		try:

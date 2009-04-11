@@ -5,14 +5,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="el" lang="el">
 <head>
 	<title>{% block title %}Helios Store{% endblock %}</title>
-	<link rel="stylesheet" type="text/css" href="/static/css/manishop.css" />
-	<script type="text/javascript" src="/static/js/jquery.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$("span.note").fadeOut().fadeIn().fadeOut().fadeIn();
-		$("p.message span").fadeOut().fadeIn().fadeOut().fadeIn().fadeOut(5000);
-	});
-	</script>
 	{% block extra-head %}
 	{% endblock %}
 </head>
@@ -75,17 +67,12 @@
 	</div>
 
 	<div id="content">
-		{% if messages %}
-			{% for message in messages %}
-				<p class="message"><span>{{ message }}</span></p>
-			{% endfor %}
-		{% endif %}
 		{% block content %}
 		{% endblock %}
 	</div>
 
 	<div id="footer">
-		<p>&copy; HeliosStore.gr {% now "Y" %} | Code of Conduct</p>
+		<p>&copy; <mystore.gr> {% now "Y" %} | Code of Conduct</p>
 	</div>
 </div>
 

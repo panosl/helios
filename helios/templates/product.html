@@ -1,4 +1,5 @@
 {% load currency %}
+{% load thumbnail %}
 
 {% for product in product_list %}
 	{% if product.is_active %}
@@ -8,7 +9,7 @@
 				<img src="/static/img/no-image.png" alt="no image available" /></a>
 			{% else %}
 			<a class="prod" href="{{ product.get_absolute_url }}" title="{{ product.name }}">
-				<img src="{{ product.get_images.0.thumbnail }}" alt="" /></a>
+				<img src="{% thumbnail product.images.0 192x192 crop %}" alt="" /></a>
 			{% endif %}
 			<h3>{{ product.name|truncatewords:"3" }}</h3>
 			<a class="category" href="{{ product.category.get_absolute_url }}">{{ product.category }}</a>
