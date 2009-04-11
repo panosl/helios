@@ -65,7 +65,7 @@ class Category(models.Model):
 	#		#'slug': self.slug,
 	#	})
 
-class ActiveProductManager(models.Manager):
+class ActiveProductManager(multilingual.Manager):
 	def get_query_set(self):
 		return super(ActiveProductManager).get_query_set().filter(is_active=True)
 
@@ -82,13 +82,16 @@ class Product(models.Model):
 	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
 	is_active = models.BooleanField(_('active'), default=True,
-		help_text=_('Determines if the product will appear in the store.'))
+		help_text=_('The product will appear in the store.'))
 	is_featured = models.BooleanField(_('featured'), default=False,
-		help_text=_('Determines if the product will be featured on the front page.'))
-	stock = models.IntegerField(_('Items in stock'), default=0)
+		help_text=_('The product will be featured on the front page.'))
+	stock = models.IntegerField(_('stock'), default=0,
+		help_text=_('Number of items in stock.'))
 	weight = models.PositiveIntegerField(_('weight'), default=0,
-		help_text=_('Defined in Kilograms.'))
+		help_text=_('Defined in kilograms.'))
 	price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
+
+	#objects = ActiveProductManager()
 
 	class Meta:
 		verbose_name = _('product')
