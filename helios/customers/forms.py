@@ -20,7 +20,7 @@ class CustomerForm(forms.Form):
 	email = forms.EmailField(label=_('Email'))
 	address = forms.CharField(label=_('Address'), max_length=50)
 	city = forms.CharField(max_length=30)
-	# zip_postal
+	postal_code = forms.CharField(max_length=30)
 	country = forms.ModelChoiceField(queryset=Country.objects.all())
 	password1 = forms.CharField(widget=forms.PasswordInput)
 	password2 = forms.CharField(widget=forms.PasswordInput)

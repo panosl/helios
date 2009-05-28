@@ -25,12 +25,16 @@ class ProductAdmin(multilingual.ModelAdmin):
 class ProductImageAdmin(admin.ModelAdmin):
 	list_display = ['picture', 'product']
 
-class OrderAdmin(admin.ModelAdmin):
-	list_display = ['date_time_created', 'customer', 'status']
-	list_filter = ('status',)
-
 class OrderLineAdmin(admin.ModelAdmin):
 	pass
+
+class OrderLineInline(admin.TabularInline):
+	model = OrderLine
+
+class OrderAdmin(admin.ModelAdmin):
+	inlines = [OrderLineInline,]
+	list_display = ['date_time_created', 'customer', 'status']
+	list_filter = ('status',)
 
 admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(Category, CategoryAdmin)

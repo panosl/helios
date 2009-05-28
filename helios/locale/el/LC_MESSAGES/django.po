@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-18 19:08+0200\n"
+"POT-Creation-Date: 2009-05-28 20:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,11 +28,11 @@ msgstr "όνομα"
 msgid "Last name"
 msgstr "επώνυμο"
 
-#: customers/forms.py:20 templates/checkout.html:28
+#: customers/forms.py:20
 msgid "Email"
 msgstr "Εμάιλ"
 
-#: customers/forms.py:21 customers/models.py:18 templates/checkout.html:29
+#: customers/forms.py:21 customers/models.py:18
 msgid "Address"
 msgstr "Διεύθυνση"
 
@@ -67,12 +67,12 @@ msgstr "ΦΑΞ"
 msgid "Postal code"
 msgstr "Ταχυδρομικός Κώδικας"
 
-#: customers/models.py:20 store/models.py:163 templates/checkout.html:30
+#: customers/models.py:20 store/models.py:172
 msgid "City"
 msgstr "Πόλη"
 
 #: location/models.py:14 store/models.py:22 store/models.py:37
-#: store/models.py:40 store/models.py:76 store/models.py:79
+#: store/models.py:40 store/models.py:75 store/models.py:78
 msgid "name"
 msgstr "όνομα"
 
@@ -84,20 +84,19 @@ msgstr "Χώρα"
 msgid "countries"
 msgstr "χώρες"
 
-#: orders/models.py:5 store/models.py:152
+#: orders/models.py:5 store/models.py:161
 msgid "Pending"
 msgstr "Εκκρεμεί"
 
-#: orders/models.py:6 store/models.py:153
+#: orders/models.py:6 store/models.py:162
 msgid "Billed"
 msgstr ""
 
-#: orders/models.py:7 store/models.py:154
+#: orders/models.py:7 store/models.py:163
 msgid "Shipped"
 msgstr "Έχει αποσταλεί"
 
 #: orders/models.py:11
-#, fuzzy
 msgid "creation date"
 msgstr "Ημερομηνία Δημιουργίας"
 
@@ -118,25 +117,24 @@ msgstr "κατάσταση"
 msgid "city"
 msgstr "Πόλη"
 
-#: orders/models.py:20 store/models.py:167
+#: orders/models.py:20 store/models.py:176
 msgid "order"
 msgstr "παραγγελεία"
 
-#: orders/models.py:21 store/models.py:168
+#: orders/models.py:21 store/models.py:177
 msgid "orders"
 msgstr "παραγγελείες"
 
-#: orders/models.py:29 store/models.py:176
-#, fuzzy
+#: orders/models.py:29 store/models.py:185
 msgid "unit price"
-msgstr "τιμή"
+msgstr "τιμή μονάδος"
 
-#: orders/models.py:30 store/models.py:177
+#: orders/models.py:30 store/models.py:186
 #, fuzzy
 msgid "line price"
 msgstr "τιμή"
 
-#: orders/models.py:31 store/models.py:178
+#: orders/models.py:31 store/models.py:187
 msgid "quantity"
 msgstr "ποσότητα"
 
@@ -156,7 +154,7 @@ msgstr "νόμισμα"
 msgid "currencies"
 msgstr "νομίσματα"
 
-#: store/models.py:38 store/models.py:41 store/models.py:77 store/models.py:80
+#: store/models.py:38 store/models.py:41 store/models.py:76 store/models.py:79
 msgid "description"
 msgstr "περιγραφή"
 
@@ -168,210 +166,181 @@ msgstr "κατηγορία"
 msgid "categories"
 msgstr "κατηγορίες"
 
+#: store/models.py:84
+msgid "active"
+msgstr "ενεργό"
+
 #: store/models.py:85
-msgid "Is product active?"
-msgstr "Είναι ενεργό το προιόν;"
+msgid "The product will appear in the store."
+msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
 
 #: store/models.py:86
-msgid "Determines if the product will appear in the store."
-msgstr "Καθορίζει εάν το προιόν εμφανίζεται στο κατάστημα."
+msgid "featured"
+msgstr ""
 
 #: store/models.py:87
-msgid "Items in stock"
-msgstr "Κομμάτια στο stock"
+msgid "The product will be featured on the front page."
+msgstr ""
 
 #: store/models.py:88
+msgid "stock"
+msgstr "στόκ"
+
+#: store/models.py:89
+msgid "Number of items in stock."
+msgstr "Κομμάτια στο στόκ."
+
+#: store/models.py:90
 msgid "weight"
 msgstr "βάρος"
 
-#: store/models.py:89
-msgid "Defined in Kilograms."
+#: store/models.py:91
+msgid "Defined in kilograms."
 msgstr "Δηλώνεται σε Κιλά."
 
-#: store/models.py:90
+#: store/models.py:92
 msgid "price"
 msgstr "τιμή"
 
-#: store/models.py:93
+#: store/models.py:97
 msgid "product"
 msgstr "προϊόν"
 
-#: store/models.py:94
+#: store/models.py:98
 msgid "products"
 msgstr "προϊόντα"
 
-#: store/models.py:115
+#: store/models.py:124
 msgid "picture"
 msgstr "εικόνα"
 
-#: store/models.py:119
+#: store/models.py:128
 msgid "product image"
 msgstr "εικόνα προϊόντος"
 
-#: store/models.py:120
+#: store/models.py:129
 msgid "product images"
 msgstr "εικόνες προϊόντων"
 
-#: store/models.py:158
+#: store/models.py:167
 msgid "Creation Date"
 msgstr "Ημερομηνία Δημιουργίας"
 
-#: store/models.py:160
-#, fuzzy
+#: store/models.py:169
 msgid "currency code"
-msgstr "νόμισμα"
+msgstr "κωδικός νομίσματος"
 
-#: store/models.py:161
-#, fuzzy
+#: store/models.py:170
 msgid "currency factor"
-msgstr "νόμισμα"
+msgstr "παράγοντας νομίσματος"
 
 #: store/views.py:144
 #, python-format
 msgid "%s does not have a customer profile."
 msgstr "%s δεν έχει προφίλ πελάτη."
 
-#: templates/404.html:5
-msgid "Ooops"
-msgstr "Ουπς"
+#~ msgid "Ooops"
+#~ msgstr "Ουπς"
 
-#: templates/404.html:6
-msgid "This page is not available"
-msgstr "Η σελίδα δεν είναι διαθέσιμη"
+#~ msgid "This page is not available"
+#~ msgstr "Η σελίδα δεν είναι διαθέσιμη"
 
-#: templates/404.html:7
-msgid "Go back to the"
-msgstr "Επιστρέψτε στο"
+#~ msgid "Go back to the"
+#~ msgstr "Επιστρέψτε στο"
 
-#: templates/404.html:7
-msgid "shop"
-msgstr "κατάστημα"
+#~ msgid "shop"
+#~ msgstr "κατάστημα"
 
-#: templates/base.html:57
-msgid "Logged in as"
-msgstr "Σύνδεση"
+#~ msgid "Logged in as"
+#~ msgstr "Σύνδεση"
 
-#: templates/base.html:57
-msgid "Logout"
-msgstr "Αποσύνδεση"
+#~ msgid "Logout"
+#~ msgstr "Αποσύνδεση"
 
-#: templates/base.html:59
-msgid "Login"
-msgstr "Συνδεθείτε"
+#~ msgid "Login"
+#~ msgstr "Συνδεθείτε"
 
-#: templates/base.html:60 templates/customer.html:9
-msgid "Create Account"
-msgstr "Δημιουργήστε το λογαριασμό σας"
+#~ msgid "Create Account"
+#~ msgstr "Δημιουργήστε το λογαριασμό σας"
 
-#: templates/base.html:69 templates/faq/faq_list.html:6
-#: templates/faq/faq_list.html.py:12
-msgid "Customer Support"
-msgstr "Εξυπηρέτηση Πελατών"
+#~ msgid "Customer Support"
+#~ msgstr "Εξυπηρέτηση Πελατών"
 
-#: templates/cart.html:6 templates/cart.html.py:16
-msgid "My Shopping Cart"
-msgstr "Το Καρότσι μου"
+#~ msgid "My Shopping Cart"
+#~ msgstr "Το Καρότσι μου"
 
-#: templates/cart.html:18
-msgid "You haven't put anything in your cart... yet!"
-msgstr "Δεν έχετε βάλει κάτι στο καρότσι σας... προς το παρόν!"
+#~ msgid "You haven't put anything in your cart... yet!"
+#~ msgstr "Δεν έχετε βάλει κάτι στο καρότσι σας... προς το παρόν!"
 
-#: templates/cart.html:28 templates/checkout.html:27
-msgid "Name"
-msgstr "όνομα"
+#~ msgid "Name"
+#~ msgstr "όνομα"
 
-#: templates/cart.html:29 templates/checkout.html:18
-msgid "Quantity"
-msgstr "ποσότητα"
+#~ msgid "Quantity"
+#~ msgstr "ποσότητα"
 
-#: templates/cart.html:30 templates/checkout.html:19
-msgid "Price"
-msgstr "τιμή"
+#~ msgid "Price"
+#~ msgstr "τιμή"
 
-#: templates/cart.html:37
-msgid "Remove"
-msgstr "Αφαίρεση"
+#~ msgid "Remove"
+#~ msgstr "Αφαίρεση"
 
-#: templates/cart.html:49
-msgid "Cart Total"
-msgstr "Σύνολο Αγορών"
+#~ msgid "Cart Total"
+#~ msgstr "Σύνολο Αγορών"
 
-#: templates/categories.html:9
-msgid "All Products"
-msgstr "Όλα τα προιόντα"
+#~ msgid "All Products"
+#~ msgstr "Όλα τα προιόντα"
 
-#: templates/checkout.html:6
-msgid "Checkout"
-msgstr ""
+#~ msgid "Your Order"
+#~ msgstr "παραγγελεία"
 
-#: templates/checkout.html:11
-msgid "Your Order"
-msgstr "παραγγελεία"
+#~ msgid "Products"
+#~ msgstr "προιόντα"
 
-#: templates/checkout.html:12
-msgid "Products"
-msgstr "προιόντα"
+#~ msgid "Taxes"
+#~ msgstr "Φόροι"
 
-#: templates/checkout.html:24
-msgid "Taxes"
-msgstr "Φόροι"
+#~ msgid "VAT"
+#~ msgstr "ΦΠΑ"
 
-#: templates/checkout.html:24
-msgid "VAT"
-msgstr "ΦΠΑ"
+#~ msgid "Your order will be shipped to"
+#~ msgstr "Η παραγγελεία σας θα αποσταλεί"
 
-#: templates/checkout.html:25
-msgid "Your order will be shipped to"
-msgstr "Η παραγγελεία σας θα αποσταλεί"
-
-#: templates/checkout.html:31
 #, fuzzy
-msgid "Country"
-msgstr "Χώρα"
+#~ msgid "Country"
+#~ msgstr "Χώρα"
 
-#: templates/checkout.html:34
-msgid "Submit Order"
-msgstr "Υποβάλετε την Παραγγελεία"
+#~ msgid "Submit Order"
+#~ msgstr "Υποβάλετε την Παραγγελεία"
 
-#: templates/customer.html:15
-msgid "Do you already have an account?"
-msgstr "Έχετε ήδη λογαριασμό;"
+#~ msgid "Do you already have an account?"
+#~ msgstr "Έχετε ήδη λογαριασμό;"
 
-#: templates/customer.html:15
-msgid "Login!"
-msgstr "Συνδεθείτε!"
+#~ msgid "Login!"
+#~ msgstr "Συνδεθείτε!"
 
-#: templates/customer.html:16
-msgid "Create a customer account"
-msgstr "Δημιουργήστε το λογαριασμό σας"
+#~ msgid "Create a customer account"
+#~ msgstr "Δημιουργήστε το λογαριασμό σας"
 
-#: templates/customer.html:79
-msgid "Submit"
-msgstr "Υποβολή"
+#~ msgid "Submit"
+#~ msgstr "Υποβολή"
 
-#: templates/paginator.html:4
-msgid "Pages"
-msgstr "Σελίδες"
+#~ msgid "Pages"
+#~ msgstr "Σελίδες"
 
-#: templates/admin/base_site.html:4
-msgid "ManiShop.gr admin site"
-msgstr "Ιστοσελίδα διαχείρισης Δωρομάνης"
+#~ msgid "ManiShop.gr admin site"
+#~ msgstr "Ιστοσελίδα διαχείρισης Δωρομάνης"
 
-#: templates/admin/base_site.html:7
-msgid "ManiShop.gr administration"
-msgstr "Διαχείρηση Δωρομάνης"
+#~ msgid "ManiShop.gr administration"
+#~ msgstr "Διαχείρηση Δωρομάνης"
 
-#: templates/faq/faq_list.html:13
-msgid "How can we help you?"
-msgstr "Πώς μπορούμε να σας βοηθήσουμε;"
+#~ msgid "How can we help you?"
+#~ msgstr "Πώς μπορούμε να σας βοηθήσουμε;"
 
-#: templates/registration/login.html:7
-msgid "Your username and password didn't match. Please try again."
-msgstr "Το όνομα χρήστη και ο κωδικός σας δεν "
+#~ msgid "Your username and password didn't match. Please try again."
+#~ msgstr "Το όνομα χρήστη και ο κωδικός σας δεν "
 
-#: templates/registration/login.html:10
-msgid "Forgot your password?"
-msgstr "Ξεχάσατε τον κωδικό σας;"
+#~ msgid "Forgot your password?"
+#~ msgstr "Ξεχάσατε τον κωδικό σας;"
 
 #~ msgid "Usernames can only contain letters, numbers and underscores"
 #~ msgstr ""
