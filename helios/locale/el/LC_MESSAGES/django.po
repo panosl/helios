@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-28 20:41+0300\n"
+"POT-Creation-Date: 2009-05-29 17:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgstr "επώνυμο"
 msgid "Email"
 msgstr "Εμάιλ"
 
-#: customers/forms.py:21 customers/models.py:18
+#: customers/forms.py:21
 msgid "Address"
 msgstr "Διεύθυνση"
 
@@ -56,20 +56,32 @@ msgid "You should entered the same password \t\t\t\t\ttwice"
 msgstr "Πρέπει να εισάγετε τον ίδιο κωδικό δύο φορές"
 
 #: customers/models.py:16
-msgid "Phone number"
+msgid "phone number"
 msgstr "τηλέφωνο"
 
 #: customers/models.py:17
 msgid "Fax"
 msgstr "ΦΑΞ"
 
-#: customers/models.py:19
-msgid "Postal code"
-msgstr "Ταχυδρομικός Κώδικας"
+#: customers/models.py:18
+msgid "address"
+msgstr "διεύθυνση"
 
-#: customers/models.py:20 store/models.py:172
-msgid "City"
-msgstr "Πόλη"
+#: customers/models.py:19
+msgid "postal code"
+msgstr "ταχυδρομικός κώδικας"
+
+#: customers/models.py:20 orders/models.py:16
+msgid "city"
+msgstr "πόλη"
+
+#: customers/models.py:24
+msgid "customer profile"
+msgstr "προφίλ πελάτη"
+
+#: customers/models.py:25
+msgid "customer profiles"
+msgstr "προφίλ πελατών"
 
 #: location/models.py:14 store/models.py:22 store/models.py:37
 #: store/models.py:40 store/models.py:75 store/models.py:78
@@ -78,7 +90,7 @@ msgstr "όνομα"
 
 #: location/models.py:17 orders/models.py:17
 msgid "country"
-msgstr "Χώρα"
+msgstr "χώρα"
 
 #: location/models.py:18
 msgid "countries"
@@ -90,7 +102,7 @@ msgstr "Εκκρεμεί"
 
 #: orders/models.py:6 store/models.py:162
 msgid "Billed"
-msgstr ""
+msgstr "έχει τιμολογηθεί"
 
 #: orders/models.py:7 store/models.py:163
 msgid "Shipped"
@@ -112,11 +124,6 @@ msgstr "παράγοντας"
 msgid "status"
 msgstr "κατάσταση"
 
-#: orders/models.py:16
-#, fuzzy
-msgid "city"
-msgstr "Πόλη"
-
 #: orders/models.py:20 store/models.py:176
 msgid "order"
 msgstr "παραγγελεία"
@@ -132,7 +139,7 @@ msgstr "τιμή μονάδος"
 #: orders/models.py:30 store/models.py:186
 #, fuzzy
 msgid "line price"
-msgstr "τιμή"
+msgstr "τιμή γραμμής"
 
 #: orders/models.py:31 store/models.py:187
 msgid "quantity"
@@ -234,146 +241,11 @@ msgstr "κωδικός νομίσματος"
 msgid "currency factor"
 msgstr "παράγοντας νομίσματος"
 
+#: store/models.py:172
+msgid "City"
+msgstr "Πόλη"
+
 #: store/views.py:144
 #, python-format
 msgid "%s does not have a customer profile."
 msgstr "%s δεν έχει προφίλ πελάτη."
-
-#~ msgid "Ooops"
-#~ msgstr "Ουπς"
-
-#~ msgid "This page is not available"
-#~ msgstr "Η σελίδα δεν είναι διαθέσιμη"
-
-#~ msgid "Go back to the"
-#~ msgstr "Επιστρέψτε στο"
-
-#~ msgid "shop"
-#~ msgstr "κατάστημα"
-
-#~ msgid "Logged in as"
-#~ msgstr "Σύνδεση"
-
-#~ msgid "Logout"
-#~ msgstr "Αποσύνδεση"
-
-#~ msgid "Login"
-#~ msgstr "Συνδεθείτε"
-
-#~ msgid "Create Account"
-#~ msgstr "Δημιουργήστε το λογαριασμό σας"
-
-#~ msgid "Customer Support"
-#~ msgstr "Εξυπηρέτηση Πελατών"
-
-#~ msgid "My Shopping Cart"
-#~ msgstr "Το Καρότσι μου"
-
-#~ msgid "You haven't put anything in your cart... yet!"
-#~ msgstr "Δεν έχετε βάλει κάτι στο καρότσι σας... προς το παρόν!"
-
-#~ msgid "Name"
-#~ msgstr "όνομα"
-
-#~ msgid "Quantity"
-#~ msgstr "ποσότητα"
-
-#~ msgid "Price"
-#~ msgstr "τιμή"
-
-#~ msgid "Remove"
-#~ msgstr "Αφαίρεση"
-
-#~ msgid "Cart Total"
-#~ msgstr "Σύνολο Αγορών"
-
-#~ msgid "All Products"
-#~ msgstr "Όλα τα προιόντα"
-
-#~ msgid "Your Order"
-#~ msgstr "παραγγελεία"
-
-#~ msgid "Products"
-#~ msgstr "προιόντα"
-
-#~ msgid "Taxes"
-#~ msgstr "Φόροι"
-
-#~ msgid "VAT"
-#~ msgstr "ΦΠΑ"
-
-#~ msgid "Your order will be shipped to"
-#~ msgstr "Η παραγγελεία σας θα αποσταλεί"
-
-#, fuzzy
-#~ msgid "Country"
-#~ msgstr "Χώρα"
-
-#~ msgid "Submit Order"
-#~ msgstr "Υποβάλετε την Παραγγελεία"
-
-#~ msgid "Do you already have an account?"
-#~ msgstr "Έχετε ήδη λογαριασμό;"
-
-#~ msgid "Login!"
-#~ msgstr "Συνδεθείτε!"
-
-#~ msgid "Create a customer account"
-#~ msgstr "Δημιουργήστε το λογαριασμό σας"
-
-#~ msgid "Submit"
-#~ msgstr "Υποβολή"
-
-#~ msgid "Pages"
-#~ msgstr "Σελίδες"
-
-#~ msgid "ManiShop.gr admin site"
-#~ msgstr "Ιστοσελίδα διαχείρισης Δωρομάνης"
-
-#~ msgid "ManiShop.gr administration"
-#~ msgstr "Διαχείρηση Δωρομάνης"
-
-#~ msgid "How can we help you?"
-#~ msgstr "Πώς μπορούμε να σας βοηθήσουμε;"
-
-#~ msgid "Your username and password didn't match. Please try again."
-#~ msgstr "Το όνομα χρήστη και ο κωδικός σας δεν "
-
-#~ msgid "Forgot your password?"
-#~ msgstr "Ξεχάσατε τον κωδικό σας;"
-
-#~ msgid "Usernames can only contain letters, numbers and underscores"
-#~ msgstr ""
-#~ "Τα ονόματα χρηστών, μπορούν να περιέχουν μόνο γράμματα, αριθμούς και "
-#~ "παύλες"
-
-#~ msgid "question"
-#~ msgstr "ερώτηση"
-
-#~ msgid "answer"
-#~ msgstr "απάντηση"
-
-#~ msgid "FAQs"
-#~ msgstr "Συχνές Ερωτήσεις"
-
-#~ msgid "Welcome to"
-#~ msgstr "Καλωσήρθατε στο"
-
-#~ msgid "Language"
-#~ msgstr "Γλώσσα"
-
-#~ msgid "No products available in this category, yet!"
-#~ msgstr ""
-#~ "Δεν υπάρχουν διαθέσιμα προιόντα σ᾽αυτή την κατηγορία, προς το παρών!"
-
-#~ msgid "Please, correct the following errors"
-#~ msgstr "Διορθώστε τα παρακάτω λάθη, παρακαλώ"
-
-#~ msgid "cart"
-#~ msgstr "καλάθι"
-
-#~ msgid "carts"
-#~ msgstr "καλάθια"
-
-#~ msgid "Frequently Asked Questions"
-#~ msgstr "Συχνές Ερωτήσεις"
