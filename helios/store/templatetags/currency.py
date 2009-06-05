@@ -8,8 +8,6 @@ register = template.Library()
 
 @register.filter(name='currency')
 def set_currency(value, arg):
-	#currency = Currency.objects.get(code__exact=arg)
-	#return '%s%s' % (currency.symbol, currency.factor * value)
 	return Currency.objects.get(code__exact=arg).factor * value
 
 class ChangeCurrencyNode(template.Node):
@@ -21,13 +19,9 @@ class ChangeCurrencyNode(template.Node):
 		try:
 			price = resolve_variable(self.current_price, context)
 			currency = resolve_variable(self.new_currency, context)
-
-			#price = Decimal(str(price))
-			#factor = Decimal(str(Currency.objects.get(code__exact=currency).factor))
 			factor = Currency.objects.get(code__exact=currency).factor
 			new_price = price * factor
 
-			#new_price = price * Currency.objects.get(code__exact=currency).factor
 			return str(new_price.quantize(Decimal('.01'), rounding=ROUND_UP))
 		except template.VariableDoesNotExist:
 			return ''
