@@ -18,8 +18,8 @@ class ProductImageInline(admin.TabularInline):
 
 class ProductAdmin(multilingual.ModelAdmin):
 	inlines = [ProductImageInline,]
-	list_filter = ('category', 'is_featured')
-	list_display = ('name', 'price', 'stock')
+	list_filter = ('category', 'is_active', 'is_featured',)
+	list_display = ('name', 'price', 'stock', 'date_added',)
 	prepopulated_fields = {'slug': ('name_en',)}
 
 class ProductImageAdmin(admin.ModelAdmin):
