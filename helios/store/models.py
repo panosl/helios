@@ -157,18 +157,6 @@ class ProductImage(models.Model):
 			pass
 		super(ProductImage, self).delete()
 
-class ShippingMethod(models.Model):
-	if settings.IS_MULTILINGUAL:
-		class Translation(multilingual.Translation):
-			name = models.CharField(_('name'), max_length=80)
-			desc = models.TextField(_('description'), blank=True)
-	else:
-		name = models.CharField(_('name'), max_length=80)
-		desc = models.TextField(_('description'), blank=True)
-
-	slug = models.SlugField(unique=True, max_length=80)
-	
-
 ORDER_STATUS = (
 	('PENDING', _('Pending')),
 	('BILLED', _('Billed')),
@@ -183,7 +171,6 @@ class Order(models.Model):
 	status = models.CharField(max_length=10, choices=ORDER_STATUS, blank=True)
 	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True)
-	shipping_method = models.ForeignKey(ShippingMethod)
 
 	class Meta:
 		verbose_name = _('order')
