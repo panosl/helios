@@ -1,6 +1,7 @@
 set(
-	fab_hosts = ['192.168.2.44'],
-	fab_user = 'panos',
+	fab_hosts = ['login.solhost.org'],
+	fab_port = '6114',
+	fab_user = 'phaethon',
 
 	app_name = 'helios',
 	repo = '/var/www/phaethon/bzr/helios',
@@ -12,13 +13,18 @@ def bzr_checkout():
 	run('cd $(branch); bzr co $(repo)')
 
 def bzr_push():
-	local('bzr push sftp://$(fab_user)@%s//var/www/phaethon/bzr/helios' % ('192.168.2.44',))
+	local('bzr push sftp://$(fab_user)@$(fab_hosts):$(fab_port)/$(repo)')
 
 def bzr_pull():
 	run('cd $(branch); bzr pull $(repo)')
 
-def reboot():
-	sudo('apachectl -k graceful')
+def symlink():
+	run('cd /var/www/phaethon/python-local/; ln -s /var/www/phaethon/checkouts/$(branch)/$(app_name)/ $(app_name)')
+
+def initial_deploy():
+	bzr_push()
+	bzr_pull()
+	symlink()
 
 def deploy():
 	bzr_push()
