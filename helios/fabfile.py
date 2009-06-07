@@ -5,21 +5,21 @@ set(
 
 	app_name = 'helios',
 	repo = '/var/www/phaethon/bzr/helios',
-	branch = '/var/www/phaethon/checkouts/helios',
+	branch = '/var/www/phaethon/checkouts',
 )
 
 
 def bzr_checkout():
-	run('cd $(branch); bzr co $(repo)')
+	run('cd $(branch); bzr co $(repo) $(app_name)')
 
 def bzr_push():
-	local('bzr push sftp://$(fab_user)@$(fab_hosts):$(fab_port)/$(repo)')
+	local('bzr push sftp://$(fab_user)@%s:$(fab_port)/$(repo)' % ('login.solhost.org',))
 
 def bzr_pull():
-	run('cd $(branch); bzr pull $(repo)')
+	run('cd $(branch)/$(app_name); bzr pull $(repo)')
 
 def symlink():
-	run('cd /var/www/phaethon/python-local/; ln -s /var/www/phaethon/checkouts/$(branch)/$(app_name)/ $(app_name)')
+	run('cd /var/www/phaethon/python-local/; ln -s /var/www/phaethon/checkouts/$(branch)/$(app_name)/$(app_name)/ $(app_name)')
 
 def initial_deploy():
 	bzr_push()

@@ -44,6 +44,7 @@ class Category(models.Model):
 	parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
 	class Meta:
+		ordering = ['slug']
 		verbose_name = _('category')
 		verbose_name_plural = _('categories')
 
