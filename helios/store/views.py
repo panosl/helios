@@ -178,6 +178,3 @@ def success(request, template_name='order_success.html'):
 		return HttpResponseRedirect('/')
 
 	return render_to_response(template_name, context_instance=RequestContext(request))
-
-def orders_report(request, template_name='admin/store/orders_report.html'):
-	return render_to_response(template_name, {'order_list': Order.objects.all()}, RequestContext(request))
