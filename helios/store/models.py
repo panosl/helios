@@ -16,21 +16,6 @@ from helios.store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 
-
-class Currency(models.Model):
-	code = models.CharField(_('code'), max_length=3)
-	name = models.CharField(_('name'), max_length=25)
-	symbol = models.CharField(_('symbol'), max_length=1)
-	factor = models.DecimalField(_('factor'), max_digits=10, decimal_places=4,
-		help_text=_('Specifies the difference of the currency to Euro.'))
-
-	class Meta:
-		verbose_name = _('currency')
-		verbose_name_plural = _('currencies')
-
-	def __unicode__(self):
-		return self.code
-
 class Category(models.Model):
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):

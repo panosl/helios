@@ -1,12 +1,8 @@
 from django.contrib import admin
 import multilingual
-from helios.store.models import Currency, Category, Product, ProductImage, Order, OrderLine
+from helios.store.models import Category, Product, ProductImage, Order, OrderLine
 from helios.store.forms import MyCategoryAdminForm
 		
-
-class CurrencyAdmin(admin.ModelAdmin):
-	list_display = ('code', 'name', 'symbol', 'factor')
-	list_display_links = ('name',)
 
 class CategoryAdmin(multilingual.ModelAdmin):
 	form = MyCategoryAdminForm
@@ -36,7 +32,6 @@ class OrderAdmin(admin.ModelAdmin):
 	list_display = ['date_time_created', 'customer', 'status']
 	list_filter = ('status',)
 
-admin.site.register(Currency, CurrencyAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
