@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from helios.store.models import Product, Category, Currency, Order, OrderLine, ORDER_STATUS
+from helios.store.models import Product, Category, Order, OrderLine, ORDER_STATUS
 from helios.store.decorators import cart_required
 from helios.customers.models import CustomerProfile
 from helios.store.cart import Cart, CartLine
@@ -99,25 +99,6 @@ def category_list(request, category, **kwargs):
 	product_list = Product.objects.filter(category__slug__exact=category) #TODO should this change to name, and unslugify it?
 	kwargs['extra_context']['category'] = Category.objects.get(slug__exact=category)
 	return object_list(request, queryset=product_list, **kwargs)
-
-def set_currency(request):
-	if request.method == 'POST':
-		currency_code = request.POST.get('currency', None)
-		next = request.POST.get('next', None)
-	else:
-		currency_code = request.GET.get('currency', None)
-		next = request.GET.get('next', None)
-	if not next:
-		next = request.META.get('HTTP_REFERER', None)
-	if not next:
-		next = '/'
-	response = HttpResponseRedirect(next)
-	if currency_code:
-		if hasattr(request, 'session'):
-			request.session['currency'] = Currency.objects.get(code__exact=currency_code)
-		else:
-			response.set_cookie('currency', currency_code)
-	return response
 
 def checkout(request, template_name='checkout.html'):
 	from helios.customers.forms import CustomerForm

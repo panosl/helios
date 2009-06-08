@@ -1,9 +1,0 @@
-- fields: {code: "USD", name: "US Dollar", symbol: "$", factor: "0.80"}
-  model: store.Currency
-  pk: '2'
-- fields: {code: "YEN", name: "Chinese Yen", symbol: "¥", factor: "15.00"}
-  model: store.Currency
-  pk: '3'
-- fields: {code: "PND", name: "Pound", symbol: "£", factor: "1.20"}
-  model: store.Currency
-  pk: '4'
