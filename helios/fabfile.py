@@ -1,5 +1,6 @@
 set(
 	fab_hosts = ['login.solhost.org'],
+	fab_host = 'login.solhost.org',
 	fab_port = '6114',
 	fab_user = 'phaethon',
 
@@ -13,7 +14,7 @@ def bzr_checkout():
 	run('cd $(branch); bzr co $(repo) $(app_name)')
 
 def bzr_push():
-	local('bzr push sftp://$(fab_user)@%s:$(fab_port)/$(repo)' % ('login.solhost.org',))
+	local('bzr push sftp://$(fab_user)@$(fab_host):$(fab_port)/$(repo)')
 
 def bzr_pull():
 	run('cd $(branch)/$(app_name); bzr pull $(repo)')
