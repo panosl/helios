@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-'''
-    store.models
-    ~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
 import os
 import Image
 from django.db import models
@@ -15,6 +8,7 @@ from helios.location.models import Country
 from helios.store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
+
 
 class Category(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -42,14 +36,14 @@ class Category(models.Model):
 			return self.name
 
 	
-	def get_absolute_url(self):
-		return '/store/' + self.slug
-
-	#@models.permalink
 	#def get_absolute_url(self):
-	#	return('category_list', (), {
-	#		#'slug': self.slug,
-	#	})
+	#	return '/store/' + self.slug
+
+	@models.permalink
+	def get_absolute_url(self):
+		return('store_category_list', (), {
+			'slug': self.slug,
+		})
 
 class ActiveProductManager(multilingual.Manager):
 	def get_query_set(self):

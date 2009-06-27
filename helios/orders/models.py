@@ -1,5 +1,25 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from helios.customers.models import CustomerProfile
+from helios.store.models import Product
+from helios.store.conf import settings
+if settings.IS_MULTILINGUAL:
+	import multilingual
 
+
+class ShippingMethod(models.Model):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
+		name = models.CharField(_('name'), max_length=80)
+		desc = models.TextField(_('description'), blank=True)
+
+	slug = models.SlugField(unique=True, max_length=80)
+	cost = models.DecimalField(_('cost'), max_digits=6, decimal_places=2)
+	free_limit = models.DecimalField(_('free limit'), max_digits=6, decimal_places=2,
+		help_text='Above this price, shipping is for free.')
 
 ORDER_STATUS = (
 	('PENDING', _('Pending')),

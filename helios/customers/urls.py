@@ -5,7 +5,7 @@ from helios.customers.views import order_list
 urlpatterns = patterns('',
 	url(r'^$', 'helios.customers.views.customer',
 		name='customer'),
-	url(r'^register/$', 'helios.customers.views.customer',
+	url(r'^register/$', 'helios.customers.views.register',
 		name='customer-register'),
 	url(r'^orders/$', order_list, {
 		'template_name': 'customer/orders.html',
