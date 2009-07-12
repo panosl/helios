@@ -1,5 +1,6 @@
 import os
 import Image
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
@@ -9,6 +10,33 @@ from helios.store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 
+
+class Tax(models.Model):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
+		name = models.CharField(_('name'), max_length=80)
+		desc = models.TextField(_('description'), blank=True)
+
+	slug = models.SlugField(unique=True, max_length=80)
+	rate = models.DecimalField(_('tax rate'), max_digits=4, decimal_places=2,
+		default=19.00)
+	is_active = models.BooleanField(_('active'), default=True,
+		help_text=_('The tax will appear in the store.'))
+	
+	class Meta:
+		verbose_name = _('tax')
+		verbose_name_plural = _('taxes')
+
+	def __unicode__(self):
+		return self.name
+	
+	def _get_factor(self):
+		"""Returns the factor depending on the tax rate."""
+		return (self.rate/Decimal('100.00'))+Decimal('1.00')
+	factor = property(_get_factor)
 
 class Category(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -35,14 +63,10 @@ class Category(models.Model):
 		else:
 			return self.name
 
-	
-	#def get_absolute_url(self):
-	#	return '/store/' + self.slug
-
 	@models.permalink
 	def get_absolute_url(self):
-		return('store_category_list', (), {
-			'slug': self.slug,
+		return('helios.store.views.category_list', (), {
+			'category': self.slug,
 		})
 
 class ActiveProductManager(multilingual.Manager):
@@ -61,6 +85,7 @@ class Product(models.Model):
 	slug = models.SlugField(unique=True, max_length=80)
 	category = models.ForeignKey(Category, blank=True, null=True)
 	date_added = models.DateField(auto_now_add=True)
+	last_modified = models.DateTimeField(auto_now=True)
 	is_active = models.BooleanField(_('active'), default=True,
 		help_text=_('The product will appear in the store.'))
 	is_featured = models.BooleanField(_('featured'), default=False,
@@ -70,13 +95,14 @@ class Product(models.Model):
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in kilograms.'))
 	price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
+	taxes = models.ManyToManyField(Tax, blank=True, null=True)
 
 	#objects = ActiveProductManager()
 
 	class Meta:
 		verbose_name = _('product')
 		verbose_name_plural = _('products')
-		ordering = ['-date_added']
+		ordering = ['-last_modified']
 
 	def __unicode__(self):
 		return self.name
@@ -96,8 +122,18 @@ class Product(models.Model):
 		return images
 	images = property(_get_images)
 
-	#TODO
-	#def get_price()
+	def _get_price(self):
+		new_price = self.price
+		taxes = self.taxes.all()
+		return self.price*reduce(lambda x, y: x.factor*y.factor, taxes)
+
+	def _get_price2(self):
+		taxes = self.taxes.all()
+		taxes_costs = [(self.price*tax.rate)/Decimal('100') for tax in taxes]
+		return sum(taxes_costs, self.price)
+
+	taxed_price = property(_get_price)
+	taxed_price2 = property(_get_price2)
 
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, null=True, blank=True)
@@ -168,3 +204,33 @@ class OrderLine(models.Model):
 
 	def __unicode__(self):
 		return u'%s %s' % (self.quantity, self.product)
+
+class ShippingMethod(models.Model):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
+		name = models.CharField(_('name'), max_length=80)
+		desc = models.TextField(_('description'), blank=True)
+
+	slug = models.SlugField(unique=True, max_length=80)
+	cost = models.DecimalField(_('cost'), max_digits=6, decimal_places=2, default=0.00)
+
+	def __unicode__(self):
+		return self.name
+
+class PaymentOption(models.Model):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
+		name = models.CharField(_('name'), max_length=80)
+		desc = models.TextField(_('description'), blank=True)
+
+	slug = models.SlugField(unique=True, max_length=80)
+	supported_countries = models.ManyToManyField(Country, blank=True, null=True)
+
+	def __unicode__(self):
+		return self.name

@@ -3,7 +3,7 @@
     store.views
     ~~~~~~~~~~~
 
-    :copyright: 2007-2008 by Panos Laganakos.
+    :copyright: 2007-2009 by Panos Laganakos.
 '''
 import pickle
 from datetime import datetime
@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from helios.store.models import Product, Category, Order, OrderLine, ORDER_STATUS
+from helios.store.models import Product, Category, Order, OrderLine, ORDER_STATUS, ShippingMethod
 from helios.store.decorators import cart_required
 from helios.customers.models import CustomerProfile
 from helios.store.cart import Cart, CartLine
@@ -80,6 +80,7 @@ def product_add(request, slug=''):
 	return HttpResponseRedirect(url)
 
 def product_remove(request, slug=''):
+
 	session_cart = pickle.loads(request.session.get('cart'))
 
 	try:
@@ -93,7 +94,7 @@ def product_remove(request, slug=''):
 		return HttpResponse('Does not have one of those!')
 
 	request.session['cart'] = pickle.dumps(session_cart)
-	return HttpResponseRedirect('/store/cart')
+	return HttpResponseRedirect(reverse('store_cart'))
 
 def category_list(request, category, **kwargs):
 	product_list = Product.objects.filter(category__slug__exact=category) #TODO should this change to name, and unslugify it?
@@ -101,17 +102,21 @@ def category_list(request, category, **kwargs):
 	return object_list(request, queryset=product_list, **kwargs)
 
 def checkout(request, template_name='checkout.html'):
-	from helios.customers.forms import CustomerForm
+	#from helios.customers.forms import CustomerForm
+
+	shipping = ShippingMethod.objects.all()
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
-		return HttpResponseRedirect('/store/cart')
+		return HttpResponseRedirect(reverse('store_cart'))
 
 	if not request.user.is_authenticated():
 		request.session['checkout'] = 'True'
 		return HttpResponseRedirect(reverse('customer-register'))
 
-	return render_to_response(template_name, context_instance=RequestContext(request))
+	return render_to_response(template_name,
+		{'shipping_methods': shipping},
+		context_instance=RequestContext(request))
 
 def submit_order(request, template_name='submit_order.html'):
 	from django.core.exceptions import ObjectDoesNotExist
@@ -123,11 +128,11 @@ def submit_order(request, template_name='submit_order.html'):
 		customer = request.user.get_profile()
 	except ObjectDoesNotExist:
 		request.user.message_set.create(message=_(u'%s does not have a customer profile.') % (request.user.username,))
-		return HttpResponseRedirect('/store')
+		return HttpResponseRedirect(reverse('store'))
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
-		return HttpResponseRedirect('/store/cart')
+		return HttpResponseRedirect(reverse('store_cart'))
 
 	order = Order.objects.create(
 		date_time_created=datetime.today(),

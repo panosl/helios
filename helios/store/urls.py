@@ -33,15 +33,28 @@ urlpatterns = patterns('helios.store.views',
 )
 
 urlpatterns += patterns('',
-	(r'^$', direct_to_template, {'template': 'home.html'}),
-	url(r'^cart/$', direct_to_template, {'template': 'cart.html'},
+	url(r'^$',
+		direct_to_template,
+		{'template': 'home.html'},
+		name='store'),
+
+	url(r'^cart/$',
+		direct_to_template,
+		{'template': 'cart.html'},
 		name='store_cart'),
-	(r'^products/(?P<slug>[-\w]+)/$', object_detail, dict(product_dict,
+
+	url(r'^products/(?P<slug>[-\w]+)/$', object_detail,
+		dict(product_dict,
 		slug_field='slug')),
-	(r'^products/$', object_list, dict(product_dict,
-		paginate_by=settings.PAGINATE_BY)),
-	url(r'^(?P<category>[-\w]+)/$', category_list, dict(paginate_by=settings.PAGINATE_BY,
-		template_object_name='product',
-		extra_context={}),
+
+	url(r'^products/$',
+		object_list,
+		dict(product_dict, paginate_by=settings.PAGINATE_BY)),
+
+	url(r'^(?P<category>[-\w]+)/$',
+		category_list,
+		dict(paginate_by=settings.PAGINATE_BY,
+			template_object_name='product',
+			extra_context={}),
 		name='store_category_list'),
 )

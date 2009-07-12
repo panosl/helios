@@ -14,5 +14,8 @@ urlpatterns = patterns('',
 
 if settings.DEBUG:
 	urlpatterns += patterns('',
-		(r'^static/(?P<path>.*)$', serve, {'document_root': os.path.join(os.path.abspath(os.path.curdir), 'static')}),
+		(r'^static/(?P<path>.*)$',
+		serve,
+		{'document_root': os.path.join(os.path.abspath(os.path.curdir),
+			'static')}),
 	)
