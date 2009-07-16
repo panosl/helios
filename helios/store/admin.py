@@ -18,7 +18,7 @@ class ProductAdmin(multilingual.ModelAdmin):
 	list_display = ('name', 'price', 'stock', 'last_modified', 'date_added',)
 	prepopulated_fields = {'slug': ('name_en',)}
 
-class ProductImageAdmin(multilingual.ModelAdmin):
+class ProductImageAdmin(admin.ModelAdmin):
 	list_display = ['picture', 'product']
 
 class TaxAdmin(multilingual.ModelAdmin):
@@ -35,12 +35,14 @@ class OrderAdmin(admin.ModelAdmin):
 	list_display = ['date_time_created', 'customer', 'status']
 	list_filter = ('status',)
 
+class ShippingRegionAdmin(multilingual.ModelAdmin):
+	prepopulated_fields = {'slug': ('name_en',)}
+
 class ShippingMethodAdmin(multilingual.ModelAdmin):
 	prepopulated_fields = {'slug': ('name_en',)}
 
 class PaymentOptionAdmin(multilingual.ModelAdmin):
 	prepopulated_fields = {'slug': ('name_en',)}
-	
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
@@ -48,5 +50,6 @@ admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Tax, TaxAdmin)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderLine, OrderLineAdmin)
+admin.site.register(ShippingRegion, ShippingRegionAdmin)
 admin.site.register(ShippingMethod, ShippingMethodAdmin)
 admin.site.register(PaymentOption, PaymentOptionAdmin)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-29 17:54+0300\n"
+"POT-Creation-Date: 2009-07-14 20:55+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgstr "διεύθυνση"
 msgid "postal code"
 msgstr "ταχυδρομικός κώδικας"
 
-#: customers/models.py:20 orders/models.py:16
+#: customers/models.py:20 orders/models.py:36
 msgid "city"
 msgstr "πόλη"
 
@@ -83,12 +83,15 @@ msgstr "προφίλ πελάτη"
 msgid "customer profiles"
 msgstr "προφίλ πελατών"
 
-#: location/models.py:14 store/models.py:22 store/models.py:37
-#: store/models.py:40 store/models.py:75 store/models.py:78
+#: location/models.py:14 orders/models.py:13 orders/models.py:16
+#: store/models.py:17 store/models.py:20 store/models.py:45 store/models.py:48
+#: store/models.py:80 store/models.py:83 store/models.py:212
+#: store/models.py:215 store/models.py:228 store/models.py:231
+#: store/models.py:243 store/models.py:246
 msgid "name"
 msgstr "όνομα"
 
-#: location/models.py:17 orders/models.py:17
+#: location/models.py:17 orders/models.py:37
 msgid "country"
 msgstr "χώρα"
 
@@ -96,156 +99,179 @@ msgstr "χώρα"
 msgid "countries"
 msgstr "χώρες"
 
-#: orders/models.py:5 store/models.py:161
-msgid "Pending"
-msgstr "Εκκρεμεί"
-
-#: orders/models.py:6 store/models.py:162
-msgid "Billed"
-msgstr "έχει τιμολογηθεί"
-
-#: orders/models.py:7 store/models.py:163
-msgid "Shipped"
-msgstr "Έχει αποσταλεί"
-
-#: orders/models.py:11
-msgid "creation date"
-msgstr "Ημερομηνία Δημιουργίας"
-
-#: orders/models.py:13 store/models.py:21
-msgid "code"
-msgstr "κωδικός"
-
-#: orders/models.py:14 store/models.py:24
-msgid "factor"
-msgstr "παράγοντας"
-
-#: orders/models.py:15
-msgid "status"
-msgstr "κατάσταση"
-
-#: orders/models.py:20 store/models.py:176
-msgid "order"
-msgstr "παραγγελεία"
-
-#: orders/models.py:21 store/models.py:177
-msgid "orders"
-msgstr "παραγγελείες"
-
-#: orders/models.py:29 store/models.py:185
-msgid "unit price"
-msgstr "τιμή μονάδος"
-
-#: orders/models.py:30 store/models.py:186
-#, fuzzy
-msgid "line price"
-msgstr "τιμή γραμμής"
-
-#: orders/models.py:31 store/models.py:187
-msgid "quantity"
-msgstr "ποσότητα"
-
-#: store/models.py:23
-msgid "symbol"
-msgstr "σύμβολο"
-
-#: store/models.py:25
-msgid "Specifies the difference of the currency to Euro."
-msgstr "Καθορίζει τη διαφορά του νομίσματος ως προς το Ευρώ."
-
-#: store/models.py:28
-msgid "currency"
-msgstr "νόμισμα"
-
-#: store/models.py:29
-msgid "currencies"
-msgstr "νομίσματα"
-
-#: store/models.py:38 store/models.py:41 store/models.py:76 store/models.py:79
+#: orders/models.py:14 orders/models.py:17 store/models.py:18
+#: store/models.py:21 store/models.py:46 store/models.py:49 store/models.py:81
+#: store/models.py:84 store/models.py:213 store/models.py:216
+#: store/models.py:229 store/models.py:232 store/models.py:244
+#: store/models.py:247
 msgid "description"
 msgstr "περιγραφή"
 
-#: store/models.py:47
-msgid "category"
-msgstr "κατηγορία"
+#: orders/models.py:20 store/models.py:220 store/models.py:235
+msgid "cost"
+msgstr "κόστος"
 
-#: store/models.py:48
-msgid "categories"
-msgstr "κατηγορίες"
+#: orders/models.py:21
+msgid "free limit"
+msgstr ""
 
-#: store/models.py:84
+#: orders/models.py:25 store/models.py:178
+msgid "Pending"
+msgstr "Εκκρεμεί"
+
+#: orders/models.py:26 store/models.py:179
+msgid "Billed"
+msgstr "έχει τιμολογηθεί"
+
+#: orders/models.py:27 store/models.py:180
+msgid "Shipped"
+msgstr "Έχει αποσταλεί"
+
+#: orders/models.py:31
+msgid "creation date"
+msgstr "Ημερομηνία Δημιουργίας"
+
+#: orders/models.py:33
+msgid "code"
+msgstr "κωδικός"
+
+#: orders/models.py:34
+msgid "factor"
+msgstr "παράγοντας"
+
+#: orders/models.py:35 store/models.py:188
+msgid "status"
+msgstr "κατάσταση"
+
+#: orders/models.py:40 store/models.py:193 store/models.py:200
+msgid "order"
+msgstr "παραγγελεία"
+
+#: orders/models.py:41 store/models.py:194
+msgid "orders"
+msgstr "παραγγελείες"
+
+#: orders/models.py:49 store/models.py:202
+msgid "unit price"
+msgstr "τιμή μονάδος"
+
+#: orders/models.py:50 store/models.py:203
+msgid "line price"
+msgstr "τιμή γραμμής"
+
+#: orders/models.py:51 store/models.py:204
+msgid "quantity"
+msgstr "ποσότητα"
+
+#: store/models.py:24
+msgid "tax rate"
+msgstr ""
+
+#: store/models.py:26 store/models.py:90
 msgid "active"
 msgstr "ενεργό"
 
-#: store/models.py:85
+#: store/models.py:27
+msgid "The tax will be available in the store."
+msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστημα."
+
+#: store/models.py:30
+msgid "tax"
+msgstr "φόρο"
+
+#: store/models.py:31
+msgid "taxes"
+msgstr "φόροι"
+
+#: store/models.py:56 store/models.py:87
+msgid "category"
+msgstr "κατηγορία"
+
+#: store/models.py:57
+msgid "categories"
+msgstr "κατηγορίες"
+
+#: store/models.py:91
 msgid "The product will appear in the store."
 msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
 
-#: store/models.py:86
+#: store/models.py:92
 msgid "featured"
 msgstr ""
 
-#: store/models.py:87
+#: store/models.py:93
 msgid "The product will be featured on the front page."
 msgstr ""
 
-#: store/models.py:88
+#: store/models.py:94
 msgid "stock"
 msgstr "στόκ"
 
-#: store/models.py:89
+#: store/models.py:95
 msgid "Number of items in stock."
 msgstr "Κομμάτια στο στόκ."
 
-#: store/models.py:90
+#: store/models.py:96
 msgid "weight"
 msgstr "βάρος"
 
-#: store/models.py:91
+#: store/models.py:97
 msgid "Defined in kilograms."
 msgstr "Δηλώνεται σε Κιλά."
 
-#: store/models.py:92
+#: store/models.py:98
 msgid "price"
 msgstr "τιμή"
 
-#: store/models.py:97
+#: store/models.py:104 store/models.py:140 store/models.py:201
 msgid "product"
 msgstr "προϊόν"
 
-#: store/models.py:98
+#: store/models.py:105
 msgid "products"
 msgstr "προϊόντα"
 
-#: store/models.py:124
+#: store/models.py:141
 msgid "picture"
 msgstr "εικόνα"
 
-#: store/models.py:128
+#: store/models.py:145
 msgid "product image"
 msgstr "εικόνα προϊόντος"
 
-#: store/models.py:129
+#: store/models.py:146
 msgid "product images"
 msgstr "εικόνες προϊόντων"
 
-#: store/models.py:167
+#: store/models.py:184
 msgid "Creation Date"
 msgstr "Ημερομηνία Δημιουργίας"
 
-#: store/models.py:169
+#: store/models.py:185
+msgid "customer"
+msgstr "πελάτης"
+
+#: store/models.py:186
 msgid "currency code"
 msgstr "κωδικός νομίσματος"
 
-#: store/models.py:170
+#: store/models.py:187
 msgid "currency factor"
 msgstr "παράγοντας νομίσματος"
 
-#: store/models.py:172
+#: store/models.py:189
 msgid "City"
 msgstr "Πόλη"
 
-#: store/views.py:144
+#: store/models.py:253
+msgid "payment option"
+msgstr "τρόπος πληρωμης"
+
+#: store/models.py:254
+msgid "payment options"
+msgstr "τρόποι πληρωμής"
+
+#: store/views.py:130
 #, python-format
 msgid "%s does not have a customer profile."
 msgstr "%s δεν έχει προφίλ πελάτη."

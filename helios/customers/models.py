@@ -20,9 +20,9 @@ class CustomerProfile(models.Model):
 	city = models.CharField(_('city'), max_length=50, blank=True)
 	country = models.ForeignKey(Country)
 
-	#class meta:
-	#	verbose_name = _('customer profile')
-	#	verbose_name_plural = _('customer profiles')
+	class meta:
+		verbose_name = _('customer profile')
+		verbose_name_plural = _('customer profiles')
 
 	def __unicode__(self):
 		return u'%s (%s)' % (self.user.get_full_name(), self.user.email)

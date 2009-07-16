@@ -24,11 +24,12 @@ class Tax(models.Model):
 	rate = models.DecimalField(_('tax rate'), max_digits=4, decimal_places=2,
 		default=19.00)
 	is_active = models.BooleanField(_('active'), default=True,
-		help_text=_('The tax will appear in the store.'))
+		help_text=_('The tax will be available in the store.'))
 	
 	class Meta:
 		verbose_name = _('tax')
 		verbose_name_plural = _('taxes')
+		pass
 
 	def __unicode__(self):
 		return self.name
@@ -83,7 +84,7 @@ class Product(models.Model):
 		desc = models.TextField(_('description'), blank=True)
 
 	slug = models.SlugField(unique=True, max_length=80)
-	category = models.ForeignKey(Category, blank=True, null=True)
+	category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
 	date_added = models.DateField(auto_now_add=True)
 	last_modified = models.DateTimeField(auto_now=True)
 	is_active = models.BooleanField(_('active'), default=True,
@@ -136,7 +137,7 @@ class Product(models.Model):
 	taxed_price2 = property(_get_price2)
 
 class ProductImage(models.Model):
-	product = models.ForeignKey(Product, null=True, blank=True)
+	product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
 	picture = models.ImageField(_('picture'), upload_to='./product_images')
 	suffix = '_thumbnail.jpg'
 
@@ -145,7 +146,7 @@ class ProductImage(models.Model):
 		verbose_name_plural= _('product images')
 
 	def __unicode__(self):
-		return str(self.picture)
+		return u'%s' % (self.picture,)
 
 
 	def _make_thumbnail(self):
@@ -181,12 +182,12 @@ ORDER_STATUS = (
 
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('Creation Date'))
-	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
+	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
 	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
 	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
-	status = models.CharField(max_length=10, choices=ORDER_STATUS, blank=True)
+	status = models.CharField(_('status'), max_length=10, choices=ORDER_STATUS, blank=True)
 	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
-	shipping_country = models.ForeignKey(Country, blank=True)
+	shipping_country = models.ForeignKey(Country, blank=True, null=True, verbose_name='shipping country')
 
 	class Meta:
 		verbose_name = _('order')
@@ -196,29 +197,14 @@ class Order(models.Model):
 		return u'Order %s' % self.date_time_created
 
 class OrderLine(models.Model):
-	order = models.ForeignKey(Order)
-	product = models.ForeignKey(Product)
+	order = models.ForeignKey(Order, verbose_name=_('order'))
+	product = models.ForeignKey(Product, verbose_name=_('product'))
 	unit_price = models.DecimalField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
 	price = models.DecimalField(_('line price'), max_digits=6, decimal_places=2, blank=True)
 	quantity = models.IntegerField(_('quantity'))
 
 	def __unicode__(self):
 		return u'%s %s' % (self.quantity, self.product)
-
-class ShippingMethod(models.Model):
-	if settings.IS_MULTILINGUAL:
-		class Translation(multilingual.Translation):
-			name = models.CharField(_('name'), max_length=80)
-			desc = models.TextField(_('description'), blank=True)
-	else:
-		name = models.CharField(_('name'), max_length=80)
-		desc = models.TextField(_('description'), blank=True)
-
-	slug = models.SlugField(unique=True, max_length=80)
-	cost = models.DecimalField(_('cost'), max_digits=6, decimal_places=2, default=0.00)
-
-	def __unicode__(self):
-		return self.name
 
 class PaymentOption(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -231,6 +217,11 @@ class PaymentOption(models.Model):
 
 	slug = models.SlugField(unique=True, max_length=80)
 	supported_countries = models.ManyToManyField(Country, blank=True, null=True)
+
+	class Meta:
+		verbose_name = _('payment option')
+		verbose_name_plural = _('payment options')
+		pass
 
 	def __unicode__(self):
 		return self.name
