@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
-from helios.store.models import Product, Category, Order, OrderLine, ORDER_STATUS, ShippingMethod
+from helios.store.models import Product, Category, Order, OrderLine, ORDER_STATUS 
 from helios.store.decorators import cart_required
 from helios.customers.models import CustomerProfile
 from helios.store.cart import Cart, CartLine
@@ -104,7 +104,7 @@ def category_list(request, category, **kwargs):
 def checkout(request, template_name='checkout.html'):
 	#from helios.customers.forms import CustomerForm
 
-	shipping = ShippingMethod.objects.all()
+	#shipping = ShippingMethod.objects.all()
 
 	session_cart = pickle.loads(request.session.get('cart'))
 	if len(session_cart) == 0:
