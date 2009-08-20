@@ -1,10 +1,16 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-import multilingual
 from helios.location.models import Country
+from helios.conf import settings
+if settings.IS_MULTILINGUAL:
+	import multilingual
 
 class Shipper(models.Model):
-	class Translation(multilingual.Translation):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
 		name = models.CharField(_('name'), max_length=80)
 		desc = models.TextField(_('description'), blank=True)
 	slug = models.SlugField(unique=True, max_length=80)
@@ -17,7 +23,11 @@ class Shipper(models.Model):
 		return self.name
 
 class ShippingRegion(models.Model):
-	class Translation(multilingual.Translation):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
 		name = models.CharField(_('name'), max_length=80)
 		desc = models.TextField(_('description'), blank=True)
 	slug = models.SlugField(unique=True, max_length=80)
@@ -32,7 +42,11 @@ class ShippingRegion(models.Model):
 		return u'%s-%s' % (self.shipper, self.name)
 
 class ShippingMethod(models.Model):
-	class Translation(multilingual.Translation):
+	if settings.IS_MULTILINGUAL:
+		class Translation(multilingual.Translation):
+			name = models.CharField(_('name'), max_length=80)
+			desc = models.TextField(_('description'), blank=True)
+	else:
 		name = models.CharField(_('name'), max_length=80)
 		desc = models.TextField(_('description'), blank=True)
 	slug = models.SlugField(unique=True, max_length=80)

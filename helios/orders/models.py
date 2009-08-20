@@ -1,54 +1,61 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from helios.customers.models import CustomerProfile
-from helios.store.models import Product
+from helios.location.models import Country
+from helios.shipping.models import ShippingMethodRegions
+from helios.store.models import Product, PaymentOption
 from helios.store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 
 
-class ShippingMethod(models.Model):
+class OrderStatus(models.Model):
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
-			name = models.CharField(_('name'), max_length=80)
+			name = models.CharField(_('name'), max_length=50)
 			desc = models.TextField(_('description'), blank=True)
 	else:
-		name = models.CharField(_('name'), max_length=80)
+		name = models.CharField(_('name'), max_length=50)
 		desc = models.TextField(_('description'), blank=True)
 
-	slug = models.SlugField(unique=True, max_length=80)
-	cost = models.DecimalField(_('cost'), max_digits=6, decimal_places=2)
-	free_limit = models.DecimalField(_('free limit'), max_digits=6, decimal_places=2,
-		help_text='Above this price, shipping is for free.')
+	slug = models.SlugField(max_length=50, unique=True)
 
-ORDER_STATUS = (
-	('PENDING', _('Pending')),
-	('BILLED', _('Billed')),
-	('SHIPPED', _('Shipped')),
-)
+	class Meta:
+		verbose_name = _('order status')
+		verbose_name_plural = _('order statuses')
+
+	def __unicode__(self):
+		return self.name
 
 class Order(models.Model):
-	date_time_created = models.DateTimeField(_('creation date'))
-	customer = models.ForeignKey(CustomerProfile, blank=True, null=True)
-	currency_code = models.CharField(_('code'), max_length=3, blank=True, null=True)
-	currency_factor = models.DecimalField(_('factor'), max_digits=10, decimal_places=4, blank=True, null=True)
-	status = models.CharField(_('status'), max_length=10, choices=ORDER_STATUS, blank=True)
-	shipping_city = models.CharField(_('city'), max_length=50, blank=True)
-	shipping_country = models.CharField(_('country'), max_length=50)
+	date_time_created = models.DateTimeField(_('Creation Date'))
+	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
+	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
+	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
+	status = models.ForeignKey(OrderStatus, blank=True, null=True)
+	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
+	shipping_country = models.ForeignKey(Country, blank=True, null=True, verbose_name='shipping country')
+	shipping_choice = models.ForeignKey(ShippingMethodRegions, blank=True, null=True)
+	payment_option = models.ForeignKey(PaymentOption, blank=True, null=True)
 
 	class Meta:
 		verbose_name = _('order')
 		verbose_name_plural = _('orders')
+		ordering = ['-date_time_created']
 
 	def __unicode__(self):
-		return 'Order %s' % self.date_time_created
+		return u'Order %s' % self.date_time_created
 
 class OrderLine(models.Model):
-	order = models.ForeignKey(Order)
-	product = models.ForeignKey(Product)
+	order = models.ForeignKey(Order, verbose_name=_('order'))
+	product = models.ForeignKey(Product, verbose_name=_('product'))
 	unit_price = models.DecimalField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
 	price = models.DecimalField(_('line price'), max_digits=6, decimal_places=2, blank=True)
 	quantity = models.IntegerField(_('quantity'))
+
+	class Meta:
+		verbose_name = _('order line')
+		verbose_name_plural = _('order lines')
 
 	def __unicode__(self):
 		return u'%s %s' % (self.quantity, self.product)

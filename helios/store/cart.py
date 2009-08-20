@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+import pickle
 try:
 	from helios.store.models import Product
 except ImportError:
@@ -46,6 +48,9 @@ class Cart(dict):
 		Sum and return the price of each ``CartLine``.
 		"""
 		return sum((cart_line.get_price() for cart_line in self.itervalues()))
+
+	def dump(self):
+		return pickle.dumps(self)
 
 class CartLine(dict):
 	"""

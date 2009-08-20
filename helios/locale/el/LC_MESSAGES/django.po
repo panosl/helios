@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-17 19:29+0300\n"
+"POT-Creation-Date: 2009-08-17 12:08+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,43 +55,44 @@ msgstr "Ο κωδικός σας είναι πολύ μικρός (τουλάχ�
 msgid "You should entered the same password \t\t\t\t\ttwice"
 msgstr "Πρέπει να εισάγετε τον ίδιο κωδικό δύο φορές"
 
-#: customers/models.py:16
+#: customers/models.py:17
 msgid "phone number"
 msgstr "τηλέφωνο"
 
-#: customers/models.py:17
+#: customers/models.py:18
 msgid "Fax"
 msgstr "ΦΑΞ"
 
-#: customers/models.py:18
+#: customers/models.py:19
 msgid "address"
 msgstr "διεύθυνση"
 
-#: customers/models.py:19
+#: customers/models.py:20
 msgid "postal code"
 msgstr "ταχυδρομικός κώδικας"
 
-#: customers/models.py:20 orders/models.py:36
+#: customers/models.py:21
 msgid "city"
 msgstr "πόλη"
 
-#: customers/models.py:24
+#: customers/models.py:25
 msgid "customer profile"
 msgstr "προφίλ πελάτη"
 
-#: customers/models.py:25
+#: customers/models.py:26
 msgid "customer profiles"
 msgstr "προφίλ πελατών"
 
-#: location/models.py:14 orders/models.py:13 orders/models.py:16
-#: shipping/models.py:8 shipping/models.py:21 shipping/models.py:36
-#: store/models.py:17 store/models.py:20 store/models.py:45 store/models.py:48
-#: store/models.py:80 store/models.py:83 store/models.py:212
-#: store/models.py:215
+#: location/models.py:14 orders/models.py:15 orders/models.py:18
+#: shipping/models.py:11 shipping/models.py:14 shipping/models.py:28
+#: shipping/models.py:31 shipping/models.py:47 shipping/models.py:50
+#: store/models.py:18 store/models.py:21 store/models.py:46 store/models.py:49
+#: store/models.py:82 store/models.py:85 store/models.py:219
+#: store/models.py:222
 msgid "name"
 msgstr "όνομα"
 
-#: location/models.py:17 orders/models.py:37
+#: location/models.py:17
 msgid "country"
 msgstr "χώρα"
 
@@ -99,206 +100,213 @@ msgstr "χώρα"
 msgid "countries"
 msgstr "χώρες"
 
-#: orders/models.py:14 orders/models.py:17 shipping/models.py:9
-#: shipping/models.py:22 shipping/models.py:37 store/models.py:18
-#: store/models.py:21 store/models.py:46 store/models.py:49 store/models.py:81
-#: store/models.py:84 store/models.py:213 store/models.py:216
+#: orders/models.py:16 orders/models.py:19 shipping/models.py:12
+#: shipping/models.py:15 shipping/models.py:29 shipping/models.py:32
+#: shipping/models.py:48 shipping/models.py:51 store/models.py:19
+#: store/models.py:22 store/models.py:47 store/models.py:50 store/models.py:83
+#: store/models.py:86 store/models.py:220 store/models.py:223
 msgid "description"
 msgstr "περιγραφή"
 
-#: orders/models.py:20
-msgid "cost"
-msgstr "κόστος"
+#: orders/models.py:24
+msgid "order status"
+msgstr "κατάσταση παραγγελείας"
 
-#: orders/models.py:21
-msgid "free limit"
-msgstr ""
-
-#: orders/models.py:25 store/models.py:178
-msgid "Pending"
-msgstr "Εκκρεμεί"
-
-#: orders/models.py:26 store/models.py:179
-msgid "Billed"
-msgstr "έχει τιμολογηθεί"
-
-#: orders/models.py:27 store/models.py:180
-msgid "Shipped"
-msgstr "Έχει αποσταλεί"
+#: orders/models.py:25
+msgid "order statuses"
+msgstr "καταστάσεις παραγγελείας"
 
 #: orders/models.py:31
-msgid "creation date"
-msgstr "Ημερομηνία Δημιουργίας"
-
-#: orders/models.py:33
-msgid "code"
-msgstr "κωδικός"
-
-#: orders/models.py:34
-msgid "factor"
-msgstr "παράγοντας"
-
-#: orders/models.py:35 store/models.py:188
-msgid "status"
-msgstr "κατάσταση"
-
-#: orders/models.py:40 store/models.py:193 store/models.py:200
-msgid "order"
-msgstr "παραγγελεία"
-
-#: orders/models.py:41 store/models.py:194
-msgid "orders"
-msgstr "παραγγελείες"
-
-#: orders/models.py:49 store/models.py:202
-msgid "unit price"
-msgstr "τιμή μονάδος"
-
-#: orders/models.py:50 store/models.py:203
-msgid "line price"
-msgstr "τιμή γραμμής"
-
-#: orders/models.py:51 store/models.py:204
-msgid "quantity"
-msgstr "ποσότητα"
-
-#: shipping/models.py:13
-msgid "shipper"
-msgstr "αποστολέας"
-
-#: shipping/models.py:14
-msgid "shippers"
-msgstr "αποστολείς"
-
-#: shipping/models.py:28
-msgid "shipping region"
-msgstr "περιοχή αποστολής"
-
-#: shipping/models.py:29
-msgid "shipping regions"
-msgstr "περιοχές αποστολής"
-
-#: shipping/models.py:43
-msgid "shipping method"
-msgstr "τρόπος αποστολής"
-
-#: shipping/models.py:44
-msgid "shipping methods"
-msgstr "τρόποι αποστολής"
-
-#: shipping/models.py:55 store/models.py:98
-msgid "price"
-msgstr "τιμή"
-
-#: shipping/models.py:58
-msgid "shipping region methods"
-msgstr ""
-
-#: store/models.py:24
-msgid "tax rate"
-msgstr "φορολογικός συντελεστής"
-
-#: store/models.py:26 store/models.py:90
-msgid "active"
-msgstr "ενεργό"
-
-#: store/models.py:27
-msgid "The tax will be available in the store."
-msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστημα."
-
-#: store/models.py:30
-msgid "tax"
-msgstr "φόρο"
-
-#: store/models.py:31
-msgid "taxes"
-msgstr "φόροι"
-
-#: store/models.py:56 store/models.py:87
-msgid "category"
-msgstr "κατηγορία"
-
-#: store/models.py:57
-msgid "categories"
-msgstr "κατηγορίες"
-
-#: store/models.py:91
-msgid "The product will appear in the store."
-msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
-
-#: store/models.py:92
-msgid "featured"
-msgstr ""
-
-#: store/models.py:93
-msgid "The product will be featured on the front page."
-msgstr ""
-
-#: store/models.py:94
-msgid "stock"
-msgstr "στόκ"
-
-#: store/models.py:95
-msgid "Number of items in stock."
-msgstr "Κομμάτια στο στόκ."
-
-#: store/models.py:96
-msgid "weight"
-msgstr "βάρος"
-
-#: store/models.py:97
-msgid "Defined in kilograms."
-msgstr "Δηλώνεται σε Κιλά."
-
-#: store/models.py:104 store/models.py:140 store/models.py:201
-msgid "product"
-msgstr "προϊόν"
-
-#: store/models.py:105
-msgid "products"
-msgstr "προϊόντα"
-
-#: store/models.py:141
-msgid "picture"
-msgstr "εικόνα"
-
-#: store/models.py:145
-msgid "product image"
-msgstr "εικόνα προϊόντος"
-
-#: store/models.py:146
-msgid "product images"
-msgstr "εικόνες προϊόντων"
-
-#: store/models.py:184
 msgid "Creation Date"
 msgstr "Ημερομηνία Δημιουργίας"
 
-#: store/models.py:185
+#: orders/models.py:32
 msgid "customer"
 msgstr "πελάτης"
 
-#: store/models.py:186
+#: orders/models.py:33
 msgid "currency code"
 msgstr "κωδικός νομίσματος"
 
-#: store/models.py:187
+#: orders/models.py:34
 msgid "currency factor"
 msgstr "παράγοντας νομίσματος"
 
-#: store/models.py:189
+#: orders/models.py:36
 msgid "City"
 msgstr "Πόλη"
 
-#: store/models.py:222
+#: orders/models.py:42 orders/models.py:50
+msgid "order"
+msgstr "παραγγελεία"
+
+#: orders/models.py:43
+msgid "orders"
+msgstr "παραγγελείες"
+
+#: orders/models.py:51 store/models.py:106 store/models.py:144
+msgid "product"
+msgstr "προϊόν"
+
+#: orders/models.py:52
+msgid "unit price"
+msgstr "τιμή μονάδος"
+
+#: orders/models.py:53
+msgid "line price"
+msgstr "τιμή γραμμής"
+
+#: orders/models.py:54
+msgid "quantity"
+msgstr "ποσότητα"
+
+#: orders/models.py:57
+msgid "order line"
+msgstr "γραμμή παραγγελείας"
+
+#: orders/models.py:58
+msgid "order lines"
+msgstr "γραμμές παραγγελειών"
+
+#: shipping/models.py:19
+msgid "shipper"
+msgstr "αποστολέας"
+
+#: shipping/models.py:20
+msgid "shippers"
+msgstr "αποστολείς"
+
+#: shipping/models.py:38
+msgid "shipping region"
+msgstr "περιοχή αποστολής"
+
+#: shipping/models.py:39
+msgid "shipping regions"
+msgstr "περιοχές αποστολής"
+
+#: shipping/models.py:57
+msgid "shipping method"
+msgstr "τρόπος αποστολής"
+
+#: shipping/models.py:58
+msgid "shipping methods"
+msgstr "τρόποι αποστολής"
+
+#: shipping/models.py:69 store/models.py:100
+msgid "price"
+msgstr "τιμή"
+
+#: shipping/models.py:72
+#, fuzzy
+msgid "shipping method regions"
+msgstr "περιοχές αποστολής"
+
+#: store/models.py:25
+msgid "tax rate"
+msgstr "φορολογικός συντελεστής"
+
+#: store/models.py:27 store/models.py:92
+msgid "active"
+msgstr "ενεργό"
+
+#: store/models.py:28
+msgid "The tax will be available in the store."
+msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστημα."
+
+#: store/models.py:31
+msgid "tax"
+msgstr "φόρο"
+
+#: store/models.py:32
+msgid "taxes"
+msgstr "φόροι"
+
+#: store/models.py:57 store/models.py:89
+msgid "category"
+msgstr "κατηγορία"
+
+#: store/models.py:58
+msgid "categories"
+msgstr "κατηγορίες"
+
+#: store/models.py:90
+msgid "date added"
+msgstr "ημερομηνία προσθήκης"
+
+#: store/models.py:91
+msgid "last modified"
+msgstr "αλλάχθηκε"
+
+#: store/models.py:93
+msgid "The product will appear in the store."
+msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
+
+#: store/models.py:94
+msgid "featured"
+msgstr ""
+
+#: store/models.py:95
+msgid "The product will be featured on the front page."
+msgstr ""
+
+#: store/models.py:96
+msgid "stock"
+msgstr "στόκ"
+
+#: store/models.py:97
+msgid "Number of items in stock."
+msgstr "Κομμάτια στο στόκ."
+
+#: store/models.py:98
+msgid "weight"
+msgstr "βάρος"
+
+#: store/models.py:99
+msgid "Defined in kilograms."
+msgstr "Δηλώνεται σε Κιλά."
+
+#: store/models.py:107
+msgid "products"
+msgstr "προϊόντα"
+
+#: store/models.py:145
+msgid "picture"
+msgstr "εικόνα"
+
+#: store/models.py:149
+msgid "product image"
+msgstr "εικόνα προϊόντος"
+
+#: store/models.py:150
+msgid "product images"
+msgstr "εικόνες προϊόντων"
+
+#: store/models.py:182
+msgid "Pending"
+msgstr "Εκκρεμεί"
+
+#: store/models.py:183
+msgid "Billed"
+msgstr "έχει τιμολογηθεί"
+
+#: store/models.py:184
+msgid "Shipped"
+msgstr "Έχει αποσταλεί"
+
+#: store/models.py:229
 msgid "payment option"
 msgstr "τρόπος πληρωμης"
 
-#: store/models.py:223
+#: store/models.py:230
 msgid "payment options"
 msgstr "τρόποι πληρωμής"
 
-#: store/views.py:130
+#: store/views.py:146
 #, python-format
 msgid "%s does not have a customer profile."
 msgstr "%s δεν έχει προφίλ πελάτη."
+
+#: store/views.py:152
+#, python-format
+msgid "%s you haven't chosen a shipping method."
+msgstr "%s δεν έχετε διαλέξει τρόπο αποστολής."

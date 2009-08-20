@@ -1,47 +1,50 @@
 from django.contrib import admin
-import multilingual
 from helios.store.models import *
 from helios.store.forms import MyCategoryAdminForm
-		
-
-class CategoryAdmin(multilingual.ModelAdmin):
-	form = MyCategoryAdminForm
-	list_display = ('name', 'desc', 'parent')
-	prepopulated_fields = {'slug': ('name_en',)}
+from helios.store.conf import settings
+if settings.IS_MULTILINGUAL:
+	import multilingual
+	admin_info = {
+		'class': multilingual.ModelAdmin,
+		'suffix': '_en'
+	}
+else:
+	admin_info = {
+		'class': admin.ModelAdmin,
+		'suffix': ''
+	}
 
 class ProductImageInline(admin.TabularInline):
 	model = ProductImage
 
-class ProductAdmin(multilingual.ModelAdmin):
-	inlines = [ProductImageInline,]
-	list_filter = ('category', 'is_active', 'is_featured',)
-	list_display = ('name', 'price', 'stock', 'last_modified', 'date_added',)
-	prepopulated_fields = {'slug': ('name_en',)}
-
 class ProductImageAdmin(admin.ModelAdmin):
 	list_display = ['picture', 'product']
 
-class TaxAdmin(multilingual.ModelAdmin):
-	prepopulated_fields = {'slug': ('name_en',)}
+class CategoryAdmin(admin_info['class']):
+	form = MyCategoryAdminForm
+	list_display = ('name', 'desc', 'parent')
+	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 
-class OrderLineAdmin(admin.ModelAdmin):
-	pass
+def set_category(modeladmin, request, queryset):
+	categories = Category.objects.all()
+	queryset.update(category)
 
-class OrderLineInline(admin.TabularInline):
-	model = OrderLine
+class ProductAdmin(admin_info['class']):
+	inlines = [ProductImageInline,]
+	list_display = ('name', 'price', 'stock', 'last_modified', 'category',)
+	list_filter = ('category', 'is_active', 'is_featured',)
+	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 
-class OrderAdmin(admin.ModelAdmin):
-	inlines = [OrderLineInline,]
-	list_display = ['date_time_created', 'customer', 'status']
-	list_filter = ('status',)
 
-class PaymentOptionAdmin(multilingual.ModelAdmin):
-	prepopulated_fields = {'slug': ('name_en',)}
+class TaxAdmin(admin_info['class']):
+	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
+
+
+class PaymentOptionAdmin(admin_info['class']):
+	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Tax, TaxAdmin)
-admin.site.register(Order, OrderAdmin)
-admin.site.register(OrderLine, OrderLineAdmin)
 admin.site.register(PaymentOption, PaymentOptionAdmin)

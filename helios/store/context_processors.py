@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
-'''
-    store.context_processors
-    ~~~~~~~~~~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
 import pickle
-from helios.store.views import Cart, CartLine
+from helios.store.views import Cart
 
 
 def cart(request):

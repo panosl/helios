@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-'''
-    customers.views
-    ~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -57,11 +51,12 @@ def register(request, template_name='customer/register.html'):
 def customer(request, template_name='customer.html'):
 	if request.user.is_authenticated():
 		try:
-			customer = request.user.get_profile()
+			user = request.user
+			customer = user.customer
 			initial_data = {
-				'username': customer.user.username,
-				'first_name': customer.user.first_name,
-				'last_name': customer.user.last_name,
+				'username': user.username,
+				'first_name': user.first_name,
+				'last_name': user.last_name,
 				'email': customer.user.email,
 				'address': customer.address,
 				'city': customer.city,
@@ -75,5 +70,5 @@ def customer(request, template_name='customer.html'):
 
 
 def order_list(request, **kwargs):
-	customer = request.user.get_profile()
+	customer = request.user.customer
 	return object_list(request, queryset=customer.order_set.all(), **kwargs)

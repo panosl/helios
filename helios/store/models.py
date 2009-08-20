@@ -1,11 +1,9 @@
 import os
-import Image
 from decimal import Decimal
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
-from helios.customers.models import CustomerProfile
 from helios.location.models import Country
+from helios.shipping.models import *
 from helios.store.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
@@ -70,9 +68,10 @@ class Category(models.Model):
 			'category': self.slug,
 		})
 
-class ActiveProductManager(multilingual.Manager):
-	def get_query_set(self):
-		return super(ActiveProductManager).get_query_set().filter(is_active=True)
+if settings.IS_MULTILINGUAL:
+	class ActiveProductManager(multilingual.Manager):
+		def get_query_set(self):
+			return super(ActiveProductManager).get_query_set().filter(is_active=True)
 
 class Product(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -85,8 +84,8 @@ class Product(models.Model):
 
 	slug = models.SlugField(unique=True, max_length=80)
 	category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
-	date_added = models.DateField(auto_now_add=True)
-	last_modified = models.DateTimeField(auto_now=True)
+	date_added = models.DateField(_('date added'), auto_now_add=True)
+	last_modified = models.DateTimeField(_('last modified'), auto_now=True)
 	is_active = models.BooleanField(_('active'), default=True,
 		help_text=_('The product will appear in the store.'))
 	is_featured = models.BooleanField(_('featured'), default=False,
@@ -103,7 +102,9 @@ class Product(models.Model):
 	class Meta:
 		verbose_name = _('product')
 		verbose_name_plural = _('products')
-		ordering = ['-last_modified']
+		if not settings.IS_MULTILINGUAL:
+			# This will not work for multilingual right now
+			ordering = ['name']
 
 	def __unicode__(self):
 		return self.name
@@ -148,21 +149,6 @@ class ProductImage(models.Model):
 	def __unicode__(self):
 		return u'%s' % (self.picture,)
 
-
-	def _make_thumbnail(self):
-		thumbnail = Image.open(self.picture.path)
-		thumbnail.thumbnail((256, 256), Image.ANTIALIAS)
-		thumbnail = thumbnail.crop((0, 0, 190, 190))
-		thumbnail.save(os.path.splitext(self.picture.path)[0] + self.suffix, 'JPEG')
-	
-	def _get_thumbnail(self):
-		return os.path.splitext(self.picture.url)[0] + self.suffix
-	thumbnail = property(_get_thumbnail)
-
-	#def save(self):
-	#	super(ProductImage, self).save()
-	#	self._make_thumbnail()
-
 	def delete(self):
 		try:
 			os.remove(self.picture.path)
@@ -173,38 +159,6 @@ class ProductImage(models.Model):
 		except OSError:
 			pass
 		super(ProductImage, self).delete()
-
-ORDER_STATUS = (
-	('PENDING', _('Pending')),
-	('BILLED', _('Billed')),
-	('SHIPPED', _('Shipped')),
-)
-
-class Order(models.Model):
-	date_time_created = models.DateTimeField(_('Creation Date'))
-	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
-	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
-	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
-	status = models.CharField(_('status'), max_length=10, choices=ORDER_STATUS, blank=True)
-	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
-	shipping_country = models.ForeignKey(Country, blank=True, null=True, verbose_name='shipping country')
-
-	class Meta:
-		verbose_name = _('order')
-		verbose_name_plural = _('orders')
-
-	def __unicode__(self):
-		return u'Order %s' % self.date_time_created
-
-class OrderLine(models.Model):
-	order = models.ForeignKey(Order, verbose_name=_('order'))
-	product = models.ForeignKey(Product, verbose_name=_('product'))
-	unit_price = models.DecimalField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
-	price = models.DecimalField(_('line price'), max_digits=6, decimal_places=2, blank=True)
-	quantity = models.IntegerField(_('quantity'))
-
-	def __unicode__(self):
-		return u'%s %s' % (self.quantity, self.product)
 
 class PaymentOption(models.Model):
 	if settings.IS_MULTILINGUAL:

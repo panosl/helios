@@ -40,3 +40,9 @@ Product
 =======
 
 A product has various attributes. The complete list is
+
+``name``
+        is the name of the product.
+
+``description``
+        is the a short summary of the product.
