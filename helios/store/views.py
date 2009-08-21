@@ -129,6 +129,27 @@ def checkout(request, template_name='checkout.html'):
 		},
 		context_instance=RequestContext(request))
 
+def paypal_purchase(request):
+	from paypal.pro.views import PayPalPro
+	item = {
+		"amt": "10.00",             # amount to charge for item
+		"inv": "inventory",         # unique tracking variable paypal
+		"custom": "tracking",       # custom tracking variable for you
+		"cancelurl": "http://...",  # Express checkout cancel url
+		"returnurl": "http://..."   # Express checkout return url
+	}
+
+	kw = {
+		"item": item,                                   # what you're selling
+		"payment_template": "paypal/payment.html",      # template name for payment
+		"confirm_template": "paypal/confirmation.html", # template name for confirmation
+		"success_url": "/success/"                      # redirect location after success
+	}
+
+	ppp = PayPalPro(**kw)
+	return ppp(request)
+
+
 @login_required
 def submit_order(request, template_name='checkout.html'):
 	customer = request.user.customer

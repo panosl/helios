@@ -28,6 +28,7 @@ urlpatterns = patterns('helios.store.views',
 		name='store_checkout'),
 	(r'^success/$', 'success'),
 	(r'^submit-order/$', 'submit_order'),
+	url(r'^payment', 'paypal_purchase'),
 	url(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add',
 		name='store_product_add'),
 	url(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove',
@@ -53,10 +54,13 @@ urlpatterns += patterns('',
 		object_list,
 		dict(product_dict, paginate_by=settings.PAGINATE_BY)),
 
+	(r'^ppp/', include('paypal.standard.ipn.urls')),
+
 	url(r'^(?P<category>[-\w]+)/$',
 		category_list,
 		dict(paginate_by=settings.PAGINATE_BY,
 			template_object_name='product',
 			extra_context={}),
 		name='store_category_list'),
+
 )

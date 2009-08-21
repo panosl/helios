@@ -34,11 +34,10 @@ class ProductAdmin(admin_info['class']):
 	list_display = ('name', 'price', 'stock', 'last_modified', 'category',)
 	list_filter = ('category', 'is_active', 'is_featured',)
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
-
+	search_fields = ['name']
 
 class TaxAdmin(admin_info['class']):
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
-
 
 class PaymentOptionAdmin(admin_info['class']):
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
