@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
-from helios.store.models import Product, Category
+from helios.store.models import Product, Category, PaymentOption
 from helios.store.forms import OrderForm, PaymentForm
 from helios.store.cart import Cart 
 from helios.orders.models import *
@@ -129,26 +129,45 @@ def checkout(request, template_name='checkout.html'):
 		},
 		context_instance=RequestContext(request))
 
-def paypal_purchase(request):
-	from paypal.pro.views import PayPalPro
-	item = {
-		"amt": "10.00",             # amount to charge for item
-		"inv": "inventory",         # unique tracking variable paypal
-		"custom": "tracking",       # custom tracking variable for you
-		"cancelurl": "http://...",  # Express checkout cancel url
-		"returnurl": "http://..."   # Express checkout return url
+def paypal_purchase(request, template_name='paypal/payment.html'):
+	from django import forms
+	from paypal.standard.forms import PayPalPaymentsForm
+	from paypal.standard.widgets import ValueHiddenInput 
+
+	customer = request.user.customer
+
+	class MyPayPalForm(PayPalPaymentsForm):
+		first_name = forms.CharField(widget=ValueHiddenInput())
+		last_name = forms.CharField(widget=ValueHiddenInput())
+		address_override = forms.IntegerField(widget=ValueHiddenInput(), initial=0)
+		
+	paypal_dict = {
+		'business': 'panos_1251033497_biz@phaethon-designs.gr',
+		'amount': '1.00',
+		'currency_code': request.session['currency'].code,
+		'item_name': 'manishop purchase',
+		#'invoice': 'unique-invoice-id',
+		'notify_url': 'http://79.107.122.6:8000/store/ppp/',
+		'return_url': 'http://79.107.122.6:8000/store/ppp/',
+		'cancel_return': 'http://www.example.com/your-cancel-location/',
+		#'cmd': PayPalPaymentsForm.CMD_CHOICES[1][0],
+		#'upload': '1',
+		'no_shipping': PayPalPaymentsForm.SHIPPING_CHOICES[1][0],
+		'address_override': 1,
+		'first_name': customer.user.first_name,
+		'last_name': customer.user.last_name,
+		'address1': customer.address,
+		'city': customer.city,
+		'postal_code': customer.postal_code,
+		'country': customer.country,
+		'email': customer.user.email,
 	}
 
-	kw = {
-		"item": item,                                   # what you're selling
-		"payment_template": "paypal/payment.html",      # template name for payment
-		"confirm_template": "paypal/confirmation.html", # template name for confirmation
-		"success_url": "/success/"                      # redirect location after success
-	}
+	#form = PayPalPaymentsForm(initial=paypal_dict)
+	form = MyPayPalForm(initial=paypal_dict)
 
-	ppp = PayPalPro(**kw)
-	return ppp(request)
-
+	return render_to_response(template_name, {'form': form},
+		context_instance=RequestContext(request))
 
 @login_required
 def submit_order(request, template_name='checkout.html'):
@@ -168,6 +187,10 @@ def submit_order(request, template_name='checkout.html'):
 		payment_form = PaymentForm(request.POST)
 		if payment_form.is_valid():
 			payment_option = payment_form.cleaned_data['payment_option']
+
+			if payment_option == PaymentOption.objects.get(slug='paypal'):
+				return HttpResponseRedirect(reverse(paypal_purchase))
+
 			order = Order.objects.create(
 				date_time_created=datetime.today(),
 				customer=customer,

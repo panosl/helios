@@ -4,7 +4,7 @@ from helios.customers.models import CustomerProfile
 from helios.location.models import Country
 from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product, PaymentOption
-from helios.store.conf import settings
+from helios.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 

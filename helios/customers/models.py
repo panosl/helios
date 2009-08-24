@@ -28,4 +28,5 @@ class CustomerProfile(models.Model):
 		return methods
 
 
-User.customer = property(lambda u: CustomerProfile.objects.get_or_create(user=u, country=Country.objects.get(pk=1))[0])
+User.customer = property(lambda u: CustomerProfile.objects.get_or_create(user=u, \
+				defaults={'country': Country.objects.get(pk=1)})[0])

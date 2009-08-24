@@ -1,7 +1,7 @@
 from django.contrib import admin
 from helios.orders.models import Order, OrderLine, OrderStatus
 from helios.store.forms import MyCategoryAdminForm
-from helios.store.conf import settings
+from helios.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 	admin_info = {

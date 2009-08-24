@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
-'''
-    store.urls
-    ~~~~~~~~~~
-
-    :copyright: 2007-2009 by Panos Laganakos.
-'''
 from django.conf.urls.defaults import *
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.simple import direct_to_template
-from helios.store.models import Product, ProductImage, Category
-from helios.store.conf import settings
+from helios.store.models import Product, ProductImage
+from helios.conf import settings
 from helios.store.views import category_list
 
 
@@ -23,12 +17,13 @@ urlpatterns = patterns('helios.store.views',
 	(r'^cart/clear/$', 'cart_clear'),
 	(r'^cart/set/(?P<product_id>\d+)/$', 'cart_set_quantity'),
 	(r'^cart/debug/$', 'cart_debug'),
+	(r'^paypal/', 'paypal_purchase'),
 	url(r'^checkout/$',
 		'checkout',
 		name='store_checkout'),
-	(r'^success/$', 'success'),
+	url(r'^success/$', 'success',
+		name='store_success'),
 	(r'^submit-order/$', 'submit_order'),
-	url(r'^payment', 'paypal_purchase'),
 	url(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add',
 		name='store_product_add'),
 	url(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove',
@@ -62,5 +57,4 @@ urlpatterns += patterns('',
 			template_object_name='product',
 			extra_context={}),
 		name='store_category_list'),
-
 )

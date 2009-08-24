@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 from helios.store.models import *
 from helios.store.forms import MyCategoryAdminForm
-from helios.store.conf import settings
+from helios.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 	admin_info = {
@@ -31,7 +32,7 @@ def set_category(modeladmin, request, queryset):
 
 class ProductAdmin(admin_info['class']):
 	inlines = [ProductImageInline,]
-	list_display = ('name', 'price', 'stock', 'last_modified', 'category',)
+	list_display = ('name', 'base_price', 'stock', 'last_modified', 'category',)
 	list_filter = ('category', 'is_active', 'is_featured',)
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 	search_fields = ['name']

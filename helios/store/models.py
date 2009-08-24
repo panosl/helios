@@ -4,7 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from helios.location.models import Country
 from helios.shipping.models import *
-from helios.store.conf import settings
+from helios.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 
@@ -94,7 +94,7 @@ class Product(models.Model):
 		help_text=_('Number of items in stock.'))
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in kilograms.'))
-	price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
+	base_price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
 	taxes = models.ManyToManyField(Tax, blank=True, null=True)
 
 	#objects = ActiveProductManager()
