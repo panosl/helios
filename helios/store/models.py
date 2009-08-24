@@ -1,5 +1,5 @@
 import os
-from decimal import Decimal
+from decimal import *
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from helios.location.models import Country
@@ -94,7 +94,7 @@ class Product(models.Model):
 		help_text=_('Number of items in stock.'))
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in kilograms.'))
-	base_price = models.DecimalField(_('price'), max_digits=6, decimal_places=2)
+	base_price = models.DecimalField(_('base price'), max_digits=6, decimal_places=2)
 	taxes = models.ManyToManyField(Tax, blank=True, null=True)
 
 	#objects = ActiveProductManager()
@@ -125,17 +125,9 @@ class Product(models.Model):
 	images = property(_get_images)
 
 	def _get_price(self):
-		new_price = self.price
-		taxes = self.taxes.all()
-		return self.price*reduce(lambda x, y: x.factor*y.factor, taxes)
-
-	def _get_price2(self):
-		taxes = self.taxes.all()
-		taxes_costs = [(self.price*tax.rate)/Decimal('100') for tax in taxes]
-		return sum(taxes_costs, self.price)
-
-	taxed_price = property(_get_price)
-	taxed_price2 = property(_get_price2)
+		tax_factors = [tax.factor for tax in self.taxes.all()]
+		return (self.base_price*reduce(lambda x,y: x*y, tax_factors)).quantize(Decimal('.01'), rounding=ROUND_UP)
+	price = property(_get_price)
 
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
