@@ -126,7 +126,7 @@ class Product(models.Model):
 
 	def _get_price(self):
 		tax_factors = [tax.factor for tax in self.taxes.all()]
-		return (self.base_price*reduce(lambda x,y: x*y, tax_factors)).quantize(Decimal('.01'), rounding=ROUND_UP)
+		return (self.base_price*reduce(lambda x,y: x*y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
 	price = property(_get_price)
 
 class ProductImage(models.Model):
@@ -171,3 +171,12 @@ class PaymentOption(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
+
+#try:
+#	from paypal.standard.ipn.signals import payment_was_successful
+#	def paypal_successful(sender, **kwargs):
+#		ipn_obj = sender
+#	payment_was_successful.connect(paypal_successful)
+#except:
+#	pass

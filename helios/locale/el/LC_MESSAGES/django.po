@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-17 12:08+0300\n"
+"POT-Creation-Date: 2009-08-25 11:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,7 +42,6 @@ msgstr ""
 "Αυτό το όνομα χρήστη χρησιμοποιείται ήδη, παρακαλώ διαλέξτε κάποιο άλλο."
 
 #: customers/forms.py:42
-#, fuzzy
 msgid "This email is already being used, please use another."
 msgstr ""
 "Αυτό το όνομα χρήστη χρησιμοποιείται ήδη, παρακαλώ διαλέξτε κάποιο άλλο."
@@ -55,40 +54,40 @@ msgstr "Ο κωδικός σας είναι πολύ μικρός (τουλάχ�
 msgid "You should entered the same password \t\t\t\t\ttwice"
 msgstr "Πρέπει να εισάγετε τον ίδιο κωδικό δύο φορές"
 
-#: customers/models.py:17
+#: customers/models.py:11
 msgid "phone number"
 msgstr "τηλέφωνο"
 
-#: customers/models.py:18
+#: customers/models.py:12
 msgid "Fax"
 msgstr "ΦΑΞ"
 
-#: customers/models.py:19
+#: customers/models.py:13
 msgid "address"
 msgstr "διεύθυνση"
 
-#: customers/models.py:20
+#: customers/models.py:14
 msgid "postal code"
 msgstr "ταχυδρομικός κώδικας"
 
-#: customers/models.py:21
+#: customers/models.py:15
 msgid "city"
 msgstr "πόλη"
 
-#: customers/models.py:25
+#: customers/models.py:19
 msgid "customer profile"
 msgstr "προφίλ πελάτη"
 
-#: customers/models.py:26
+#: customers/models.py:20
 msgid "customer profiles"
 msgstr "προφίλ πελατών"
 
 #: location/models.py:14 orders/models.py:15 orders/models.py:18
 #: shipping/models.py:11 shipping/models.py:14 shipping/models.py:28
 #: shipping/models.py:31 shipping/models.py:47 shipping/models.py:50
-#: store/models.py:18 store/models.py:21 store/models.py:46 store/models.py:49
-#: store/models.py:82 store/models.py:85 store/models.py:219
-#: store/models.py:222
+#: store/models.py:15 store/models.py:18 store/models.py:43 store/models.py:46
+#: store/models.py:79 store/models.py:82 store/models.py:158
+#: store/models.py:161
 msgid "name"
 msgstr "όνομα"
 
@@ -102,9 +101,9 @@ msgstr "χώρες"
 
 #: orders/models.py:16 orders/models.py:19 shipping/models.py:12
 #: shipping/models.py:15 shipping/models.py:29 shipping/models.py:32
-#: shipping/models.py:48 shipping/models.py:51 store/models.py:19
-#: store/models.py:22 store/models.py:47 store/models.py:50 store/models.py:83
-#: store/models.py:86 store/models.py:220 store/models.py:223
+#: shipping/models.py:48 shipping/models.py:51 store/models.py:16
+#: store/models.py:19 store/models.py:44 store/models.py:47 store/models.py:80
+#: store/models.py:83 store/models.py:159 store/models.py:162
 msgid "description"
 msgstr "περιγραφή"
 
@@ -144,7 +143,7 @@ msgstr "παραγγελεία"
 msgid "orders"
 msgstr "παραγγελείες"
 
-#: orders/models.py:51 store/models.py:106 store/models.py:144
+#: orders/models.py:51 store/models.py:103 store/models.py:133
 msgid "product"
 msgstr "προϊόν"
 
@@ -192,7 +191,7 @@ msgstr "τρόπος αποστολής"
 msgid "shipping methods"
 msgstr "τρόποι αποστολής"
 
-#: shipping/models.py:69 store/models.py:100
+#: shipping/models.py:69
 msgid "price"
 msgstr "τιμή"
 
@@ -201,112 +200,111 @@ msgstr "τιμή"
 msgid "shipping method regions"
 msgstr "περιοχές αποστολής"
 
-#: store/models.py:25
+#: store/models.py:22
 msgid "tax rate"
 msgstr "φορολογικός συντελεστής"
 
-#: store/models.py:27 store/models.py:92
+#: store/models.py:24 store/models.py:89
 msgid "active"
 msgstr "ενεργό"
 
-#: store/models.py:28
+#: store/models.py:25
 msgid "The tax will be available in the store."
 msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστημα."
 
-#: store/models.py:31
+#: store/models.py:28
 msgid "tax"
 msgstr "φόρο"
 
-#: store/models.py:32
+#: store/models.py:29
 msgid "taxes"
 msgstr "φόροι"
 
-#: store/models.py:57 store/models.py:89
+#: store/models.py:54 store/models.py:86
 msgid "category"
 msgstr "κατηγορία"
 
-#: store/models.py:58
+#: store/models.py:55
 msgid "categories"
 msgstr "κατηγορίες"
 
-#: store/models.py:90
+#: store/models.py:87
 msgid "date added"
 msgstr "ημερομηνία προσθήκης"
 
-#: store/models.py:91
+#: store/models.py:88
 msgid "last modified"
 msgstr "αλλάχθηκε"
 
-#: store/models.py:93
+#: store/models.py:90
 msgid "The product will appear in the store."
 msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
 
-#: store/models.py:94
+#: store/models.py:91
 msgid "featured"
 msgstr ""
 
-#: store/models.py:95
+#: store/models.py:92
 msgid "The product will be featured on the front page."
 msgstr ""
 
-#: store/models.py:96
+#: store/models.py:93
 msgid "stock"
 msgstr "στόκ"
 
-#: store/models.py:97
+#: store/models.py:94
 msgid "Number of items in stock."
 msgstr "Κομμάτια στο στόκ."
 
-#: store/models.py:98
+#: store/models.py:95
 msgid "weight"
 msgstr "βάρος"
 
-#: store/models.py:99
+#: store/models.py:96
 msgid "Defined in kilograms."
 msgstr "Δηλώνεται σε Κιλά."
 
-#: store/models.py:107
+#: store/models.py:97
+msgid "base price"
+msgstr "βασική τιμή"
+
+#: store/models.py:104
 msgid "products"
 msgstr "προϊόντα"
 
-#: store/models.py:145
+#: store/models.py:134
 msgid "picture"
 msgstr "εικόνα"
 
-#: store/models.py:149
+#: store/models.py:138
 msgid "product image"
 msgstr "εικόνα προϊόντος"
 
-#: store/models.py:150
+#: store/models.py:139
 msgid "product images"
 msgstr "εικόνες προϊόντων"
 
-#: store/models.py:182
-msgid "Pending"
-msgstr "Εκκρεμεί"
-
-#: store/models.py:183
-msgid "Billed"
-msgstr "έχει τιμολογηθεί"
-
-#: store/models.py:184
-msgid "Shipped"
-msgstr "Έχει αποσταλεί"
-
-#: store/models.py:229
+#: store/models.py:168
 msgid "payment option"
 msgstr "τρόπος πληρωμης"
 
-#: store/models.py:230
+#: store/models.py:169
 msgid "payment options"
 msgstr "τρόποι πληρωμής"
 
-#: store/views.py:146
-#, python-format
-msgid "%s does not have a customer profile."
-msgstr "%s δεν έχει προφίλ πελάτη."
-
-#: store/views.py:152
+#: store/views.py:179
 #, python-format
 msgid "%s you haven't chosen a shipping method."
 msgstr "%s δεν έχετε διαλέξει τρόπο αποστολής."
+
+#~ msgid "Pending"
+#~ msgstr "Εκκρεμεί"
+
+#~ msgid "Billed"
+#~ msgstr "έχει τιμολογηθεί"
+
+#~ msgid "Shipped"
+#~ msgstr "Έχει αποσταλεί"
+
+#~ msgid "%s does not have a customer profile."
+#~ msgstr "%s δεν έχει προφίλ πελάτη."

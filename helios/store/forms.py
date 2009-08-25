@@ -2,6 +2,10 @@ from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from helios.store.models import Category, PaymentOption
 from helios.shipping.models import ShippingMethodRegions
+from helios.conf import settings
+if settings.USE_PAYPAL:
+	from paypal.standard.forms import PayPalPaymentsForm
+	from paypal.standard.widgets import ValueHiddenInput 
 
 
 class MyCategoryAdminForm(forms.ModelForm):
@@ -41,7 +45,6 @@ class OrderForm(forms.Form):
 		})
 	)
 
-
 class PaymentForm(forms.Form):
 	payment_option = forms.ModelChoiceField(
 		queryset = PaymentOption.objects.all(),
@@ -50,3 +53,9 @@ class PaymentForm(forms.Form):
 			'class': 'order',
 		}),
 	)
+
+if settings.USE_PAYPAL:
+	class MyPayPalForm(PayPalPaymentsForm):
+		first_name = forms.CharField(widget=ValueHiddenInput())
+		last_name = forms.CharField(widget=ValueHiddenInput())
+		address_override = forms.IntegerField(widget=ValueHiddenInput(), initial=0)

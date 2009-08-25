@@ -10,9 +10,10 @@ from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from helios.store.models import Product, Category, PaymentOption
-from helios.store.forms import OrderForm, PaymentForm
+from helios.store.forms import OrderForm, PaymentForm, MyPayPalForm
 from helios.store.cart import Cart 
-from helios.orders.models import *
+from helios.store.decorators import cart_required
+from helios.orders.models import OrderStatus, Order, OrderLine
 
 
 def cart_debug(request):
@@ -95,11 +96,9 @@ def category_list(request, category, **kwargs):
 	kwargs['extra_context']['category'] = Category.objects.get(slug__exact=category)
 	return object_list(request, queryset=product_list, **kwargs)
 
+@cart_required
 def checkout(request, template_name='checkout.html'):
 	session_cart = pickle.loads(request.session.get('cart'))
-
-	if len(session_cart) == 0:
-		return HttpResponseRedirect(reverse('store_cart'))
 
 	if not request.user.is_authenticated():
 		request.session['checkout'] = 'True'
@@ -123,36 +122,36 @@ def checkout(request, template_name='checkout.html'):
 
 	return render_to_response(template_name,
 		{
+			'customer': customer,
 			'shipping_form': shipping_form,
 			'payment_form': payment_form,
 			'order_total': order_total,
 		},
 		context_instance=RequestContext(request))
 
+@cart_required
+@login_required
 def paypal_purchase(request, template_name='paypal/payment.html'):
-	from django import forms
-	from paypal.standard.forms import PayPalPaymentsForm
-	from paypal.standard.widgets import ValueHiddenInput 
+	try:
+		shipping_choice = request.session['shipping_choice']
+	except KeyError:
+		request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
+		return HttpResponseRedirect(reverse('store_checkout'))
 
+	session_cart = pickle.loads(request.session.get('cart'))
 	customer = request.user.customer
+	order_total = session_cart.get_price() + request.session['shipping_choice'].cost
 
-	class MyPayPalForm(PayPalPaymentsForm):
-		first_name = forms.CharField(widget=ValueHiddenInput())
-		last_name = forms.CharField(widget=ValueHiddenInput())
-		address_override = forms.IntegerField(widget=ValueHiddenInput(), initial=0)
-		
 	paypal_dict = {
 		'business': 'panos_1251033497_biz@phaethon-designs.gr',
-		'amount': '1.00',
+		'amount': order_total,
 		'currency_code': request.session['currency'].code,
 		'item_name': 'manishop purchase',
 		#'invoice': 'unique-invoice-id',
-		'notify_url': 'http://79.107.122.6:8000/store/ppp/',
-		'return_url': 'http://79.107.122.6:8000/store/ppp/',
+		'notify_url': 'http://79.107.108.6:8000/store/ppp/',
+		'return_url': 'http://79.107.108.6:8000/store/ppp/',
 		'cancel_return': 'http://www.example.com/your-cancel-location/',
-		#'cmd': PayPalPaymentsForm.CMD_CHOICES[1][0],
-		#'upload': '1',
-		'no_shipping': PayPalPaymentsForm.SHIPPING_CHOICES[1][0],
+		'no_shipping': MyPayPalForm.SHIPPING_CHOICES[1][0],
 		'address_override': 1,
 		'first_name': customer.user.first_name,
 		'last_name': customer.user.last_name,
@@ -166,22 +165,21 @@ def paypal_purchase(request, template_name='paypal/payment.html'):
 	#form = PayPalPaymentsForm(initial=paypal_dict)
 	form = MyPayPalForm(initial=paypal_dict)
 
-	return render_to_response(template_name, {'form': form},
+	return render_to_response(template_name,
+		{'form': form},
 		context_instance=RequestContext(request))
 
+@cart_required
 @login_required
 def submit_order(request, template_name='checkout.html'):
-	customer = request.user.customer
-
 	try:
 		shipping_choice = request.session['shipping_choice']
 	except KeyError:
 		request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
 		return HttpResponseRedirect(reverse('store_checkout'))
 
+	customer = request.user.customer
 	session_cart = pickle.loads(request.session.get('cart'))
-	if len(session_cart) == 0:
-		return HttpResponseRedirect(reverse('store_cart'))
 
 	if request.method == 'POST':
 		payment_form = PaymentForm(request.POST)
