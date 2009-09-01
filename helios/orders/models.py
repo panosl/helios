@@ -28,7 +28,7 @@ class OrderStatus(models.Model):
 		return self.name
 
 class Order(models.Model):
-	date_time_created = models.DateTimeField(_('Creation Date'))
+	date_time_created = models.DateTimeField(_('creation date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
 	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
 	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)

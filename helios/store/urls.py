@@ -8,7 +8,7 @@ from helios.store.views import category_list
 
 
 product_dict = {
-	'queryset': Product.objects.all(), # We retrieve all of them and decide on the template
+	'queryset': Product.objects.filter(is_active__exact=True),
 	'template_object_name': 'product',
 	'extra_context': {'productimage_list': ProductImage.objects.all()},
 }
