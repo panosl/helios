@@ -49,8 +49,6 @@ urlpatterns += patterns('',
 		object_list,
 		dict(product_dict, paginate_by=settings.PAGINATE_BY)),
 
-	(r'^ppp/', include('paypal.standard.ipn.urls')),
-
 	url(r'^(?P<category>[-\w]+)/$',
 		category_list,
 		dict(paginate_by=settings.PAGINATE_BY,
@@ -58,3 +56,8 @@ urlpatterns += patterns('',
 			extra_context={}),
 		name='store_category_list'),
 )
+
+if settings.USE_PAYPAL:
+	urlpatterns += patterns('',
+		(r'^ppp/', include('paypal.standard.ipn.urls')),
+	)
