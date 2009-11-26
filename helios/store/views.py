@@ -10,10 +10,13 @@ from django.views.generic.list_detail import object_list
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from helios.store.models import Product, Category, PaymentOption
-from helios.store.forms import OrderForm, PaymentForm, MyPayPalForm
+from helios.store.forms import OrderForm, PaymentForm
 from helios.store.cart import Cart 
 from helios.store.decorators import cart_required
 from helios.orders.models import OrderStatus, Order, OrderLine
+from helios.conf import settings
+if settings.USE_PAYPAL:
+	from helios.store.forms import MyPayPalForm
 
 
 def cart_debug(request):
