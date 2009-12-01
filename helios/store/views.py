@@ -16,7 +16,7 @@ from helios.store.decorators import cart_required
 from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.conf import settings
 if settings.USE_PAYPAL:
-	import MyPayPalForm
+	from helios.store.forms import MyPayPalForm
 
 
 def cart_debug(request):
