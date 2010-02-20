@@ -107,7 +107,7 @@ class Product(models.Model):
 			ordering = ['name']
 
 	def __unicode__(self):
-		return self.name
+		return self.name or ''
 
 	@models.permalink	
 	def get_absolute_url(self):
