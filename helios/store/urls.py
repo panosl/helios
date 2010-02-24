@@ -47,7 +47,9 @@ urlpatterns += patterns('',
 
 	url(r'^products/$',
 		object_list,
-		dict(product_dict, paginate_by=settings.PAGINATE_BY)),
+		dict(product_dict,
+			paginate_by=settings.PAGINATE_BY),
+		name='store_product_list'),
 
 	url(r'^(?P<category>[-\w]+)/$',
 		category_list,
