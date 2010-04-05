@@ -95,7 +95,7 @@ class Product(models.Model):
 	weight = models.PositiveIntegerField(_('weight'), default=0,
 		help_text=_('Defined in kilograms.'))
 	base_price = models.DecimalField(_('base price'), max_digits=6, decimal_places=2)
-	taxes = models.ManyToManyField(Tax, blank=True, null=True)
+	taxes = models.ManyToManyField(Tax, blank=True, null=True, verbose_name=_('taxes'))
 
 	#objects = ActiveProductManager()
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-25 11:54+0300\n"
+"POT-Creation-Date: 2010-04-05 13:50+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,7 +116,8 @@ msgid "order statuses"
 msgstr "καταστάσεις παραγγελείας"
 
 #: orders/models.py:31
-msgid "Creation Date"
+#, fuzzy
+msgid "creation date"
 msgstr "Ημερομηνία Δημιουργίας"
 
 #: orders/models.py:32
@@ -216,7 +217,7 @@ msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστη
 msgid "tax"
 msgstr "φόρο"
 
-#: store/models.py:29
+#: store/models.py:29 store/models.py:98
 msgid "taxes"
 msgstr "φόροι"
 
@@ -250,11 +251,11 @@ msgstr ""
 
 #: store/models.py:93
 msgid "stock"
-msgstr "στόκ"
+msgstr "απόθεμα"
 
 #: store/models.py:94
 msgid "Number of items in stock."
-msgstr "Κομμάτια στο στόκ."
+msgstr "Κομμάτια σε απόθεμα."
 
 #: store/models.py:95
 msgid "weight"
@@ -292,7 +293,7 @@ msgstr "τρόπος πληρωμης"
 msgid "payment options"
 msgstr "τρόποι πληρωμής"
 
-#: store/views.py:179
+#: store/views.py:141 store/views.py:181
 #, python-format
 msgid "%s you haven't chosen a shipping method."
 msgstr "%s δεν έχετε διαλέξει τρόπο αποστολής."
