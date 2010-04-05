@@ -1,4 +1,0 @@
-#!/bin/bash
-
-#sudo /usr/lib/python2.5/smtpd.py -n -c DebuggingServer localhost:25
-sudo /System/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/smtpd.py -n -c DebuggingServer localhost:25
