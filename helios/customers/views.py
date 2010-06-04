@@ -10,6 +10,7 @@ from helios.customers.models import CustomerProfile
 
 
 def register(request, template_name='customer/register.html'):
+	form = CustomerForm(request.POST or None)
 	if request.method == 'POST':
 		form  = CustomerForm(request.POST)
 		if form.is_valid():
