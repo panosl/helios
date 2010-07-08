@@ -148,7 +148,8 @@ def paypal_purchase(request, template_name='paypal/payment.html'):
 	paypal_dict = {
 		'business': 'panos_1251033497_biz@phaethon-designs.gr',
 		'amount': order_total,
-		'currency_code': request.session['currency'].code,
+		if settings.HAS_CURRENCIES:
+			'currency_code': request.session['currency'].code,
 		'item_name': 'manishop purchase',
 		#'invoice': 'unique-invoice-id',
 		'notify_url': 'http://79.107.108.6:8000/store/ppp/',
@@ -195,8 +196,9 @@ def submit_order(request, template_name='checkout.html'):
 			order = Order.objects.create(
 				date_time_created=datetime.today(),
 				customer=customer,
-				currency_code=request.session['currency'].code,
-				currency_factor=request.session['currency'].factor,
+				if settings.HAS_CURRENCIES:
+					currency_code=request.session['currency'].code,
+					currency_factor=request.session['currency'].factor,
 				status=OrderStatus.objects.get(slug__exact='pending'),
 				shipping_city=customer.city,
 				shipping_country=customer.country,

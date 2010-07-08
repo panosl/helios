@@ -30,8 +30,9 @@ class OrderStatus(models.Model):
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('creation date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
-	currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
-	currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
+	if settings.HAS_CURRENCIES:
+		currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
+		currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
 	status = models.ForeignKey(OrderStatus, blank=True, null=True)
 	shipping_city = models.CharField(_('City'), max_length=50, blank=True)
 	shipping_country = models.ForeignKey(Country, blank=True, null=True, verbose_name='shipping country')
