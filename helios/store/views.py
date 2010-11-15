@@ -148,8 +148,6 @@ def paypal_purchase(request, template_name='paypal/payment.html'):
 	paypal_dict = {
 		'business': 'panos_1251033497_biz@phaethon-designs.gr',
 		'amount': order_total,
-		if settings.HAS_CURRENCIES:
-			'currency_code': request.session['currency'].code,
 		'item_name': 'manishop purchase',
 		#'invoice': 'unique-invoice-id',
 		'notify_url': 'http://79.107.108.6:8000/store/ppp/',
@@ -165,6 +163,9 @@ def paypal_purchase(request, template_name='paypal/payment.html'):
 		'country': customer.country,
 		'email': customer.user.email,
 	}
+
+	if settings.HAS_CURRENCIES:
+		paypal_dict['currency_code'] = request.session['currency'].code
 
 	#form = PayPalPaymentsForm(initial=paypal_dict)
 	form = MyPayPalForm(initial=paypal_dict)
@@ -193,18 +194,19 @@ def submit_order(request, template_name='checkout.html'):
 			if payment_option == PaymentOption.objects.get(slug='paypal'):
 				return HttpResponseRedirect(reverse(paypal_purchase))
 
-			order = Order.objects.create(
-				date_time_created=datetime.today(),
-				customer=customer,
-				if settings.HAS_CURRENCIES:
-					currency_code=request.session['currency'].code,
-					currency_factor=request.session['currency'].factor,
-				status=OrderStatus.objects.get(slug__exact='pending'),
-				shipping_city=customer.city,
-				shipping_country=customer.country,
-				shipping_choice=request.session['shipping_choice'],
-				payment_option=payment_option
-			)
+			order_dict = {
+				'date_time_created': datetime.today(),
+				'customer': customer,
+				'status': OrderStatus.objects.get(slug__exact='pending'),
+				'shipping_city': customer.city,
+				'shipping_country': customer.country,
+				'shipping_choice': request.session['shipping_choice'],
+				'payment_option': payment_option
+			}
+			if settings.HAS_CURRENCIES:
+				order_dict['currency_code'] = request.session['currency'].code,
+				order_dict['currency_factor'] = request.session['currency'].factor,
+			order = Order.objects.create(**order_dict)
 
 			for cart_line in session_cart.values():
 				order_line = OrderLine.objects.create(
