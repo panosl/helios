@@ -7,7 +7,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
 from django.views.generic.list_detail import object_list
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.decorators import login_required
 from helios.store.models import Product, Category, PaymentOption
 from helios.store.forms import OrderForm, PaymentForm

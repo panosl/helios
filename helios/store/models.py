@@ -1,7 +1,7 @@
 import os
 from decimal import *
 from django.db import models
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 from helios.location.models import Country
 from helios.shipping.models import *
 from helios.conf import settings
