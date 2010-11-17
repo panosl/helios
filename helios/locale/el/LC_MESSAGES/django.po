@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-05 13:50+0300\n"
+"POT-Creation-Date: 2010-11-17 12:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,55 +116,54 @@ msgid "order statuses"
 msgstr "καταστάσεις παραγγελείας"
 
 #: orders/models.py:31
-#, fuzzy
 msgid "creation date"
-msgstr "Ημερομηνία Δημιουργίας"
+msgstr "ημερομηνία δημιουργίας"
 
 #: orders/models.py:32
 msgid "customer"
 msgstr "πελάτης"
 
-#: orders/models.py:33
+#: orders/models.py:34
 msgid "currency code"
 msgstr "κωδικός νομίσματος"
 
-#: orders/models.py:34
+#: orders/models.py:35
 msgid "currency factor"
 msgstr "παράγοντας νομίσματος"
 
-#: orders/models.py:36
+#: orders/models.py:37
 msgid "City"
 msgstr "Πόλη"
 
-#: orders/models.py:42 orders/models.py:50
+#: orders/models.py:43 orders/models.py:51
 msgid "order"
 msgstr "παραγγελεία"
 
-#: orders/models.py:43
+#: orders/models.py:44
 msgid "orders"
 msgstr "παραγγελείες"
 
-#: orders/models.py:51 store/models.py:103 store/models.py:133
+#: orders/models.py:52 store/models.py:103 store/models.py:133
 msgid "product"
 msgstr "προϊόν"
 
-#: orders/models.py:52
+#: orders/models.py:53
 msgid "unit price"
 msgstr "τιμή μονάδος"
 
-#: orders/models.py:53
+#: orders/models.py:54
 msgid "line price"
 msgstr "τιμή γραμμής"
 
-#: orders/models.py:54
+#: orders/models.py:55
 msgid "quantity"
 msgstr "ποσότητα"
 
-#: orders/models.py:57
+#: orders/models.py:58
 msgid "order line"
 msgstr "γραμμή παραγγελείας"
 
-#: orders/models.py:58
+#: orders/models.py:59
 msgid "order lines"
 msgstr "γραμμές παραγγελειών"
 
@@ -293,19 +292,7 @@ msgstr "τρόπος πληρωμης"
 msgid "payment options"
 msgstr "τρόποι πληρωμής"
 
-#: store/views.py:141 store/views.py:181
+#: store/views.py:141 store/views.py:183
 #, python-format
 msgid "%s you haven't chosen a shipping method."
 msgstr "%s δεν έχετε διαλέξει τρόπο αποστολής."
-
-#~ msgid "Pending"
-#~ msgstr "Εκκρεμεί"
-
-#~ msgid "Billed"
-#~ msgstr "έχει τιμολογηθεί"
-
-#~ msgid "Shipped"
-#~ msgstr "Έχει αποσταλεί"
-
-#~ msgid "%s does not have a customer profile."
-#~ msgstr "%s δεν έχει προφίλ πελάτη."

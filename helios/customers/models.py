@@ -15,7 +15,7 @@ class CustomerProfile(models.Model):
 	city = models.CharField(_('city'), max_length=50, blank=True)
 	country = models.ForeignKey(Country, blank=True, null=True)
 
-	class meta:
+	class Meta:
 		verbose_name = _('customer profile')
 		verbose_name_plural = _('customer profiles')
 
@@ -37,11 +37,11 @@ class CustomerProfile(models.Model):
 
 	def get_full_name(self):
 		return self.user.get_full_name()
-	
+
 	@property
 	def email(self):
 		return self.user.email
-	
+
 
 User.customer = property(lambda u: CustomerProfile.objects.get_or_create(user=u, \
 				defaults={'country': Country.objects.get(pk=1)})[0])
