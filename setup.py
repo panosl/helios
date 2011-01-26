@@ -21,7 +21,7 @@ for dirpath, dirnames, filenames in os.walk('helios'):
 			pkg = pkg.replace(os.path.altsep, '.')
 		packages.append(pkg)
 	elif filenames:
-		prefix = dirpath[13:] # Strip "currencies/" or "currencies\"
+		prefix = dirpath[5:] # Strip "currencies/" or "currencies\"
 		for f in filenames:
 			data_files.append(os.path.join(prefix, f))
 
