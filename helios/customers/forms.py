@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
-'''
-    customers.forms
-    ~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
 from django import forms
-#from django.core.validators import alnum_re
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from helios.customers.models import Country
@@ -26,20 +19,20 @@ class CustomerForm(forms.Form):
 	password2 = forms.CharField(widget=forms.PasswordInput)
 
 	def clean_username(self):
-		#if not alnum_re.search(self.cleaned_data['username']):
-			#raise forms.ValidationError([_('Usernames can only contain letters, numbers and underscores')])
 		try:
 			user = User.objects.get(username__exact=self.cleaned_data['username'])
 		except User.DoesNotExist:
 			return self.cleaned_data['username']
-		raise forms.ValidationError([_('This username is already taken, please choose another.')])
+		raise forms.ValidationError([_('This username is already taken, \
+			please choose another.')])
 
 	def clean_email(self):
 		try:
 			user = User.objects.get(email__exact=self.cleaned_data['email'])
 		except User.DoesNotExist:
 			return self.cleaned_data['email']
-		raise forms.ValidationError([_('This email is already being used, please use another.')])
+		raise forms.ValidationError([_('This email is already being used, \
+			please use another.')])
 
 	def clean_password1(self):
 		'''Check length of the password.'''
@@ -66,6 +59,7 @@ class CustomerForm(forms.Form):
 					twice')])
 			else:
 				return self.cleaned_data['password2']
+
 
 class CreateCustomerForm(CustomerForm):
 	pass

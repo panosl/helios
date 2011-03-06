@@ -15,18 +15,24 @@ product_dict = {
 
 urlpatterns = patterns('helios.store.views',
 	(r'^cart/clear/$', 'cart_clear'),
-	(r'^cart/set/(?P<product_id>\d+)/$', 'cart_set_quantity'),
 	(r'^cart/debug/$', 'cart_debug'),
-	(r'^paypal/', 'paypal_purchase'),
+
+	url(r'^cart/set/(?P<product_id>\d+)/$',
+		'cart_set_quantity',
+		name='store_cart_set_quantity'),
 	url(r'^checkout/$',
 		'checkout',
 		name='store_checkout'),
 	url(r'^success/$', 'success',
 		name='store_success'),
-	(r'^submit-order/$', 'submit_order'),
-	url(r'^products/(?P<slug>[-\w]+)/add/$', 'product_add',
+	url(r'^submit-order/$',
+		'submit_order',
+		name='store_submit_order'),
+	url(r'^products/(?P<slug>[-\w]+)/add/$',
+		'product_add',
 		name='store_product_add'),
-	url(r'^products/(?P<slug>[-\w]+)/remove/$', 'product_remove',
+	url(r'^products/(?P<slug>[-\w]+)/remove/$',
+		'product_remove',
 		name='store_product_remove'),
 )
 
@@ -61,5 +67,5 @@ urlpatterns += patterns('',
 
 if settings.USE_PAYPAL:
 	urlpatterns += patterns('',
-		(r'^ppp/', include('paypal.standard.ipn.urls')),
+		(r'^paypal/', include('helios.paypal.urls'),
 	)

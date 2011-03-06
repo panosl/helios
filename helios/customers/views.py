@@ -12,7 +12,7 @@ from helios.customers.models import CustomerProfile
 def register(request, template_name='customer/register.html'):
 	form = CustomerForm(request.POST or None)
 	if request.method == 'POST':
-		form  = CustomerForm(request.POST)
+		form = CustomerForm(request.POST)
 		if form.is_valid():
 			user = User.objects.create_user(form.cleaned_data['username'],
 				form.cleaned_data['email'],
@@ -45,8 +45,9 @@ def register(request, template_name='customer/register.html'):
 		else:
 			form = CustomerForm()
 
-
-	return render_to_response(template_name, {'form': form}, context_instance=RequestContext(request))
+	return render_to_response(template_name, {
+			'form': form
+		}, context_instance=RequestContext(request))
 
 
 def customer(request, template_name='customer.html'):
@@ -63,11 +64,14 @@ def customer(request, template_name='customer.html'):
 				'city': customer.city,
 				'country': customer.country_id,
 			}
-			#initial_data = model_to_dict(customer, fields=['username', 'first_name', 'last_name', 'address'])
+			#initial_data = model_to_dict(customer,
+				#fields=['username', 'first_name',
+					#'last_name', 'address'])
 		except:
 			return HttpResponseRedirect('/')
 
-	return render_to_response(template_name, context_instance=RequestContext(request))
+	return render_to_response(template_name,
+		context_instance=RequestContext(request))
 
 
 def order_list(request, **kwargs):

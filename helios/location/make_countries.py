@@ -2,7 +2,6 @@
 from string import Template
 
 
-
 countries = (
 	# {{{
 	'United States',

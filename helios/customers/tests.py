@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-'''
-    customers.tests
-    ~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
-
 #import unittest
 #from django.test.client import Client
 from django.test import TestCase
@@ -22,6 +15,7 @@ customer_data = {
 	'password1': '12345',
 	'password2': '12345',
 }
+
 
 class CustomerCreationTest(TestCase):
 	fixtures = ['countries.yaml']

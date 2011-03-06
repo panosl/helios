@@ -23,7 +23,8 @@ class CustomerProfile(models.Model):
 		return u'%s' % (self.user.get_full_name())
 
 	def shipping_methods(self):
-		methods = [region.shippingmethodregions_set.all() for region in self.country.shippingregion_set.all()]
+		methods = [region.shippingmethodregions_set.all()
+			for region in self.country.shippingregion_set.all()]
 		methods = [method[0] for method in methods]
 		return methods
 
@@ -43,5 +44,5 @@ class CustomerProfile(models.Model):
 		return self.user.email
 
 
-User.customer = property(lambda u: CustomerProfile.objects.get_or_create(user=u, \
-				defaults={'country': Country.objects.get(pk=1)})[0])
+User.customer = property(lambda u: CustomerProfile.objects.get_or_create(
+			user=u, defaults={'country': Country.objects.get(pk=1)})[0])

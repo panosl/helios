@@ -1,0 +1,23 @@
+[
+    {
+        "pk": 1, 
+        "model": "orders.orderstatus", 
+        "fields": {
+            "slug": "pending"
+        }
+    }, 
+    {
+        "pk": 2, 
+        "model": "orders.orderstatus", 
+        "fields": {
+            "slug": "billed"
+        }
+    }, 
+    {
+        "pk": 3, 
+        "model": "orders.orderstatus", 
+        "fields": {
+            "slug": "shipped"
+        }
+    }
+]
