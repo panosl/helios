@@ -21,7 +21,8 @@ if settings.USE_PAYPAL:
 
 
 def cart_debug(request):
-	return HttpResponse('%s' % request.session.keys())
+	#return HttpResponse('%s' % request.session.keys())
+	return HttpResponse('%s' % request.session.items())
 
 def cart_clear(request):
 	session_cart = pickle.loads(request.session.get('cart'))
@@ -112,17 +113,26 @@ def checkout(request, template_name='checkout.html'):
 	order_total = session_cart.get_price()
 
 	if request.method == 'POST':
-		shipping_form = OrderForm(customer, request.POST,
-			initial={'shipping_choice': request.POST['shipping_choice']})
+		#shipping_form = OrderForm(customer, request.POST,
+			#initial={'shipping_choice': request.POST['shipping_choice']})
+		shipping_form = OrderForm(customer, request.POST)
+		payment_form = PaymentForm(request.POST)
 
 		if shipping_form.is_valid():
 			shipping_choice = shipping_form.cleaned_data['shipping_choice']
 			order_total += Decimal(shipping_choice.cost)
 			request.session['shipping_choice'] = shipping_choice
+
+		if payment_form.is_valid():
+			payment_option = payment_form.cleaned_data['payment_option']
+			request.session['payment_option'] = payment_option
+
+		if payment_form.is_valid() and shipping_form.is_valid():
+			return HttpResponseRedirect(reverse(submit_order))
 	else:
 		shipping_form = OrderForm(customer)
+		payment_form = PaymentForm()
 
-	payment_form = PaymentForm()
 
 	return render_to_response(template_name,
 		{
@@ -143,48 +153,44 @@ def submit_order(request, template_name='checkout.html'):
 		request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
 		return HttpResponseRedirect(reverse('store_checkout'))
 
+	try:
+		payment_option = request.session['payment_option']
+	except KeyError:
+		request.user.message_set.create(message=_(u'%s you haven\'t chosen a payment option.') % (request.user.username,))
+		return HttpResponseRedirect(reverse('store_checkout'))
+
 	customer = request.user.customer
 	session_cart = pickle.loads(request.session.get('cart'))
 
-	if request.method == 'POST':
-		payment_form = PaymentForm(request.POST)
-		if payment_form.is_valid():
-			payment_option = payment_form.cleaned_data['payment_option']
+	if payment_option.slug == 'paypal':
+		return HttpResponseRedirect(reverse(paypal_purchase))
 
-			#if payment_option == PaymentOption.objects.get(slug='paypal'):
-			if payment_option.slug == 'paypal':
-				return HttpResponseRedirect(reverse(paypal_purchase))
+	order_dict = {
+		'date_time_created': datetime.today(),
+		'customer': customer,
+		'status': OrderStatus.objects.get(slug__exact='pending'),
+		'shipping_city': customer.city,
+		'shipping_country': customer.country,
+		'shipping_choice': request.session['shipping_choice'],
+		'payment_option': payment_option
+	}
+	if settings.HAS_CURRENCIES:
+		order_dict['currency_code'] = request.session['currency'].code,
+		order_dict['currency_factor'] = request.session['currency'].factor,
+	order = Order.objects.create(**order_dict)
 
-			order_dict = {
-				'date_time_created': datetime.today(),
-				'customer': customer,
-				'status': OrderStatus.objects.get(slug__exact='pending'),
-				'shipping_city': customer.city,
-				'shipping_country': customer.country,
-				'shipping_choice': request.session['shipping_choice'],
-				'payment_option': payment_option
-			}
-			if settings.HAS_CURRENCIES:
-				order_dict['currency_code'] = request.session['currency'].code,
-				order_dict['currency_factor'] = request.session['currency'].factor,
-			order = Order.objects.create(**order_dict)
+	for cart_line in session_cart.values():
+		order_line = OrderLine.objects.create(
+			order=order,
+			product=cart_line.get_product(),
+			unit_price=cart_line.get_product().price,
+			price=cart_line.get_price(),
+			quantity=cart_line.get_quantity()
+		)
+	session_cart.clear() 
+	request.session['cart'] = session_cart.dump()
 
-			for cart_line in session_cart.values():
-				order_line = OrderLine.objects.create(
-					order=order,
-					product=cart_line.get_product(),
-					unit_price=cart_line.get_product().price,
-					price=cart_line.get_price(),
-					quantity=cart_line.get_quantity()
-				)
-			session_cart.clear() 
-			request.session['cart'] = session_cart.dump()
-
-			return HttpResponseRedirect(reverse(success))
-	else:
-		return HttpResponseRedirect('/')
-
-	return HttpResponseRedirect('/')
+	return HttpResponseRedirect(reverse(success))
 
 @login_required
 def success(request, template_name='order_success.html'):
