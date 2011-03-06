@@ -1,11 +1,4 @@
 # -*- coding: utf-8 -*-
-'''
-    location.models
-    ~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2008 by Panos Laganakos.
-'''
-
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 

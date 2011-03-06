@@ -18,14 +18,17 @@ else:
 class OrderLineAdmin(admin.ModelAdmin):
 	pass
 
+
 class OrderLineInline(admin.TabularInline):
 	model = OrderLine
 
+
 class OrderAdmin(admin.ModelAdmin):
 	date_hierarchy = 'date_time_created'
-	inlines = [OrderLineInline,]
+	inlines = [OrderLineInline]
 	list_display = ['date_time_created', 'customer', 'status']
 	list_filter = ('status',)
+
 
 class OrderStatusAdmin(admin_info['class']):
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}

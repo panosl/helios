@@ -16,6 +16,7 @@ else:
 class ShipperAdmin(admin_info['class']):
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 
+
 class ShippingRegionAdmin(admin_info['class']):
 	prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 	list_display = [
@@ -25,8 +26,10 @@ class ShippingRegionAdmin(admin_info['class']):
 	]
 	filter_horizontal = ('countries',)
 
+
 class ShippingMethodRegionsInline(admin.TabularInline):
 	model = ShippingMethodRegions
+
 
 class ShippingMethodAdmin(admin_info['class']):
 	inlines = [ShippingMethodRegionsInline]
@@ -35,6 +38,7 @@ class ShippingMethodAdmin(admin_info['class']):
 		'name',
 		'shipper',
 	]
+
 
 class ShippingMethodRegionsAdmin(admin.ModelAdmin):
 	pass

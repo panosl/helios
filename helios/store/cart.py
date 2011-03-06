@@ -5,6 +5,7 @@ try:
 except ImportError:
 	pass
 
+
 class Cart(dict):
 	"""
 	A dict-like object, which stores ``Product.id``:``CartLine`` pairs, in the form of:
@@ -25,7 +26,8 @@ class Cart(dict):
 
 		If product already in ``Cart`` add to the quantity.
 		"""
-		if self.has_key(product_id):
+		#if self.has_key(product_id):
+		if product_id in self:
 			self[product_id]['quantity'] += quantity
 		else:
 			self[product_id] = CartLine(id=product_id, quantity=quantity)
@@ -52,12 +54,13 @@ class Cart(dict):
 	def dump(self):
 		return pickle.dumps(self)
 
+
 class CartLine(dict):
 	"""
 	"""
 	def __init__(self, **line):
 		super(CartLine, self).__init__(line)
-	
+
 	def get_product(self):
 		product = Product.objects.get(id__exact=self['id'])
 		return product
@@ -71,7 +74,7 @@ class CartLine(dict):
 	def get_price(self):
 		price = self.get_product().price * self['quantity']
 		return price
-	
+
 	def _get_price(self):
 		price = self.get_product().price * self['quantity']
 		return price

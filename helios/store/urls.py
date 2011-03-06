@@ -67,5 +67,5 @@ urlpatterns += patterns('',
 
 if settings.USE_PAYPAL:
 	urlpatterns += patterns('',
-		(r'^paypal/', include('helios.paypal.urls'),
+		(r'^paypal/', include('helios.paypal.urls')),
 	)

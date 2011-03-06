@@ -23,7 +23,7 @@ class Tax(models.Model):
 		default=19.00)
 	is_active = models.BooleanField(_('active'), default=True,
 		help_text=_('The tax will be available in the store.'))
-	
+
 	class Meta:
 		verbose_name = _('tax')
 		verbose_name_plural = _('taxes')
@@ -31,11 +31,12 @@ class Tax(models.Model):
 
 	def __unicode__(self):
 		return self.name
-	
+
 	def _get_factor(self):
 		"""Returns the factor depending on the tax rate."""
-		return (self.rate/Decimal('100.00'))+Decimal('1.00')
+		return (self.rate / Decimal('100.00')) + Decimal('1.00')
 	factor = property(_get_factor)
+
 
 class Category(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -68,10 +69,12 @@ class Category(models.Model):
 			'category': self.slug,
 		})
 
+
 if settings.IS_MULTILINGUAL:
 	class ActiveProductManager(multilingual.Manager):
 		def get_query_set(self):
 			return super(ActiveProductManager).get_query_set().filter(is_active=True)
+
 
 class Product(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -109,7 +112,7 @@ class Product(models.Model):
 	def __unicode__(self):
 		return self.name or ''
 
-	@models.permalink	
+	@models.permalink
 	def get_absolute_url(self):
 		return ('django.views.generic.list_detail.object_detail', (), {
 			'slug': self.slug,
@@ -126,8 +129,9 @@ class Product(models.Model):
 
 	def _get_price(self):
 		tax_factors = [tax.factor for tax in self.taxes.all()]
-		return (self.base_price*reduce(lambda x,y: x*y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+		return (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
 	price = property(_get_price)
+
 
 class ProductImage(models.Model):
 	product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
@@ -145,12 +149,13 @@ class ProductImage(models.Model):
 		try:
 			os.remove(self.picture.path)
 		except OSError:
-			pass	
+			pass
 		try:
 			os.remove(os.path.splitext(self.picture.path)[0] + self.suffix)
 		except OSError:
 			pass
 		super(ProductImage, self).delete()
+
 
 class PaymentOption(models.Model):
 	if settings.IS_MULTILINGUAL:

@@ -27,6 +27,7 @@ class OrderStatus(models.Model):
 	def __unicode__(self):
 		return self.name
 
+
 class Order(models.Model):
 	date_time_created = models.DateTimeField(_('creation date'))
 	customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
@@ -46,6 +47,7 @@ class Order(models.Model):
 
 	def __unicode__(self):
 		return u'Order %s' % self.date_time_created
+
 
 class OrderLine(models.Model):
 	order = models.ForeignKey(Order, verbose_name=_('order'))

@@ -5,6 +5,7 @@ from helios.conf import settings
 if settings.IS_MULTILINGUAL:
 	import multilingual
 
+
 class Shipper(models.Model):
 	if settings.IS_MULTILINGUAL:
 		class Translation(multilingual.Translation):
@@ -21,6 +22,7 @@ class Shipper(models.Model):
 
 	def __unicode__(self):
 		return self.name
+
 
 class ShippingRegion(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -40,6 +42,7 @@ class ShippingRegion(models.Model):
 
 	def __unicode__(self):
 		return u'%s-%s' % (self.shipper, self.name)
+
 
 class ShippingMethod(models.Model):
 	if settings.IS_MULTILINGUAL:
@@ -63,6 +66,7 @@ class ShippingMethod(models.Model):
 	def __unicode__(self):
 		return self.name
 
+
 class ShippingMethodRegions(models.Model):
 	region = models.ForeignKey(ShippingRegion)
 	method = models.ForeignKey(ShippingMethod)
@@ -70,6 +74,6 @@ class ShippingMethodRegions(models.Model):
 
 	class Meta:
 		verbose_name_plural = _('shipping method regions')
-	
+
 	def __unicode__(self):
 		return u'%s-%s' % (self.region, self.method,)
