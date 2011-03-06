@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.generic.list_detail import object_list
-from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
 from helios.customers.forms import CustomerForm, CreateCustomerForm
 from helios.customers.models import CustomerProfile
 
@@ -41,7 +42,7 @@ def register(request, template_name='customer/register.html'):
 				return HttpResponseRedirect('/')
 	else:
 		if request.user.is_authenticated():
-			return HttpResponseRedirect(customer)
+			return HttpResponseRedirect(reverse('customer'))
 		else:
 			form = CustomerForm()
 
@@ -50,7 +51,7 @@ def register(request, template_name='customer/register.html'):
 		}, context_instance=RequestContext(request))
 
 
-def customer(request, template_name='customer.html'):
+def customer(request, template_name='customer/customer.html'):
 	if request.user.is_authenticated():
 		try:
 			user = request.user
