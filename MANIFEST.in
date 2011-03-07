@@ -2,3 +2,5 @@ include *.txt
 include MANIFEST.in
 recursive-include docs *
 recursive-include helios/location/fixtures *
+recursive-include helios/orders/fixtures *
+recursive-include helios/store/fixtures *
