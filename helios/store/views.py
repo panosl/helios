@@ -112,6 +112,9 @@ def checkout(request, template_name='checkout.html'):
 	customer = request.user.customer
 	order_total = session_cart.get_price()
 
+	if not customer.country.shippingregion_set.all():
+		return HttpResponseRedirect(reverse('store_unshippable'))
+
 	if request.method == 'POST':
 		#shipping_form = OrderForm(customer, request.POST,
 			#initial={'shipping_choice': request.POST['shipping_choice']})
@@ -143,6 +146,12 @@ def checkout(request, template_name='checkout.html'):
 		},
 		context_instance=RequestContext(request))
 
+@login_required
+def unshippable(request, template_name='store/unshippable.html'):
+	return render_to_response(template_name, {
+			'customer': request.user.customer,
+	},
+	context_instance=RequestContext(request))
 
 @cart_required
 @login_required
