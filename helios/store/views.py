@@ -78,7 +78,8 @@ def product_add(request, slug=''):
 
 	url = request.META.get('HTTP_REFERER', None)
 	if url is None:
-		url = '/store/products'
+		#url = '/store/products'
+		url = reverse('store_product_list')
 
 	return HttpResponseRedirect(url)
 
@@ -153,6 +154,13 @@ def checkout(request, template_name='checkout.html'):
 
 @login_required
 def unshippable(request, template_name='store/unshippable.html'):
+	customer = request.user.customer
+
+	if customer.country.shippingregion_set.all():
+		url = request.META.get('HTTP_REFERER', None)
+		if url is None:
+			url = reverse('store')
+		return HttpResponseRedirect(url)
 	return render_to_response(template_name, {
 			'customer': request.user.customer,
 	},
