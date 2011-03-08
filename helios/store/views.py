@@ -14,21 +14,22 @@ from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
 from helios.store.models import Product, Category, PaymentOption
 from helios.store.forms import PaymentForm
-from helios.store.cart import Cart 
+from helios.store.cart import Cart
 from helios.store.decorators import cart_required
 if settings.USE_PAYPAL:
 	from helios.paypal.views import *
 
 
 def cart_debug(request):
-	#return HttpResponse('%s' % request.session.keys())
 	return HttpResponse('%s' % request.session.items())
+
 
 def cart_clear(request):
 	session_cart = pickle.loads(request.session.get('cart'))
-	session_cart.clear() 
+	session_cart.clear()
 	request.session['cart'] = session_cart.dump()
 	return HttpResponse('Done')
+
 
 def cart_set_quantity(request, product_id, success_url='/store/cart'):
 	if not request.method == 'POST':
@@ -38,7 +39,7 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 		quantity = int(request.POST.get('quantity'))
 	except ValueError:
 		return HttpResponseRedirect(success_url)
-		
+
 	if not request.session.get('cart'):
 		session_cart = Cart()
 		pcart = session_cart.dump()
@@ -63,9 +64,10 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 
 	return HttpResponseRedirect(success_url)
 
+
 def product_add(request, slug=''):
 	session_cart = pickle.loads(request.session.get('cart'))
-	
+
 	try:
 		product = Product.objects.get(slug=slug)
 	except Product.DoesNotExist:
@@ -74,11 +76,12 @@ def product_add(request, slug=''):
 	session_cart.add_product(product.id, 1)
 	request.session['cart'] = session_cart.dump()
 
-        url = request.META.get('HTTP_REFERER', None)
+	url = request.META.get('HTTP_REFERER', None)
 	if url is None:
 		url = '/store/products'
 
 	return HttpResponseRedirect(url)
+
 
 def product_remove(request, slug=''):
 	session_cart = pickle.loads(request.session.get('cart'))
@@ -96,10 +99,12 @@ def product_remove(request, slug=''):
 	request.session['cart'] = session_cart.dump()
 	return HttpResponseRedirect(reverse('store_cart'))
 
+
 def category_list(request, category, **kwargs):
 	product_list = Product.objects.filter(category__slug__exact=category)
 	kwargs['extra_context']['category'] = Category.objects.get(slug__exact=category)
 	return object_list(request, queryset=product_list, **kwargs)
+
 
 @cart_required
 def checkout(request, template_name='checkout.html'):
@@ -136,7 +141,6 @@ def checkout(request, template_name='checkout.html'):
 		shipping_form = OrderForm(customer)
 		payment_form = PaymentForm()
 
-
 	return render_to_response(template_name,
 		{
 			'customer': customer,
@@ -146,12 +150,14 @@ def checkout(request, template_name='checkout.html'):
 		},
 		context_instance=RequestContext(request))
 
+
 @login_required
 def unshippable(request, template_name='store/unshippable.html'):
 	return render_to_response(template_name, {
 			'customer': request.user.customer,
 	},
 	context_instance=RequestContext(request))
+
 
 @cart_required
 @login_required
@@ -196,10 +202,11 @@ def submit_order(request, template_name='checkout.html'):
 			price=cart_line.get_price(),
 			quantity=cart_line.get_quantity()
 		)
-	session_cart.clear() 
+	session_cart.clear()
 	request.session['cart'] = session_cart.dump()
 
 	return HttpResponseRedirect(reverse(success))
+
 
 @login_required
 def success(request, template_name='order_success.html'):

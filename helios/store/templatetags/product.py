@@ -1,17 +1,11 @@
 # -*- coding: utf-8 -*-
-'''
-    store.templatetags.product
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    :copyright: 2007-2009 by Panos Laganakos.
-'''
-
 from django.template import Library, Node
 from django.template.defaultfilters import stringfilter
 from helios.store.models import Product
 
 
 register = Library()
+
 
 @register.inclusion_tag('product.html', takes_context=True)
 def show_products(context, product_list):

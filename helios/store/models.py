@@ -140,7 +140,7 @@ class ProductImage(models.Model):
 
 	class Meta:
 		verbose_name = _('product image')
-		verbose_name_plural= _('product images')
+		verbose_name_plural = _('product images')
 
 	def __unicode__(self):
 		return u'%s' % (self.picture,)
