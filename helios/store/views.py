@@ -2,11 +2,13 @@
 import pickle
 from datetime import datetime
 from decimal import Decimal
+from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list_detail import object_list
 from helios.conf import settings
@@ -212,6 +214,12 @@ def submit_order(request, template_name='checkout.html'):
 		)
 	session_cart.clear()
 	request.session['cart'] = session_cart.dump()
+
+	#TODO maybe turn this into a signal
+	subject = render_to_string('store/order_subject.txt')
+
+	send_mail(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order}), 'from@example.com',
+		['to@example.com'], fail_silently=False)
 
 	return HttpResponseRedirect(reverse(success))
 
