@@ -2,7 +2,7 @@
 import pickle
 from datetime import datetime
 from decimal import Decimal
-from django.core.mail import send_mail
+from django.core.mail import mail_managers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
@@ -216,10 +216,9 @@ def submit_order(request, template_name='checkout.html'):
 	request.session['cart'] = session_cart.dump()
 
 	#TODO maybe turn this into a signal
-	subject = render_to_string('store/order_subject.txt')
+	subject = render_to_string('store/order_subject.txt', {'order': order})
 
-	send_mail(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order}), 'from@example.com',
-		['to@example.com'], fail_silently=False)
+	mail_managers(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order, 'customer': customer}), fail_silently=False)
 
 	return HttpResponseRedirect(reverse(success))
 
