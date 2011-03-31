@@ -14,6 +14,7 @@ from django.views.generic.list_detail import object_list
 from helios.conf import settings
 from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
+from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product, Category, PaymentOption
 from helios.store.forms import PaymentForm
 from helios.store.cart import Cart
@@ -132,7 +133,7 @@ def checkout(request, template_name='checkout.html'):
 		if shipping_form.is_valid():
 			shipping_choice = shipping_form.cleaned_data['shipping_choice']
 			order_total += Decimal(shipping_choice.cost)
-			request.session['shipping_choice'] = shipping_choice
+			request.session['shipping_choice'] = shipping_choice.id
 
 		if payment_form.is_valid():
 			payment_option = payment_form.cleaned_data['payment_option']
@@ -173,7 +174,7 @@ def unshippable(request, template_name='store/unshippable.html'):
 @login_required
 def submit_order(request, template_name='checkout.html'):
 	try:
-		shipping_choice = request.session['shipping_choice']
+		shipping_choice = ShippingMethodRegions.objects.get(pk=request.session['shipping_choice'])
 	except KeyError:
 		request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
 		return HttpResponseRedirect(reverse('store_checkout'))
@@ -196,7 +197,8 @@ def submit_order(request, template_name='checkout.html'):
 		'status': OrderStatus.objects.get(slug__exact='pending'),
 		'shipping_city': customer.city,
 		'shipping_country': customer.country,
-		'shipping_choice': request.session['shipping_choice'],
+		#'shipping_choice': request.session['shipping_choice'],
+		'shipping_choice': shipping_choice,
 		'payment_option': payment_option
 	}
 	if settings.HAS_CURRENCIES:
