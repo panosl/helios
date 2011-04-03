@@ -12,7 +12,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list_detail import object_list
 from helios.conf import settings
-from helios.orders.models import OrderStatus, Order, OrderLine
+from helios.orders.models import OrderStatus, Order, OrderLine, PaymentOption
 from helios.orders.forms import OrderForm
 from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product, Category, PaymentOption
@@ -137,7 +137,7 @@ def checkout(request, template_name='checkout.html'):
 
 		if payment_form.is_valid():
 			payment_option = payment_form.cleaned_data['payment_option']
-			request.session['payment_option'] = payment_option
+			request.session['payment_option'] = payment_option.id
 
 		if payment_form.is_valid() and shipping_form.is_valid():
 			return HttpResponseRedirect(reverse(submit_order))
@@ -180,7 +180,7 @@ def submit_order(request, template_name='checkout.html'):
 		return HttpResponseRedirect(reverse('store_checkout'))
 
 	try:
-		payment_option = request.session['payment_option']
+		payment_option = PaymentOption.objects.get(pk=request.session['payment_option'])
 	except KeyError:
 		request.user.message_set.create(message=_(u'%s you haven\'t chosen a payment option.') % (request.user.username,))
 		return HttpResponseRedirect(reverse('store_checkout'))
