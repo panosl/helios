@@ -197,7 +197,6 @@ def submit_order(request, template_name='checkout.html'):
 		'status': OrderStatus.objects.get(slug__exact='pending'),
 		'shipping_city': customer.city,
 		'shipping_country': customer.country,
-		#'shipping_choice': request.session['shipping_choice'],
 		'shipping_choice': shipping_choice,
 		'payment_option': payment_option
 	}

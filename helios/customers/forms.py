@@ -11,12 +11,12 @@ class CustomerForm(forms.Form):
 	first_name = forms.CharField(label=_('First name'), max_length=30)
 	last_name = forms.CharField(label=_('Last name'), max_length=30)
 	email = forms.EmailField(label=_('Email'))
-	address = forms.CharField(label=_('Address'), max_length=50)
-	city = forms.CharField(max_length=30)
-	postal_code = forms.CharField(max_length=30)
-	country = forms.ModelChoiceField(queryset=Country.objects.all())
-	password1 = forms.CharField(widget=forms.PasswordInput)
-	password2 = forms.CharField(widget=forms.PasswordInput)
+	address = forms.CharField(label=_('address'), max_length=50)
+	city = forms.CharField(label=_('city'), max_length=30)
+	postal_code = forms.CharField(label=_('postal code'), max_length=30)
+	country = forms.ModelChoiceField(label=_('country'), queryset=Country.objects.all())
+	password1 = forms.CharField(label=_('password'), widget=forms.PasswordInput)
+	password2 = forms.CharField(label=_('repeat password'), widget=forms.PasswordInput)
 
 	def clean_username(self):
 		try:
