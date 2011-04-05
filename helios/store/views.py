@@ -69,7 +69,10 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 
 
 def product_add(request, slug=''):
-	session_cart = pickle.loads(request.session.get('cart'))
+	try:
+		session_cart = pickle.loads(request.session.get('cart'))
+	except TypeError:
+		return HttpResponse('Your browser does not support sessions.')
 
 	try:
 		product = Product.objects.get(slug=slug)
