@@ -52,7 +52,8 @@ urlpatterns += patterns('',
 
 	url(r'^products/(?P<slug>[-\w]+)/$', object_detail,
 		dict(product_dict,
-		slug_field='slug')),
+		slug_field='slug'),
+		name='store_product_detail'),
 
 	url(r'^products/$',
 		object_list,
