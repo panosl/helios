@@ -222,7 +222,7 @@ def submit_order(request, template_name='checkout.html'):
 	#TODO maybe turn this into a signal
 	subject = render_to_string('store/order_subject.txt', {'order': order})
 
-	mail_managers(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order, 'customer': customer}), fail_silently=False)
+	mail_managers(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order, 'customer': customer, 'country': customer.country }), fail_silently=False)
 
 	return HttpResponseRedirect(reverse(success))
 
