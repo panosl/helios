@@ -1,3 +1,4 @@
+from django import forms
 from paypal.standard.forms import PayPalPaymentsForm
 from paypal.standard.widgets import ValueHiddenInput
 
