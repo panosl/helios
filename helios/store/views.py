@@ -5,8 +5,9 @@ from decimal import Decimal
 from django.core.mail import send_mail, mail_managers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response
+from django.shortcuts import get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -108,8 +109,10 @@ def product_remove(request, slug=''):
 
 
 def category_list(request, category, **kwargs):
-	product_list = Product.objects.filter(category__slug__exact=category)
-	kwargs['extra_context']['category'] = Category.objects.get(slug__exact=category)
+	category = get_object_or_404(Category, slug=category)
+	product_list = Product.objects.filter(category__slug__exact=category.slug)
+	kwargs['extra_context']['category'] = category
+
 	return object_list(request, queryset=product_list, **kwargs)
 
 
