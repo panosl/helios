@@ -6,7 +6,6 @@ from django.views.generic.simple import redirect_to
 
 
 urlpatterns = patterns('',
-	(r'^$', redirect_to, {'url': 'store'}),
 	(r'^store/', include('store.urls')),
 	(r'^customer/', include('customers.urls')),
 )
