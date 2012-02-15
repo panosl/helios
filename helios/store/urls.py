@@ -40,11 +40,6 @@ urlpatterns = patterns('helios.store.views',
 )
 
 urlpatterns += patterns('',
-	url(r'^$',
-		direct_to_template,
-		{'template': 'home.html'},
-		name='store'),
-
 	url(r'^cart/$',
 		direct_to_template,
 		{'template': 'cart.html'},
