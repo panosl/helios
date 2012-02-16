@@ -83,6 +83,9 @@ def product_add(request, slug=''):
 	session_cart.add_product(product.id, 1)
 	request.session['cart'] = session_cart.dump()
 
+	if request.is_ajax():
+		return HttpResponse(session_cart.get_product_count())
+
 	url = request.META.get('HTTP_REFERER', None)
 	if url is None:
 		#url = '/store/products'
