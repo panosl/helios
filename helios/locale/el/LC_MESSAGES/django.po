@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-03 17:56+0300\n"
+"POT-Creation-Date: 2012-02-19 12:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -172,7 +173,7 @@ msgstr "γραμμή παραγγελείας"
 msgid "order lines"
 msgstr "γραμμές παραγγελειών"
 
-#: paypal/views.py:17 store/views.py:179
+#: paypal/views.py:17 store/views.py:188
 #, python-format
 msgid "%s you haven't chosen a shipping method."
 msgstr "%s δεν έχετε διαλέξει τρόπο αποστολής."
@@ -302,7 +303,7 @@ msgstr "τρόπος πληρωμης"
 msgid "payment options"
 msgstr "τρόποι πληρωμής"
 
-#: store/views.py:185
+#: store/views.py:194
 #, python-format
 msgid "%s you haven't chosen a payment option."
 msgstr "%s δεν έχετε διαλέξει τρόπο πληρωμής."

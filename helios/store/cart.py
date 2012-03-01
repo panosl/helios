@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pickle
+from contextlib import contextmanager
 try:
 	from helios.store.models import Product
 except ImportError:
@@ -79,3 +80,13 @@ class CartLine(dict):
 		price = self.get_product().price * self['quantity']
 		return price
 	price = property(_get_price)
+
+
+@contextmanager
+def cart(request):
+	if not request.session.get('cart'):
+		cart = Cart()
+		request.session['cart'] = pickle.dumps(cart)
+	session_cart = pickle.loads(request.session.get('cart'))
+	yield session_cart
+	request.session['cart'] = session_cart.dump()

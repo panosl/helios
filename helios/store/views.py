@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import pickle
+from __future__ import with_statement
 from datetime import datetime
 from decimal import Decimal
 from django.core.mail import send_mail, mail_managers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -18,7 +17,7 @@ from helios.orders.forms import OrderForm
 from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product, Category, PaymentOption
 from helios.store.forms import PaymentForm
-from helios.store.cart import Cart
+from helios.store.cart import cart
 from helios.store.decorators import cart_required
 if settings.USE_PAYPAL:
 	from helios.paypal.views import *
@@ -29,9 +28,8 @@ def cart_debug(request):
 
 
 def cart_clear(request):
-	session_cart = pickle.loads(request.session.get('cart'))
-	session_cart.clear()
-	request.session['cart'] = session_cart.dump()
+	with cart(request) as session_cart:
+		session_cart.clear()
 	return HttpResponse('Done')
 
 
@@ -44,70 +42,55 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 	except ValueError:
 		return HttpResponseRedirect(success_url)
 
-	if not request.session.get('cart'):
-		session_cart = Cart()
-		pcart = session_cart.dump()
-		request.session['cart'] = pcart
-
-	session_cart = pickle.loads(request.session.get('cart'))
-
 	product_id = int(product_id)
-	items_in_stock = session_cart[product_id].get_product().stock
+	with cart(request) as session_cart:
+		items_in_stock = session_cart[product_id].get_product().stock
 
-	if quantity < 0:
-		return HttpResponseRedirect(success_url)
-	elif quantity == 0 or items_in_stock == 0:
-		del session_cart[product_id]
-	else:
-		if quantity >= items_in_stock:
-			session_cart[product_id]['quantity'] = items_in_stock
+		if quantity < 0:
+			return HttpResponseRedirect(success_url)
+		elif quantity == 0 or items_in_stock == 0:
+			del session_cart[product_id]
 		else:
-			session_cart[product_id]['quantity'] = quantity
-
-	request.session['cart'] = session_cart.dump()
+			if quantity >= items_in_stock:
+				session_cart[product_id]['quantity'] = items_in_stock
+			else:
+				session_cart[product_id]['quantity'] = quantity
 
 	return HttpResponseRedirect(success_url)
 
 
 def product_add(request, slug=''):
 	try:
-		session_cart = pickle.loads(request.session.get('cart'))
-	except TypeError:
-		return HttpResponse('Your browser does not support sessions.')
-
-	try:
 		product = Product.objects.get(slug=slug)
 	except Product.DoesNotExist:
 		return HttpResponse('That product does not exist.')
 
-	session_cart.add_product(product.id, 1)
-	request.session['cart'] = session_cart.dump()
+	with cart(request) as session_cart:
+		session_cart.add_product(product.id, 1)
 
 	if request.is_ajax():
-		return HttpResponse(str(session_cart.get_product_count()))
+		with cart(request) as session_cart:
+			return HttpResponse(str(session_cart.get_product_count()))
 
 	url = request.META.get('HTTP_REFERER', None)
 	if url is None:
-		#url = '/store/products'
 		url = reverse('store_product_list')
 
 	return HttpResponseRedirect(url)
 
 
 def product_remove(request, slug=''):
-	session_cart = pickle.loads(request.session.get('cart'))
-
 	try:
 		product = Product.objects.get(slug=slug)
 	except Product.DoesNotExist:
 		return HttpResponse('That product does not exist.')
 
-	try:
-		session_cart.remove_product(product.id)
-	except KeyError:
-		return HttpResponse('Does not have one of those!')
+	with cart(request) as session_cart:
+		try:
+			session_cart.remove_product(product.id)
+		except KeyError:
+			return HttpResponse('Does not have one of those!')
 
-	request.session['cart'] = session_cart.dump()
 	return HttpResponseRedirect(reverse('store_cart'))
 
 
@@ -121,14 +104,13 @@ def category_list(request, category, **kwargs):
 
 @cart_required
 def checkout(request, template_name='checkout.html'):
-	session_cart = pickle.loads(request.session.get('cart'))
-
 	if not request.user.is_authenticated():
 		request.session['checkout'] = 'True'
 		return HttpResponseRedirect(reverse('customer-register'))
 
 	customer = request.user.customer
-	order_total = session_cart.get_price()
+	with cart(request) as session_cart:
+		order_total = session_cart.get_price()
 
 	if not customer.country.shippingregion_set.all():
 		return HttpResponseRedirect(reverse('store_unshippable'))
@@ -195,7 +177,6 @@ def submit_order(request, template_name='checkout.html'):
 		return HttpResponseRedirect(reverse('store_checkout'))
 
 	customer = request.user.customer
-	session_cart = pickle.loads(request.session.get('cart'))
 
 	if payment_option.slug == 'paypal':
 		return HttpResponseRedirect(reverse(paypal_purchase))
@@ -214,16 +195,16 @@ def submit_order(request, template_name='checkout.html'):
 		order_dict['currency_factor'] = request.session['currency'].factor,
 	order = Order.objects.create(**order_dict)
 
-	for cart_line in session_cart.values():
-		order_line = OrderLine.objects.create(
-			order=order,
-			product=cart_line.get_product(),
-			unit_price=cart_line.get_product().price,
-			price=cart_line.get_price(),
-			quantity=cart_line.get_quantity()
-		)
-	session_cart.clear()
-	request.session['cart'] = session_cart.dump()
+	with cart(request) as session_cart:
+		for cart_line in session_cart.values():
+			order_line = OrderLine.objects.create(
+				order=order,
+				product=cart_line.get_product(),
+				unit_price=cart_line.get_product().price,
+				price=cart_line.get_price(),
+				quantity=cart_line.get_quantity()
+			)
+		session_cart.clear()
 
 	#TODO maybe turn this into a signal
 	subject = render_to_string('store/order_subject.txt', {'order': order})

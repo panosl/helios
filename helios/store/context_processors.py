@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pickle
-from helios.store.views import Cart
+from helios.store.cart import Cart
 
 
 def cart(request):
