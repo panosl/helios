@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-03 11:26+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: models.py:14 models.py:17 models.py:43 models.py:46 models.py:81
+#: models.py:84
+msgid "name"
+msgstr "όνομα"
+
+#: models.py:15 models.py:18 models.py:44 models.py:47 models.py:82
+#: models.py:85
+msgid "description"
+msgstr "περιγραφή"
+
+#: models.py:21
+msgid "tax rate"
+msgstr "φορολογικός συντελεστής"
+
+#: models.py:23 models.py:91
+msgid "active"
+msgstr "ενεργό"
+
+#: models.py:24
+msgid "The tax will be available in the store."
+msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστημα."
+
+#: models.py:27
+msgid "tax"
+msgstr "φόρος"
+
+#: models.py:28 models.py:100
+msgid "taxes"
+msgstr "φόροι"
+
+#: models.py:54 models.py:88
+msgid "category"
+msgstr "κατηγορία"
+
+#: models.py:55
+msgid "categories"
+msgstr "κατηγορίες"
+
+#: models.py:89
+msgid "date added"
+msgstr "ημερομηνία προσθήκης"
+
+#: models.py:90
+msgid "last modified"
+msgstr "αλλάχθηκε"
+
+#: models.py:92
+msgid "The product will appear in the store."
+msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
+
+#: models.py:93
+msgid "featured"
+msgstr ""
+
+#: models.py:94
+msgid "The product will be featured on the front page."
+msgstr ""
+
+#: models.py:95
+msgid "stock"
+msgstr "απόθεμα"
+
+#: models.py:96
+msgid "Number of items in stock."
+msgstr "Κομμάτια σε απόθεμα."
+
+#: models.py:97
+msgid "weight"
+msgstr "βάρος"
+
+#: models.py:98
+msgid "Defined in kilograms."
+msgstr "Δηλώνεται σε Κιλά."
+
+#: models.py:99
+msgid "base price"
+msgstr ""
+
+#: models.py:105 models.py:136
+msgid "product"
+msgstr "προϊόν"
+
+#: models.py:106
+msgid "products"
+msgstr "προϊόντα"
+
+#: models.py:137
+msgid "picture"
+msgstr "εικόνα"
+
+#: models.py:141
+msgid "product image"
+msgstr "εικόνα προϊόντος"
+
+#: models.py:142
+msgid "product images"
+msgstr "εικόνες προϊόντων"
+
+#: views.py:171
+#, python-format
+msgid "%s you haven't chosen a shipping method."
+msgstr ""
+
+#: views.py:177
+#, python-format
+msgid "%s you haven't chosen a payment option."
+msgstr "%s δεν έχετε διαλέξει τρόπο πληρωμής."

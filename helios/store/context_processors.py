@@ -4,8 +4,8 @@ from helios.store.cart import Cart
 
 
 def cart(request):
-	if not request.session.get('cart'):
-		cart = Cart()
-		request.session['cart'] = pickle.dumps(cart)
+    if not request.session.get('cart'):
+        cart = Cart()
+        request.session['cart'] = pickle.dumps(cart)
 
-	return {'cart': pickle.loads(request.session['cart'])}
+    return {'cart': pickle.loads(request.session['cart'])}
