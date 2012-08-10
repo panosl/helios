@@ -14,7 +14,7 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=80)),
             ('desc', self.gf('django.db.models.fields.TextField')(blank=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=80)),
-            ('rate', self.gf('django.db.models.fields.DecimalField')(default=19.0, max_digits=4, decimal_places=2)),
+            ('rate', self.gf('django.db.models.fields.DecimalField')(default='19.0', max_digits=4, decimal_places=2)),
             ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
         ))
         db.send_create_signal('store', ['Tax'])

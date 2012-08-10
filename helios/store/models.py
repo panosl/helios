@@ -37,6 +37,11 @@ class Tax(models.Model):
     factor = property(_get_factor)
 
 
+class CategoryManager(models.Manager):
+    def get_root_nodes(self):
+        return super(CategoryManager, self).get_query_set().filter(parent=None)
+
+
 class Category(models.Model):
     if settings.IS_MULTILINGUAL:
         class Translation(multilingual.Translation):
@@ -49,8 +54,10 @@ class Category(models.Model):
     slug = models.SlugField(max_length=50, unique=True)
     parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
 
+    objects = CategoryManager()
+
     class Meta:
-        ordering = ['slug']
+        ordering = ['name']
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 
@@ -67,6 +74,9 @@ class Category(models.Model):
         return('helios.store.views.category_list', (), {
             'category': self.slug,
         })
+
+    def get_children(self):
+        return self.child_set.all()
 
 
 if settings.IS_MULTILINGUAL:
