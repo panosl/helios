@@ -11,6 +11,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list_detail import object_list
+from django.views.generic import DetailView
 from helios.conf import settings
 from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
@@ -22,6 +23,17 @@ from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
 if settings.USE_PAYPAL:
     from helios.paypal.views import *
+
+
+class ProductDetail(DetailView):
+    context_object_name = 'product'
+    queryset = Product.objects.all()
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetail, self).get_context_data(**kwargs)
+        context['category'] = self.get_object().category
+        return context
 
 
 def cart_debug(request):
