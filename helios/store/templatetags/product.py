@@ -15,7 +15,7 @@ def show_products(context, product_list):
     }
 
 
-@register.filter(name='truncatechars')
+@register.filter(name='legacy_truncatechars')
 @stringfilter
 def truncate_chars(value, arg):
     print 'fuck you'
