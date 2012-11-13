@@ -167,6 +167,34 @@ class ProductImage(models.Model):
         super(ProductImage, self).delete()
 
 
+class Collection(models.Model):
+    if settings.IS_MULTILINGUAL:
+        class Translation(multilingual.Translation):
+            name = models.CharField(_('name'), max_length=80)
+            desc = models.TextField(_('description'), blank=True)
+    else:
+        name = models.CharField(_('name'), max_length=80)
+        desc = models.TextField(_('description'), blank=True)
+
+    slug = models.SlugField(unique=True, max_length=80)
+    is_active = models.BooleanField(_('active'), default=True,
+        help_text=_('The collection will be available in the store.'))
+    products = models.ManyToManyField(Product)
+
+    class Meta:
+        verbose_name = _('collection')
+        verbose_name_plural = _('collections')
+
+    def __unicode__(self):
+        return self.name or ''
+
+    @models.permalink
+    def get_absolute_url(self):
+        return('helios.store.views.collection_list', (), {
+            'collection': self.slug,
+        })
+
+
 #try:
 #    from paypal.standard.ipn.signals import payment_was_successful
 #    def paypal_successful(sender, **kwargs):

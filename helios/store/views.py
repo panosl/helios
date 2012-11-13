@@ -16,7 +16,7 @@ from helios.conf import settings
 from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
 from helios.shipping.models import ShippingMethodRegions
-from helios.store.models import Product, Category
+from helios.store.models import Product, Category, Collection
 from helios.store.cart import cart
 from helios.payment.models import PaymentOption
 from helios.payment.forms import PaymentForm
@@ -111,6 +111,14 @@ def category_list(request, category, **kwargs):
     category = get_object_or_404(Category, slug=category)
     product_list = Product.objects.filter(category__slug__exact=category.slug)
     kwargs['extra_context']['category'] = category
+
+    return object_list(request, queryset=product_list, **kwargs)
+
+def collection_list(request, collection, **kwargs):
+    collection = get_object_or_404(Collection, slug=collection)
+    #product_list = Product.objects.filter(category__slug__exact=category.slug)
+    product_list = collection.products.all()
+    kwargs['extra_context']['collection'] = collection
 
     return object_list(request, queryset=product_list, **kwargs)
 

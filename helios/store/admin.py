@@ -48,7 +48,13 @@ class TaxAdmin(admin_info['class']):
     prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
 
 
+class CollectionAdmin(admin_info['class']):
+    filter_horizontal = ['products']
+    prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
+
+
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductImage, ProductImageAdmin)
 admin.site.register(Tax, TaxAdmin)
+admin.site.register(Collection, CollectionAdmin)
