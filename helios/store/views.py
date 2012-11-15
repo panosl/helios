@@ -109,7 +109,11 @@ def product_remove(request, slug=''):
 
 def category_list(request, category, **kwargs):
     category = get_object_or_404(Category, slug=category)
-    product_list = Product.objects.filter(category__slug__exact=category.slug)
+    #TODO include the category along with the children
+    if category.is_root_node():
+        product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children()))
+    else:
+        product_list = Product.objects.filter(category__slug__exact=category.slug)
     kwargs['extra_context']['category'] = category
 
     return object_list(request, queryset=product_list, **kwargs)

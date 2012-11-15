@@ -40,6 +40,7 @@ class Tax(models.Model):
 
 class CategoryManager(models.Manager):
     def get_root_nodes(self):
+        '''return all root node, aka nodes that don\'t have any parent categories'''
         return super(CategoryManager, self).get_query_set().filter(parent=None)
 
 
@@ -78,6 +79,9 @@ class Category(models.Model):
 
     def get_children(self):
         return self.child_set.all()
+
+    def is_root_node(self):
+        return True if self.parent is None else False
 
 
 if settings.IS_MULTILINGUAL:
