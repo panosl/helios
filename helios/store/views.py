@@ -111,7 +111,7 @@ def category_list(request, category, **kwargs):
     category = get_object_or_404(Category, slug=category)
     #TODO include the category along with the children
     if category.is_root_node():
-        product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children()))
+        product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
     else:
         product_list = Product.objects.filter(category__slug__exact=category.slug)
     kwargs['extra_context']['category'] = category
