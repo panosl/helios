@@ -150,9 +150,11 @@ class Product(models.Model):
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
     picture = models.ImageField(_('picture'), upload_to='./product_images')
+    list_position = models.PositiveIntegerField(_('list position'), default=1)
     suffix = '_thumbnail.jpg'
 
     class Meta:
+        ordering = ['list_position']
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
 

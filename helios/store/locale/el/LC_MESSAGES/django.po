@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-13 17:36+0200\n"
+"POT-Creation-Date: 2013-01-23 22:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: models.py:15 models.py:18 models.py:49 models.py:52 models.py:92
-#: models.py:95 models.py:173 models.py:176
+#: models.py:15 models.py:18 models.py:50 models.py:53 models.py:96
+#: models.py:99 models.py:179 models.py:182
 msgid "name"
 msgstr "όνομα"
 
-#: models.py:16 models.py:19 models.py:50 models.py:53 models.py:93
-#: models.py:96 models.py:174 models.py:177
+#: models.py:16 models.py:19 models.py:51 models.py:54 models.py:97
+#: models.py:100 models.py:180 models.py:183
 msgid "description"
 msgstr "περιγραφή"
 
@@ -32,7 +32,7 @@ msgstr "περιγραφή"
 msgid "tax rate"
 msgstr "φορολογικός συντελεστής"
 
-#: models.py:24 models.py:102 models.py:180
+#: models.py:24 models.py:106 models.py:186
 msgid "active"
 msgstr "ενεργό"
 
@@ -44,96 +44,100 @@ msgstr "Ο φόρος θα είναι διαθέσιμος στο κατάστη
 msgid "tax"
 msgstr "φόρος"
 
-#: models.py:29 models.py:111
+#: models.py:29 models.py:115
 msgid "taxes"
 msgstr "φόροι"
 
-#: models.py:62 models.py:99
+#: models.py:63 models.py:103
 msgid "category"
 msgstr "κατηγορία"
 
-#: models.py:63
+#: models.py:64
 msgid "categories"
 msgstr "κατηγορίες"
 
-#: models.py:100
+#: models.py:104
 msgid "date added"
 msgstr "ημερομηνία προσθήκης"
 
-#: models.py:101
+#: models.py:105
 msgid "last modified"
 msgstr "αλλάχθηκε"
 
-#: models.py:103
+#: models.py:107
 msgid "The product will appear in the store."
 msgstr "Το προιόν θα εμφανίζεται στο κατάστημα."
 
-#: models.py:104
+#: models.py:108
 msgid "featured"
 msgstr ""
 
-#: models.py:105
+#: models.py:109
 msgid "The product will be featured on the front page."
 msgstr ""
 
-#: models.py:106
+#: models.py:110
 msgid "stock"
 msgstr "απόθεμα"
 
-#: models.py:107
+#: models.py:111
 msgid "Number of items in stock."
 msgstr "Κομμάτια σε απόθεμα."
 
-#: models.py:108
+#: models.py:112
 msgid "weight"
 msgstr "βάρος"
 
-#: models.py:109
+#: models.py:113
 msgid "Defined in kilograms."
 msgstr "Δηλώνεται σε Κιλά."
 
-#: models.py:110
+#: models.py:114
 msgid "base price"
 msgstr ""
 
-#: models.py:116 models.py:147
+#: models.py:120 models.py:151
 msgid "product"
 msgstr "προϊόν"
 
-#: models.py:117
+#: models.py:121
 msgid "products"
 msgstr "προϊόντα"
 
-#: models.py:148
+#: models.py:152
 msgid "picture"
 msgstr "εικόνα"
 
-#: models.py:152
+#: models.py:153
+msgid "list position"
+msgstr "σειρά"
+
+#: models.py:158
 msgid "product image"
 msgstr "εικόνα προϊόντος"
 
-#: models.py:153
+#: models.py:159
 msgid "product images"
 msgstr "εικόνες προϊόντων"
 
-#: models.py:181
+#: models.py:187
 msgid "The collection will be available in the store."
 msgstr "Η συλλογή θα είναι διαθέσιμη στο κατάστημα."
 
-#: models.py:185
+#: models.py:191
 msgid "collection"
 msgstr "συλλογή"
 
-#: models.py:186
+#: models.py:192
 msgid "collections"
 msgstr "συλλογές"
 
-#: views.py:191
+#: views.py:195
 #, python-format
 msgid "%s you haven't chosen a shipping method."
 msgstr ""
 
-#: views.py:197
+#: views.py:201
 #, python-format
 msgid "%s you haven't chosen a payment option."
 msgstr "%s δεν έχετε διαλέξει τρόπο πληρωμής."
