@@ -122,6 +122,7 @@ def category_list(request, category, **kwargs):
     if fieldname:
         try:
             product_list = product_list.order_by(fieldname)
+            kwargs['extra_context']['sorting'] = fieldname
         except FieldError:
             pass
 
