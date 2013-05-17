@@ -110,11 +110,20 @@ def product_remove(request, slug=''):
 def category_list(request, category, **kwargs):
     category = get_object_or_404(Category, slug=category)
     #TODO include the category along with the children
+
+    fieldname = request.GET.get('sort', None)
+
     if category.is_root_node():
         product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
     else:
         product_list = Product.objects.filter(category__slug__exact=category.slug)
     kwargs['extra_context']['category'] = category
+
+    if fieldname:
+        try:
+            product_list = product_list.order_by(fieldname)
+        except FieldError:
+            pass
 
     return object_list(request, queryset=product_list, **kwargs)
 
