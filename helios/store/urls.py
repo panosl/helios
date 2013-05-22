@@ -4,7 +4,7 @@ from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.simple import direct_to_template
 from helios.store.models import Product, ProductImage
 from helios.conf import settings
-from helios.store.views import category_list, collection_list, ProductDetail
+from helios.store.views import category_list, collection_list, ProductDetail, ProductList
 
 
 product_dict = {
@@ -62,10 +62,14 @@ urlpatterns += patterns('',
         name='store_collection_list'
     ),
     url(r'^(?P<category>[-\w]+)/$',
-        category_list,
-        dict(paginate_by=settings.PAGINATE_BY,
-            template_object_name='product',
-            extra_context={}),
+        ProductList.as_view(),
         name='store_category_list'
     ),
+    #url(r'^(?P<category>[-\w]+)/$',
+        #category_list,
+        #dict(paginate_by=settings.PAGINATE_BY,
+            #template_object_name='product',
+            #extra_context={}),
+        #name='store_category_list'
+    #),
 )

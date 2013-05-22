@@ -2,6 +2,7 @@
 from __future__ import with_statement
 from datetime import datetime
 from decimal import Decimal
+from django.core.exceptions import FieldError
 from django.core.mail import send_mail, mail_managers
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,7 @@ from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list_detail import object_list
-from django.views.generic import DetailView
+from django.views.generic import ListView, DetailView
 from helios.conf import settings
 from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
@@ -112,6 +113,8 @@ def category_list(request, category, **kwargs):
     #TODO include the category along with the children
 
     fieldname = request.GET.get('sort', None)
+    print request.GET.get('sort', None)
+    print fieldname
 
     if category.is_root_node():
         product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
@@ -119,14 +122,42 @@ def category_list(request, category, **kwargs):
         product_list = Product.objects.filter(category__slug__exact=category.slug)
     kwargs['extra_context']['category'] = category
 
-    if fieldname:
-        try:
-            product_list = product_list.order_by(fieldname)
-            kwargs['extra_context']['sorting'] = fieldname
-        except FieldError:
-            pass
+    try:
+        product_list = product_list.order_by(fieldname)
+        kwargs['extra_context']['sorting'] = fieldname
+    except TypeError:
+        pass
+    except FieldError:
+        pass
 
     return object_list(request, queryset=product_list, **kwargs)
+
+
+class ProductList(ListView):
+    model = Product
+    context_object_name = 'product_list'
+
+    def get_queryset(self):
+        self.sort_by = self.request.GET.get('sort')
+        self.category = get_object_or_404(Category, slug=self.kwargs['category'])
+
+        if self.category.is_root_node():
+            queryset = Product.objects.filter(category__slug__in=(c.slug for c in self.category.get_children())) | Product.objects.filter(category__slug__exact=self.category.slug)
+        else:
+            queryset = Product.objects.filter(category=self.category)
+
+        #queryset = Product.objects.filter(category=self.category)
+
+        if self.sort_by:
+            return queryset.order_by(self.sort_by)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductList, self).get_context_data(**kwargs)
+        context['category'] = self.category
+        context['sort_by'] = self.sort_by
+        return context
+
 
 def collection_list(request, collection, **kwargs):
     collection = get_object_or_404(Collection, slug=collection)

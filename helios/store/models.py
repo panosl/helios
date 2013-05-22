@@ -73,7 +73,8 @@ class Category(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return('helios.store.views.category_list', (), {
+        #return('helios.store.views.category_list', (), {
+        return('store_category_list', (), {
             'category': self.slug,
         })
 
