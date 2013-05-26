@@ -1,17 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
-from django.views.generic.list_detail import object_list, object_detail
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView, ListView
 from helios.store.models import Product, ProductImage
 from helios.conf import settings
-from helios.store.views import category_list, collection_list, ProductDetail, ProductList
+from helios.store.views import CollectionList, ProductDetail, ProductList
 
-
-product_dict = {
-    'queryset': Product.objects.filter(is_active__exact=True),
-    'template_object_name': 'product',
-    'extra_context': {'productimage_list': ProductImage.objects.all()},
-}
 
 urlpatterns = patterns('helios.store.views',
     (r'^cart/clear/$', 'cart_clear'),
@@ -41,35 +34,28 @@ urlpatterns = patterns('helios.store.views',
 
 urlpatterns += patterns('',
     url(r'^cart/$',
-        direct_to_template,
-        {'template': 'cart.html'},
+        TemplateView.as_view(
+            template_name='cart.html'
+        ),
         name='store_cart'
     ),
-    url(r'^products/(?P<slug>[-\w]+)/$', ProductDetail.as_view(),
+    url(r'^products/(?P<slug>[-\w]+)/$',
+        ProductDetail.as_view(),
         name='store_product_detail'
     ),
     url(r'^products/$',
-        object_list,
-        dict(product_dict,
-            paginate_by=settings.PAGINATE_BY),
+        ListView.as_view(
+            queryset=Product.objects.filter(is_active__exact=True),
+            context_object_name='product_list'
+        ),
         name='store_product_list'
     ),
     url(r'^collections/(?P<collection>[-\w]+)/$',
-        collection_list,
-        dict(paginate_by=settings.PAGINATE_BY,
-            template_object_name='product',
-            extra_context={}),
+        CollectionList.as_view(),
         name='store_collection_list'
     ),
     url(r'^(?P<category>[-\w]+)/$',
         ProductList.as_view(),
         name='store_category_list'
     ),
-    #url(r'^(?P<category>[-\w]+)/$',
-        #category_list,
-        #dict(paginate_by=settings.PAGINATE_BY,
-            #template_object_name='product',
-            #extra_context={}),
-        #name='store_category_list'
-    #),
 )

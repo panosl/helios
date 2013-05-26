@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic.list_detail import object_list
+#from django.views.generic.list_detail import object_list
 from django.views.generic import ListView, DetailView
 from helios.conf import settings
 from helios.orders.models import OrderStatus, Order, OrderLine
@@ -108,29 +108,29 @@ def product_remove(request, slug=''):
     return HttpResponseRedirect(reverse('store_cart'))
 
 
-def category_list(request, category, **kwargs):
-    category = get_object_or_404(Category, slug=category)
-    #TODO include the category along with the children
+#def category_list(request, category, **kwargs):
+    #category = get_object_or_404(Category, slug=category)
+    ##TODO include the category along with the children
 
-    fieldname = request.GET.get('sort', None)
-    print request.GET.get('sort', None)
-    print fieldname
+    #fieldname = request.GET.get('sort', None)
+    #print request.GET.get('sort', None)
+    #print fieldname
 
-    if category.is_root_node():
-        product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
-    else:
-        product_list = Product.objects.filter(category__slug__exact=category.slug)
-    kwargs['extra_context']['category'] = category
+    #if category.is_root_node():
+        #product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
+    #else:
+        #product_list = Product.objects.filter(category__slug__exact=category.slug)
+    #kwargs['extra_context']['category'] = category
 
-    try:
-        product_list = product_list.order_by(fieldname)
-        kwargs['extra_context']['sorting'] = fieldname
-    except TypeError:
-        pass
-    except FieldError:
-        pass
+    #try:
+        #product_list = product_list.order_by(fieldname)
+        #kwargs['extra_context']['sorting'] = fieldname
+    #except TypeError:
+        #pass
+    #except FieldError:
+        #pass
 
-    return object_list(request, queryset=product_list, **kwargs)
+    #return object_list(request, queryset=product_list, **kwargs)
 
 
 class ProductList(ListView):
@@ -166,6 +166,22 @@ def collection_list(request, collection, **kwargs):
     kwargs['extra_context']['collection'] = collection
 
     return object_list(request, queryset=product_list, **kwargs)
+
+
+class CollectionList(ListView):
+    model = Collection
+    context_object_name = 'product_list'
+
+    def get_queryset(self):
+        self.collection = get_object_or_404(Collection, slug=self.kwargs['collection'])
+
+        return self.collection.products.all()
+
+    def get_context_data(self, **kwargs):
+        context = super(CollectionList, self).get_context_data(**kwargs)
+        context['collection'] = self.collection
+        return context
+
 
 
 @cart_required
