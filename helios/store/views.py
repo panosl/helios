@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import with_statement
-from datetime import datetime
 from decimal import Decimal
+
 from django.core.exceptions import FieldError
 from django.core.mail import send_mail, mail_managers
 from django.core.urlresolvers import reverse
@@ -11,15 +11,12 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-#from django.views.generic.list_detail import object_list
 from django.views.generic import ListView, DetailView
+
 from helios.conf import settings
-from helios.orders.models import OrderStatus, Order, OrderLine
 from helios.orders.forms import OrderForm
-from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product, Category, Collection
 from helios.store.cart import cart
-from helios.payment.models import PaymentOption
 from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
 if settings.USE_PAYPAL:
@@ -198,8 +195,6 @@ def checkout(request, template_name='checkout.html'):
         return HttpResponseRedirect(reverse('store_unshippable'))
 
     if request.method == 'POST':
-        #shipping_form = OrderForm(customer, request.POST,
-            #initial={'shipping_choice': request.POST['shipping_choice']})
         shipping_form = OrderForm(customer, request.POST)
         payment_form = PaymentForm(request.POST)
 
@@ -242,60 +237,6 @@ def unshippable(request, template_name='store/unshippable.html'):
     },
     context_instance=RequestContext(request))
 
-
-@cart_required
-@login_required
-def submit_order(request, template_name='checkout.html'):
-    try:
-        shipping_choice = ShippingMethodRegions.objects.get(pk=request.session['shipping_choice'])
-    except KeyError:
-        request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
-        return HttpResponseRedirect(reverse('store_checkout'))
-
-    try:
-        payment_option = PaymentOption.objects.get(pk=request.session['payment_option'])
-    except KeyError:
-        request.user.message_set.create(message=_(u'%s you haven\'t chosen a payment option.') % (request.user.username,))
-        return HttpResponseRedirect(reverse('store_checkout'))
-
-    customer = request.user.customer
-
-    if payment_option.slug == 'paypal':
-        return HttpResponseRedirect(reverse(paypal_purchase))
-
-    order_dict = {
-        'date_time_created': datetime.today(),
-        'customer': customer,
-        'status': OrderStatus.objects.get(slug__exact='pending'),
-        'shipping_city': customer.city,
-        'shipping_country': customer.country,
-        'shipping_choice': shipping_choice,
-        'payment_option': payment_option
-    }
-
-    if request.session['currency']:
-        order_dict['currency_code'] = request.session['currency'].code
-        order_dict['currency_factor'] = request.session['currency'].factor
-    order = Order.objects.create(**order_dict)
-
-    with cart(request) as session_cart:
-        for cart_line in session_cart.values():
-            order_line = OrderLine.objects.create(
-                order=order,
-                product=cart_line.get_product(),
-                unit_price=cart_line.get_product().price,
-                price=cart_line.get_price(),
-                quantity=cart_line.get_quantity()
-            )
-        session_cart.clear()
-
-    #TODO maybe turn this into a signal
-    subject = render_to_string('store/order_subject.txt', {'order': order})
-
-    send_mail(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order, 'customer': customer, 'country': customer.country }), 'noreply@holabyolga.gr', [customer.email])
-    mail_managers(''.join(subject.splitlines()), render_to_string('store/order.txt', {'order': order, 'customer': customer, 'country': customer.country }), fail_silently=False)
-
-    return HttpResponseRedirect(reverse(success))
 
 
 @login_required
