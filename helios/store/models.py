@@ -121,7 +121,7 @@ class Product(models.Model):
         verbose_name_plural = _('products')
         if not settings.IS_MULTILINGUAL:
             # This will not work for multilingual right now
-            ordering = ['-is_featured', '-last_modified']
+            ordering = ['-last_modified']
 
     def __unicode__(self):
         return self.name or ''
