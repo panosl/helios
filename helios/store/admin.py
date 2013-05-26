@@ -35,12 +35,12 @@ def set_category(modeladmin, request, queryset):
     queryset.update(category)
 
 
-class ProductAdmin(admin_info['class']):
+class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
-    list_display = ('name', 'base_price', 'price', 'stock', 'last_modified', 'category', 'is_active', 'is_featured')
-    list_filter = ('category', 'is_active', 'is_featured',)
-    prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
-    search_fields = ['name']
+    #list_display = ('name', 'base_price', 'price', 'stock', 'last_modified', 'category', 'is_active', 'is_featured')
+    #list_filter = ('category', 'is_active', 'is_featured',)
+    #prepopulated_fields = {'slug': (''.join(['name', admin_info['suffix']]),)}
+    #search_fields = ['name']
 
 
 class TaxAdmin(admin_info['class']):
