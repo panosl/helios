@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from decimal import *
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from helios.shipping.models import *
 from helios.conf import settings
 if settings.IS_MULTILINGUAL:
     import multilingual
