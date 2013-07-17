@@ -196,7 +196,7 @@ class Collection(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return('helios.store.views.collection_list', (), {
+        return('store_collection_list', (), {
             'collection': self.slug,
         })
 

@@ -156,15 +156,6 @@ class ProductList(ListView):
         return context
 
 
-def collection_list(request, collection, **kwargs):
-    collection = get_object_or_404(Collection, slug=collection)
-    #product_list = Product.objects.filter(category__slug__exact=category.slug)
-    product_list = collection.products.all()
-    kwargs['extra_context']['collection'] = collection
-
-    return object_list(request, queryset=product_list, **kwargs)
-
-
 class CollectionList(ListView):
     model = Collection
     context_object_name = 'product_list'
@@ -178,7 +169,6 @@ class CollectionList(ListView):
         context = super(CollectionList, self).get_context_data(**kwargs)
         context['collection'] = self.collection
         return context
-
 
 
 @cart_required
