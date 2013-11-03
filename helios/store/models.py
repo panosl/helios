@@ -160,7 +160,7 @@ class Product(models.Model):
 
 
     def has_discount(self):
-        if self.category.categorypercentagediscount:
+        if self.category and self.category.categorypercentagediscount:
             return True
         else:
             return False
