@@ -166,7 +166,7 @@ class Product(models.Model):
             return False
 
     price = property(_get_price)
-    discounted_price = property(_get_price)
+    discounted_price = property(_get_discounted_price)
 
 
 class ProductImage(models.Model):
