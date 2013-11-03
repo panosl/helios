@@ -1,8 +1,10 @@
 import os
-from django.core.urlresolvers import reverse
 from decimal import *
+
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
+
 from helios.conf import settings
 if settings.IS_MULTILINGUAL:
     import multilingual
@@ -143,8 +145,28 @@ class Product(models.Model):
 
     def _get_price(self):
         tax_factors = [tax.factor for tax in self.taxes.all()]
-        return (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+        taxed_product = (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+        return taxed_product
+
+    def _get_discounted_price(self):
+        tax_factors = [tax.factor for tax in self.taxes.all()]
+        taxed_product = (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+        if self.category.categorypercentagediscount:
+            category_discount = Decimal(self.category.categorypercentagediscount.discount)/Decimal('100.0')
+            return taxed_product - (taxed_product * category_discount).quantize(Decimal('.01'), rounding=ROUND_UP)
+
+        else:
+            return taxed_product
+
+
+    def has_discount(self):
+        if self.category.categorypercentagediscount:
+            return True
+        else:
+            return False
+
     price = property(_get_price)
+    discounted_price = property(_get_price)
 
 
 class ProductImage(models.Model):
