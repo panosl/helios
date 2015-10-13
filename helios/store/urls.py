@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from django.views.generic import TemplateView, ListView
 from helios.store.models import Product, ProductImage
 from helios.conf import settings
