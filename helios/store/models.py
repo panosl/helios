@@ -92,33 +92,34 @@ if settings.IS_MULTILINGUAL:
             return super(ActiveProductManager).get_query_set().filter(is_active=True)
 
 
-class Product(models.Model):
-    if settings.IS_MULTILINGUAL:
-        class Translation(multilingual.Translation):
-            name = models.CharField(_('name'), max_length=80)
-            desc = models.TextField(_('description'), blank=True)
-    else:
-        name = models.CharField(_('name'), max_length=80)
-        desc = models.TextField(_('description'), blank=True)
-
+class BaseProduct(models.Model):
+    name = models.CharField(_('name'), max_length=80)
     slug = models.SlugField(unique=True, max_length=80)
-    category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
+    desc = models.TextField(_('description'), blank=True)
     date_added = models.DateField(_('date added'), auto_now_add=True)
     last_modified = models.DateTimeField(_('last modified'), auto_now=True)
     is_active = models.BooleanField(_('active'), default=True,
         help_text=_('The product will appear in the store.'))
+    base_price = models.DecimalField(_('base price'), max_digits=6, decimal_places=2)
+
+    class Meta:
+        abstract = True
+
+
+class Product(BaseProduct):
+    category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
     is_featured = models.BooleanField(_('featured'), default=False,
         help_text=_('The product will be featured on the front page.'))
     stock = models.IntegerField(_('stock'), default=0,
         help_text=_('Number of items in stock.'))
     weight = models.PositiveIntegerField(_('weight'), default=0,
         help_text=_('Defined in kilograms.'))
-    base_price = models.DecimalField(_('base price'), max_digits=6, decimal_places=2)
     taxes = models.ManyToManyField(Tax, blank=True, null=True, verbose_name=_('taxes'))
 
     #objects = ActiveProductManager()
 
-    class Meta:
+    class Meta(BaseProduct.Meta):
+        abstract = False
         verbose_name = _('product')
         verbose_name_plural = _('products')
         if not settings.IS_MULTILINGUAL:
