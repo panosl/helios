@@ -10,6 +10,7 @@ if settings.USE_PAYPAL:
 class MyCategoryAdminForm(forms.ModelForm):
     class Meta:
         model = Category
+        fields = '__all__'
 
     def clean_parent(self):
         slug = self.cleaned_data['slug']

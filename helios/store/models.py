@@ -42,7 +42,7 @@ class Tax(models.Model):
 class CategoryManager(models.Manager):
     def get_root_nodes(self):
         '''return all root node, aka nodes that don\'t have any parent categories'''
-        return super(CategoryManager, self).get_query_set().filter(parent=None)
+        return super(CategoryManager, self).get_queryset().filter(parent=None)
 
 
 class Category(models.Model):
@@ -88,8 +88,8 @@ class Category(models.Model):
 
 if settings.IS_MULTILINGUAL:
     class ActiveProductManager(multilingual.Manager):
-        def get_query_set(self):
-            return super(ActiveProductManager).get_query_set().filter(is_active=True)
+        def get_queryset(self):
+            return super(ActiveProductManager).get_queryset().filter(is_active=True)
 
 
 class BaseProduct(models.Model):
@@ -114,7 +114,7 @@ class Product(BaseProduct):
         help_text=_('Number of items in stock.'))
     weight = models.PositiveIntegerField(_('weight'), default=0,
         help_text=_('Defined in kilograms.'))
-    taxes = models.ManyToManyField(Tax, blank=True, null=True, verbose_name=_('taxes'))
+    taxes = models.ManyToManyField(Tax, blank=True, verbose_name=_('taxes'))
 
     #objects = ActiveProductManager()
 
