@@ -18,7 +18,6 @@ def show_products(context, product_list):
 @register.filter(name='legacy_truncatechars')
 @stringfilter
 def truncate_chars(value, arg):
-    print 'fuck you'
     arg = int(arg)
     value = unicode(value)
     if len(value) > arg:
