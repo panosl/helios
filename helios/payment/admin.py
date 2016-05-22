@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+
+from helios.payment.models import PaymentOption
 from helios.conf import settings
+
 if settings.IS_MULTILINGUAL:
     import multilingual
     admin_info = {
