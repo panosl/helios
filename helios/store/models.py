@@ -105,6 +105,9 @@ class BaseProduct(models.Model):
     class Meta:
         abstract = True
 
+    def __unicode__(self):
+        return self.name
+
 
 class Product(BaseProduct):
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
