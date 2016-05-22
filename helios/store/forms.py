@@ -1,7 +1,6 @@
 from django import forms
 from django.core.exceptions import ObjectDoesNotExist
 from helios.store.models import Category
-from helios.shipping.models import ShippingMethodRegions
 from helios.conf import settings
 if settings.USE_PAYPAL:
     from helios.paypal.forms import *
