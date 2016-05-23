@@ -173,13 +173,13 @@ class Product(BaseProduct):
     discounted_price = property(_get_discounted_price)
 
 
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
+class BaseProductImage(models.Model):
     picture = models.ImageField(_('picture'), upload_to='./product_images')
     list_position = models.PositiveIntegerField(_('list position'), default=1)
     suffix = '_thumbnail.jpg'
 
     class Meta:
+        abstract = True
         ordering = ['list_position']
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
@@ -197,6 +197,10 @@ class ProductImage(models.Model):
         except OSError:
             pass
         super(ProductImage, self).delete()
+
+
+class ProductImage(BaseProductImage):
+    product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
 
 
 class Collection(models.Model):
