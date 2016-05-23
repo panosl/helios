@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import with_statement
 from decimal import Decimal
+from importlib import import_module
 
 from django.core.exceptions import FieldError
 from django.core.mail import send_mail, mail_managers
@@ -19,18 +20,26 @@ from helios.store.models import Product, Category, Collection
 from helios.store.cart import cart
 from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
+
 if settings.USE_PAYPAL:
     from helios.paypal.views import *
 
+module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
+ProductModel = getattr(import_module(module_name), model_name)
+
 
 class ProductDetail(DetailView):
-    context_object_name = 'product'
-    queryset = Product.objects.all()
-    model = Product
+    context_object_name = model_name.lower()
+    queryset = ProductModel.objects.all()
+    model = ProductModel
+    template_name='store/product_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
-        context['category'] = self.get_object().category
+        try:
+            context['category'] = self.get_object().category
+        except AttributeError:
+            pass
         return context
 
 

@@ -108,6 +108,13 @@ class BaseProduct(models.Model):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('store_product_detail', (), {
+            'slug': self.slug,
+        })
+
+
 
 class Product(BaseProduct):
     category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
@@ -131,12 +138,6 @@ class Product(BaseProduct):
 
     def __unicode__(self):
         return self.name or ''
-
-    @models.permalink
-    def get_absolute_url(self):
-        return ('store_product_detail', (), {
-            'slug': self.slug,
-        })
 
     def get_images(self):
         images = self.productimage_set.all()
