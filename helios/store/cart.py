@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import pickle
 from contextlib import contextmanager
-try:
-    from helios.store.models import Product
-except ImportError:
-    pass
+from importlib import import_module
+
+from helios.conf import settings
+
+
+module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
+ProductModel = getattr(import_module(module_name), model_name)
 
 
 class Cart(dict):
@@ -40,7 +43,7 @@ class Cart(dict):
         """
         Return the product_list based on the currently stored IDs.
         """
-        product_list = Product.objects.in_bulk(self.keys())
+        product_list = ProductModel.objects.in_bulk(self.keys())
         return product_list.values()
 
     def get_product_count(self):
@@ -62,8 +65,8 @@ class CartLine(dict):
     def __init__(self, **line):
         super(CartLine, self).__init__(line)
 
-    def get_product(self):
-        product = Product.objects.get(id__exact=self['id'])
+    def _get_product(self):
+        product = ProductModel.objects.get(id__exact=self['id'])
         return product
 
     def get_quantity(self):
@@ -72,13 +75,11 @@ class CartLine(dict):
     def set_quantity(self, quantity):
         self['quantity'] = quantity
 
-    def get_price(self):
-        price = self.get_product().price * self['quantity']
+    def _get_price(self):
+        price = self._get_product().price * self['quantity']
         return price
 
-    def _get_price(self):
-        price = self.get_product().price * self['quantity']
-        return price
+    product = property(_get_product)
     price = property(_get_price)
 
 
