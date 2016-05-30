@@ -81,8 +81,8 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 
 def product_add(request, slug=''):
     try:
-        product = Product.objects.get(slug=slug)
-    except Product.DoesNotExist:
+        product = ProductModel.objects.get(slug=slug)
+    except ProductModel.DoesNotExist:
         return HttpResponse('That product does not exist.')
 
     with cart(request) as session_cart:
@@ -101,8 +101,8 @@ def product_add(request, slug=''):
 
 def product_remove(request, slug=''):
     try:
-        product = Product.objects.get(slug=slug)
-    except Product.DoesNotExist:
+        product = ProductModel.objects.get(slug=slug)
+    except ProductModel.DoesNotExist:
         return HttpResponse('That product does not exist.')
 
     with cart(request) as session_cart:
