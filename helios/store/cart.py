@@ -46,7 +46,7 @@ class Cart(dict):
         product_list = ProductModel.objects.in_bulk(self.keys())
         return product_list.values()
 
-    def get_product_count(self):
+    def _get_product_count(self):
         return sum((product['quantity'] for product in self.itervalues()))
 
     def get_price(self):
@@ -57,6 +57,8 @@ class Cart(dict):
 
     def dump(self):
         return pickle.dumps(self)
+
+    product_count = property(_get_product_count)
 
 
 class CartLine(dict):
