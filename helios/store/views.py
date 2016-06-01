@@ -64,15 +64,23 @@ def cart_set_quantity(request, product_id, success_url='/store/cart'):
 
     product_id = int(product_id)
     with cart(request) as session_cart:
-        items_in_stock = session_cart[product_id].get_product().stock
+        try:
+            items_in_stock = session_cart[product_id].product.stock
 
-        if quantity < 0:
-            return HttpResponseRedirect(success_url)
-        elif quantity == 0 or items_in_stock == 0:
-            del session_cart[product_id]
-        else:
-            if quantity >= items_in_stock:
-                session_cart[product_id]['quantity'] = items_in_stock
+            if quantity < 0:
+                return HttpResponseRedirect(success_url)
+            elif quantity == 0 or items_in_stock == 0:
+                del session_cart[product_id]
+            else:
+                if quantity >= items_in_stock:
+                    session_cart[product_id]['quantity'] = items_in_stock
+                else:
+                    session_cart[product_id]['quantity'] = quantity
+        except AttributeError:
+            if quantity < 0:
+                return HttpResponseRedirect(success_url)
+            elif quantity == 0:
+                del session_cart[product_id]
             else:
                 session_cart[product_id]['quantity'] = quantity
 
