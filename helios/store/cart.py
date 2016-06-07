@@ -49,15 +49,16 @@ class Cart(dict):
     def _get_product_count(self):
         return sum((product['quantity'] for product in self.itervalues()))
 
-    def get_price(self):
+    def _get_price(self):
         """
         Sum and return the price of each ``CartLine``.
         """
-        return sum((cart_line.get_price() for cart_line in self.itervalues()))
+        return sum((cart_line.price for cart_line in self.itervalues()))
 
     def dump(self):
         return pickle.dumps(self)
 
+    total_price = property(_get_price)
     product_count = property(_get_product_count)
 
 
