@@ -7,9 +7,11 @@ class ShippingChoiceField(forms.ModelChoiceField):
         return u'%s, %s - %s' % (obj.method.name, obj.method.shipper, obj.cost)
 
 
-class OrderForm(forms.Form):
+# todo this needs to be handled either here
+# or in the checkout view in the store app
+class ShippingOrderForm(forms.Form):
     def __init__(self, customer, *args, **kwargs):
-        super(OrderForm, self).__init__(*args, **kwargs)
+        super(ShippingOrderForm, self).__init__(*args, **kwargs)
         methods = [region.shippingmethodregions_set.all()
             for region in customer.country.shippingregion_set.all()]
         methods = [method[0] for method in methods]
@@ -23,3 +25,7 @@ class OrderForm(forms.Form):
             'onclick': '$("#shipping_choice").submit()',
         })
     )
+
+
+class OrderForm(forms.Form):
+    pass

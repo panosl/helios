@@ -1,24 +1,16 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from helios.customers.models import CustomerProfile
 from helios.location.models import Country
 from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import Product
 from helios.payment.models import PaymentOption
-from helios.conf import settings
-if settings.IS_MULTILINGUAL:
-    import multilingual
 
 
 class OrderStatus(models.Model):
-    if settings.IS_MULTILINGUAL:
-        class Translation(multilingual.Translation):
-            name = models.CharField(_('name'), max_length=50)
-            desc = models.TextField(_('description'), blank=True)
-    else:
-        name = models.CharField(_('name'), max_length=50)
-        desc = models.TextField(_('description'), blank=True)
-
+    name = models.CharField(_('name'), max_length=50)
+    desc = models.TextField(_('description'), blank=True)
     slug = models.SlugField(max_length=50, unique=True)
 
     class Meta:
@@ -29,9 +21,16 @@ class OrderStatus(models.Model):
         return self.name
 
 
-class Order(models.Model):
-    date_time_created = models.DateTimeField(_('creation date'))
+class BaseOrder(models.Model):
     customer = models.ForeignKey(CustomerProfile, blank=True, null=True, verbose_name=_('customer'))
+    created_at = models.DateTimeField(_('Created at'))
+    updated_at = models.DateTimeField(_('Updated at'))
+
+    class Meta:
+        abstract = True
+
+
+class Order(BaseOrder):
     if settings.HAS_CURRENCIES:
         currency_code = models.CharField(_('currency code'), max_length=3, blank=True, null=True)
         currency_factor = models.DecimalField(_('currency factor'), max_digits=10, decimal_places=4, blank=True, null=True)
@@ -47,19 +46,24 @@ class Order(models.Model):
         ordering = ['-date_time_created']
 
     def __unicode__(self):
-        return u'Order %s' % self.date_time_created
+        return u'Order %s' % self.created_at
 
 
-class OrderLine(models.Model):
-    order = models.ForeignKey(Order, verbose_name=_('order'))
+class BaseOrderLine(models.Model):
+    order = models.ForeignKey(BaseOrder, verbose_name=_('order'))
     product = models.ForeignKey(Product, verbose_name=_('product'))
     unit_price = models.DecimalField(_('unit price'), max_digits=6, decimal_places=2, blank=True)
     price = models.DecimalField(_('line price'), max_digits=6, decimal_places=2, blank=True)
     quantity = models.IntegerField(_('quantity'))
 
     class Meta:
+        abstract = True
         verbose_name = _('order line')
         verbose_name_plural = _('order lines')
 
     def __unicode__(self):
         return u'%s %s' % (self.quantity, self.product)
+
+
+class OrderLine(BaseOrderLine):
+    pass

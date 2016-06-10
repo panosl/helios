@@ -15,10 +15,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 
 from helios.conf import settings
-from helios.orders.forms import OrderForm
+# from helios.orders.forms import OrderForm
 from helios.store.models import Product, Category, Collection
 from helios.store.cart import cart
-from helios.payment.forms import PaymentForm
+# from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
 
 if settings.USE_PAYPAL:
@@ -202,8 +202,8 @@ def checkout(request, template_name='checkout.html'):
         return HttpResponseRedirect(reverse('store_unshippable'))
 
     if request.method == 'POST':
-        shipping_form = OrderForm(customer, request.POST)
-        payment_form = PaymentForm(request.POST)
+        # shipping_form = OrderForm(customer, request.POST)
+        # payment_form = PaymentForm(request.POST)
 
         if shipping_form.is_valid():
             shipping_choice = shipping_form.cleaned_data['shipping_choice']
@@ -217,14 +217,15 @@ def checkout(request, template_name='checkout.html'):
         if payment_form.is_valid() and shipping_form.is_valid():
             return HttpResponseRedirect(reverse(submit_order))
     else:
-        shipping_form = OrderForm(customer)
-        payment_form = PaymentForm()
+        # shipping_form = OrderForm(customer)
+        # payment_form = PaymentForm()
+        pass
 
     return render_to_response(template_name,
         {
             'customer': customer,
-            'shipping_form': shipping_form,
-            'payment_form': payment_form,
+            # 'shipping_form': shipping_form,
+            # 'payment_form': payment_form,
             'order_total': order_total,
         },
         context_instance=RequestContext(request))
