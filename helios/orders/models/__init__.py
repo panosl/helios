@@ -2,10 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from helios.customers.models import BaseCustomer
-from helios.location.models import Country
-from helios.shipping.models import ShippingMethodRegions
 from helios.store.models import BaseProduct
-from helios.payment.models import PaymentOption
 
 
 class BaseOrder(models.Model):

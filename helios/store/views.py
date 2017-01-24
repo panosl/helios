@@ -15,14 +15,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import ListView, DetailView
 
 from helios.conf import settings
-# from helios.orders.forms import OrderForm
 from helios.store.models import Product, Category, Collection
 from helios.store.cart import cart
+# from helios.orders.forms import OrderForm
 # from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
 
-if settings.USE_PAYPAL:
-    from helios.paypal.views import *
 
 module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
 ProductModel = getattr(import_module(module_name), model_name)
@@ -244,7 +242,6 @@ def unshippable(request, template_name='store/unshippable.html'):
             'customer': request.user.customer,
     },
     context_instance=RequestContext(request))
-
 
 
 @login_required
