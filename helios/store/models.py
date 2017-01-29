@@ -197,7 +197,7 @@ class BaseProductImage(models.Model):
             os.remove(os.path.splitext(self.picture.path)[0] + self.suffix)
         except OSError:
             pass
-        super(ProductImage, self).delete()
+        super(BaseProductImage, self).delete()
 
 
 class ProductImage(BaseProductImage):
