@@ -16,7 +16,7 @@ from django.views.generic import ListView, DetailView
 
 from helios.conf import settings
 from helios.store.models import Product, Category, Collection
-from helios.store.cart import cart
+# from helios.store.cart import cart
 # from helios.orders.forms import OrderForm
 # from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
@@ -24,6 +24,7 @@ from helios.store.decorators import cart_required
 
 module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
 ProductModel = getattr(import_module(module_name), model_name)
+cart = getattr(import_module(settings.CART), 'cart')
 
 
 class ProductDetail(DetailView):
