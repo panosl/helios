@@ -3,8 +3,9 @@ from importlib import import_module
 
 from django.conf.urls import *
 from django.views.generic import TemplateView, ListView
+from django.contrib.auth.decorators import login_required
+
 from helios.store.models import ProductImage
-from helios.conf import settings
 from helios.store.views import *
 from helios.conf import settings
 
@@ -13,8 +14,12 @@ module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
 ProductModel = getattr(import_module(module_name), model_name)
 
 urlpatterns = [
-    url(r'^cart/clear/$', cart_clear),
-    url(r'^cart/debug/$', cart_debug),
+    url(r'^cart/clear/$',
+        cart_clear
+    ),
+    url(r'^cart/debug/$',
+        login_required(cart_debug)
+    ),
 
     url(r'^cart/set/(?P<product_id>\d+)/$',
         cart_set_quantity,
