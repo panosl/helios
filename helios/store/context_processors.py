@@ -14,7 +14,18 @@ def cart(request):
         request.session['cart'] = pickle.dumps(cart)
 
     cart = pickle.loads(request.session['cart'])
+
+    try:
+        if Cart.version > cart.version:
+            raise AttributeError
+    except AttributeError:
+        del request.session['cart']
+        cart = Cart(user=request.user)
+        request.session['cart'] = pickle.dumps(cart)
+        cart = pickle.loads(request.session['cart'])
+
     cart.update_with_user(request.user)
+
     request.session['cart'] = pickle.dumps(cart)
 
     return {'cart': pickle.loads(request.session['cart'])}

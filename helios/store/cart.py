@@ -22,6 +22,7 @@ class Cart(dict):
     >>> cart = Cart()
     >>> cart.add_product(id=1, quantity=20)
     """
+    version = 1
 
     def __init__(self, user=AnonymousUser, **products):
     # def __init__(self, **products):
@@ -109,6 +110,16 @@ def cart(request):
         cart = Cart(user=request.user)
         request.session['cart'] = pickle.dumps(cart)
     session_cart = pickle.loads(request.session.get('cart'))
+
+    try:
+        if Cart.version > session_cart.version:
+            raise AttributeError
+    except AttributeError:
+        del request.session['cart']
+        session_cart = Cart(user=request.user)
+        request.session['cart'] = pickle.dumps(session_cart)
+        session_cart = pickle.loads(request.session['cart'])
+
     session_cart.update_with_user(request.user)
     yield session_cart
     request.session['cart'] = session_cart.dump()
