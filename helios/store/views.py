@@ -152,6 +152,8 @@ class ProductList(ListView):
 
     def get_queryset(self):
         self.sort_by = self.request.GET.get('sort')
+        if not self.sort_by in ['last_modified', 'slug', 'base_price']:
+            self.sort_by = None
         self.category = get_object_or_404(Category, slug=self.kwargs['category'])
 
         if self.category.is_root_node():
