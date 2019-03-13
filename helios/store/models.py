@@ -3,7 +3,7 @@ from decimal import *
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from helios.conf import settings
 if settings.IS_MULTILINGUAL:
@@ -55,7 +55,7 @@ class Category(models.Model):
         desc = models.TextField(_('description'), blank=True)
 
     slug = models.SlugField(max_length=50, unique=True)
-    parent = models.ForeignKey('self', blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='child_set')
 
     objects = CategoryManager()
 
@@ -72,7 +72,6 @@ class Category(models.Model):
         else:
             return self.name
 
-    @models.permalink
     def get_absolute_url(self):
         #return('helios.store.views.category_list', (), {
         return('store_category_list', (), {
@@ -108,7 +107,6 @@ class BaseProduct(models.Model):
     def __unicode__(self):
         return self.name
 
-    @models.permalink
     def get_absolute_url(self):
         return ('store_product_detail', (), {
             'slug': self.slug,
@@ -117,7 +115,7 @@ class BaseProduct(models.Model):
 
 
 class Product(BaseProduct):
-    category = models.ForeignKey(Category, blank=True, null=True, verbose_name=_('category'))
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_('category'))
     is_featured = models.BooleanField(_('featured'), default=False,
         help_text=_('The product will be featured on the front page.'))
     stock = models.IntegerField(_('stock'), default=0,
@@ -201,7 +199,7 @@ class BaseProductImage(models.Model):
 
 
 class ProductImage(BaseProductImage):
-    product = models.ForeignKey(Product, null=True, blank=True, verbose_name=_('product'))
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('product'))
 
 
 class Collection(models.Model):
@@ -225,7 +223,6 @@ class Collection(models.Model):
     def __unicode__(self):
         return self.name or ''
 
-    @models.permalink
     def get_absolute_url(self):
         return('store_collection_list', (), {
             'collection': self.slug,

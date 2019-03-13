@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50, verbose_name='name')),
                 ('desc', models.TextField(verbose_name='description', blank=True)),
                 ('slug', models.SlugField(unique=True)),
-                ('parent', models.ForeignKey(related_name='child_set', blank=True, to='store.Category', null=True)),
+                ('parent', models.ForeignKey(related_name='child_set', on_delete=models.SET_NULL, blank=True, to='store.Category', null=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
                 ('is_featured', models.BooleanField(default=False, help_text='The product will be featured on the front page.', verbose_name='featured')),
                 ('stock', models.IntegerField(default=0, help_text='Number of items in stock.', verbose_name='stock')),
                 ('weight', models.PositiveIntegerField(default=0, help_text='Defined in kilograms.', verbose_name='weight')),
-                ('category', models.ForeignKey(verbose_name='category', blank=True, to='store.Category', null=True)),
+                ('category', models.ForeignKey(verbose_name='category', on_delete=models.SET_NULL, blank=True, to='store.Category', null=True)),
             ],
             options={
                 'ordering': ['-is_featured', '-last_modified'],
@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('picture', models.ImageField(upload_to=b'./product_images', verbose_name='picture')),
                 ('list_position', models.PositiveIntegerField(default=1, verbose_name='list position')),
-                ('product', models.ForeignKey(verbose_name='product', blank=True, to='store.Product', null=True)),
+                ('product', models.ForeignKey(verbose_name='product', on_delete=models.CASCADE, blank=True, to='store.Product', null=True)),
             ],
             options={
                 'ordering': ['list_position'],
