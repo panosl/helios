@@ -5,7 +5,7 @@ from importlib import import_module
 
 from django.core.exceptions import FieldError
 from django.core.mail import send_mail, mail_managers
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404

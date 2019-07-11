@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pickle
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 def cart_required(view_func):
