@@ -11,9 +11,12 @@ def cart(request):
     # del request.session['cart']
     if not request.session.get('cart'):
         cart = Cart(user=request.user)
-        request.session['cart'] = pickle.dumps(cart)
+        # request.session['cart'] = pickle.dumps(cart)
+        request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
 
-    cart = pickle.loads(request.session['cart'])
+    # cart = pickle.loads(request.session['cart'])
+    cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
+    # cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
 
     try:
         if Cart.version > cart.version:
@@ -21,11 +24,14 @@ def cart(request):
     except AttributeError:
         del request.session['cart']
         cart = Cart(user=request.user)
-        request.session['cart'] = pickle.dumps(cart)
-        cart = pickle.loads(request.session['cart'])
+        # request.session['cart'] = pickle.dumps(cart)
+        request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
+        # cart = pickle.loads(request.session['cart'])
+        cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
 
     cart.update_with_user(request.user)
 
-    request.session['cart'] = pickle.dumps(cart)
+    # request.session['cart'] = pickle.dumps(cart)
+    request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
 
-    return {'cart': pickle.loads(request.session['cart'])}
+    return {'cart': pickle.loads(bytes(request.session['cart'], 'latin-1'))}

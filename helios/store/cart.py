@@ -52,16 +52,17 @@ class Cart(dict):
         return product_list.values()
 
     def _get_product_count(self):
-        return sum((product['quantity'] for product in self.itervalues()))
+        return sum((product['quantity'] for product in self.values()))
 
     def _get_price(self):
         """
         Sum and return the price of each ``CartLine``.
         """
-        return sum((cart_line.price for cart_line in self.itervalues()))
+        return sum((cart_line.price for cart_line in self.values()))
 
     def dump(self):
-        return pickle.dumps(self)
+        # return pickle.dumps(self)
+        return str(pickle.dumps(self, protocol=0), 'latin-1')
 
     def update_with_user(self, user):
         """
@@ -71,7 +72,7 @@ class Cart(dict):
         """
         self.user = user
 
-        for cl in self.itervalues():
+        for cl in self.values():
             cl.user = self.user
 
     total_price = property(_get_price)
@@ -108,8 +109,10 @@ def cart(request):
     # del request.session['cart']
     if not request.session.get('cart'):
         cart = Cart(user=request.user)
-        request.session['cart'] = pickle.dumps(cart)
-    session_cart = pickle.loads(request.session.get('cart'))
+        # request.session['cart'] = pickle.dumps(cart)
+        request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
+    # session_cart = pickle.loads(request.session.get('cart'))
+    session_cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
 
     try:
         if Cart.version > session_cart.version:
@@ -117,8 +120,10 @@ def cart(request):
     except AttributeError:
         del request.session['cart']
         session_cart = Cart(user=request.user)
-        request.session['cart'] = pickle.dumps(session_cart)
-        session_cart = pickle.loads(request.session['cart'])
+        # request.session['cart'] = pickle.dumps(session_cart)
+        request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
+        # session_cart = pickle.loads(request.session['cart'])
+        session_cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
 
     session_cart.update_with_user(request.user)
     yield session_cart

@@ -30,7 +30,7 @@ class Tax(models.Model):
         verbose_name_plural = _('taxes')
         pass
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def _get_factor(self):
@@ -64,7 +64,7 @@ class Category(models.Model):
         verbose_name = _('category')
         verbose_name_plural = _('categories')
 
-    def __unicode__(self):
+    def __str__(self):
         pname = u''
         if self.parent is not None:
             pname = unicode(self.parent) + u': '
@@ -104,7 +104,7 @@ class BaseProduct(models.Model):
     class Meta:
         abstract = True
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def get_absolute_url(self):
@@ -134,7 +134,7 @@ class Product(BaseProduct):
             # This will not work for multilingual right now
             ordering = ['-is_featured', '-last_modified']
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name or ''
 
     def get_images(self):
@@ -183,7 +183,7 @@ class BaseProductImage(models.Model):
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
 
-    def __unicode__(self):
+    def __str__(self):
         return u'%s' % (self.picture,)
 
     def delete(self):
@@ -220,7 +220,7 @@ class Collection(models.Model):
         verbose_name = _('collection')
         verbose_name_plural = _('collections')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name or ''
 
     def get_absolute_url(self):
