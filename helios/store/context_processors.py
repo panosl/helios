@@ -15,8 +15,14 @@ def cart(request):
         request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
 
     # cart = pickle.loads(request.session['cart'])
-    cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
     # cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
+    try:
+        # failsafe for old request carts
+        cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
+    except UnicodeDecodeError:
+        del request.session['cart']
+        cart = Cart(user=request.user)
+        request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
 
     try:
         if Cart.version > cart.version:
