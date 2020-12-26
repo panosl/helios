@@ -2,6 +2,7 @@
 from django.conf import settings
 
 
+DEBUG = getattr(settings, 'STORE_DEBUG', False)
 PAGINATE_BY = getattr(settings, 'STORE_PAGINATE_BY', 50)
 IS_MULTILINGUAL = getattr(settings, 'STORE_IS_MULTILINGUAL', False)
 HAS_CURRENCIES = getattr(settings, 'STORE_HAS_CURRENCIES', False)
