@@ -17,10 +17,6 @@ urlpatterns = [
     url(r'^cart/clear/$',
         cart_clear
     ),
-    url(r'^cart/debug/$',
-        login_required(cart_debug)
-    ),
-
     url(r'^cart/set/(?P<product_id>\d+)/$',
         cart_set_quantity,
         name='store_cart_set_quantity'
@@ -79,3 +75,10 @@ urlpatterns += [
         name='store_category_list'
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^cart/debug/$',
+            login_required(cart_debug)
+        ),
+    )

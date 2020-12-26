@@ -8,14 +8,10 @@ Cart = getattr(import_module(settings.CART), 'Cart')
 
 
 def cart(request):
-    # del request.session['cart']
     if not request.session.get('cart'):
         cart = Cart(user=request.user)
-        # request.session['cart'] = pickle.dumps(cart)
         request.session['cart'] = str(pickle.dumps(cart, protocol=0), 'latin-1')
 
-    # cart = pickle.loads(request.session['cart'])
-    # cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
     try:
         # failsafe for old request carts
         cart = pickle.loads(bytes(request.session['cart'], 'latin-1'))
