@@ -16,6 +16,7 @@ from django.views.generic import ListView, DetailView
 
 from helios.conf import settings
 from helios.store.models import Product, Category, Collection
+
 # from helios.store.cart import cart
 # from helios.orders.forms import OrderForm
 # from helios.payment.forms import PaymentForm
@@ -31,7 +32,7 @@ class ProductDetail(DetailView):
     context_object_name = model_name.lower()
     queryset = ProductModel.objects.all()
     model = ProductModel
-    template_name='store/product_detail.html'
+    template_name = 'store/product_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetail, self).get_context_data(**kwargs)
@@ -121,29 +122,29 @@ def product_remove(request, slug=''):
     return HttpResponseRedirect(reverse('store_cart'))
 
 
-#def category_list(request, category, **kwargs):
-    #category = get_object_or_404(Category, slug=category)
-    ##TODO include the category along with the children
+# def category_list(request, category, **kwargs):
+# category = get_object_or_404(Category, slug=category)
+##TODO include the category along with the children
 
-    #fieldname = request.GET.get('sort', None)
-    #print request.GET.get('sort', None)
-    #print fieldname
+# fieldname = request.GET.get('sort', None)
+# print request.GET.get('sort', None)
+# print fieldname
 
-    #if category.is_root_node():
-        #product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
-    #else:
-        #product_list = Product.objects.filter(category__slug__exact=category.slug)
-    #kwargs['extra_context']['category'] = category
+# if category.is_root_node():
+# product_list = Product.objects.filter(category__slug__in=(c.slug for c in category.get_children())) | Product.objects.filter(category__slug__exact=category.slug)
+# else:
+# product_list = Product.objects.filter(category__slug__exact=category.slug)
+# kwargs['extra_context']['category'] = category
 
-    #try:
-        #product_list = product_list.order_by(fieldname)
-        #kwargs['extra_context']['sorting'] = fieldname
-    #except TypeError:
-        #pass
-    #except FieldError:
-        #pass
+# try:
+# product_list = product_list.order_by(fieldname)
+# kwargs['extra_context']['sorting'] = fieldname
+# except TypeError:
+# pass
+# except FieldError:
+# pass
 
-    #return object_list(request, queryset=product_list, **kwargs)
+# return object_list(request, queryset=product_list, **kwargs)
 
 
 class ProductList(ListView):
@@ -157,11 +158,13 @@ class ProductList(ListView):
         self.category = get_object_or_404(Category, slug=self.kwargs['category'])
 
         if self.category.is_root_node():
-            queryset = Product.objects.filter(category__slug__in=(c.slug for c in self.category.get_children())) | Product.objects.filter(category__slug__exact=self.category.slug)
+            queryset = Product.objects.filter(
+                category__slug__in=(c.slug for c in self.category.get_children())
+            ) | Product.objects.filter(category__slug__exact=self.category.slug)
         else:
             queryset = Product.objects.filter(category=self.category)
 
-        #queryset = Product.objects.filter(category=self.category)
+        # queryset = Product.objects.filter(category=self.category)
 
         if self.sort_by:
             return queryset.order_by(self.sort_by)
@@ -222,14 +225,16 @@ def checkout(request, template_name='checkout.html'):
         # payment_form = PaymentForm()
         pass
 
-    return render_to_response(template_name,
+    return render_to_response(
+        template_name,
         {
             'customer': customer,
             # 'shipping_form': shipping_form,
             # 'payment_form': payment_form,
             'order_total': order_total,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request),
+    )
 
 
 @login_required
@@ -241,10 +246,13 @@ def unshippable(request, template_name='store/unshippable.html'):
         if url is None:
             url = reverse('store')
         return HttpResponseRedirect(url)
-    return render_to_response(template_name, {
+    return render_to_response(
+        template_name,
+        {
             'customer': request.user.customer,
-    },
-    context_instance=RequestContext(request))
+        },
+        context_instance=RequestContext(request),
+    )
 
 
 @login_required

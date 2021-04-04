@@ -6,24 +6,31 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 
 from helios.conf import settings
+
 if settings.IS_MULTILINGUAL:
     import multilingual
 
 
 class Tax(models.Model):
     if settings.IS_MULTILINGUAL:
+
         class Translation(multilingual.Translation):
             name = models.CharField(_('name'), max_length=80)
             desc = models.TextField(_('description'), blank=True)
+
     else:
         name = models.CharField(_('name'), max_length=80)
         desc = models.TextField(_('description'), blank=True)
 
     slug = models.SlugField(unique=True, max_length=80)
-    rate = models.DecimalField(_('tax rate'), max_digits=4, decimal_places=2,
-        default=19.00)
-    is_active = models.BooleanField(_('active'), default=True,
-        help_text=_('The tax will be available in the store.'))
+    rate = models.DecimalField(
+        _('tax rate'), max_digits=4, decimal_places=2, default=19.00
+    )
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
+        help_text=_('The tax will be available in the store.'),
+    )
 
     class Meta:
         verbose_name = _('tax')
@@ -36,6 +43,7 @@ class Tax(models.Model):
     def _get_factor(self):
         """Returns the factor depending on the tax rate."""
         return (self.rate / Decimal('100.00')) + Decimal('1.00')
+
     factor = property(_get_factor)
 
 
@@ -47,15 +55,23 @@ class CategoryManager(models.Manager):
 
 class Category(models.Model):
     if settings.IS_MULTILINGUAL:
+
         class Translation(multilingual.Translation):
             name = models.CharField(_('name'), max_length=50)
             desc = models.TextField(_('description'), blank=True)
+
     else:
         name = models.CharField(_('name'), max_length=50)
         desc = models.TextField(_('description'), blank=True)
 
     slug = models.SlugField(max_length=50, unique=True)
-    parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='child_set')
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name='child_set',
+    )
 
     objects = CategoryManager()
 
@@ -73,10 +89,14 @@ class Category(models.Model):
             return self.name
 
     def get_absolute_url(self):
-        #return('helios.store.views.category_list', (), {
-        return('store_category_list', (), {
-            'category': self.slug,
-        })
+        # return('helios.store.views.category_list', (), {
+        return (
+            'store_category_list',
+            (),
+            {
+                'category': self.slug,
+            },
+        )
 
     def get_children(self):
         return self.child_set.all()
@@ -86,6 +106,7 @@ class Category(models.Model):
 
 
 if settings.IS_MULTILINGUAL:
+
     class ActiveProductManager(multilingual.Manager):
         def get_queryset(self):
             return super(ActiveProductManager).get_queryset().filter(is_active=True)
@@ -97,8 +118,9 @@ class BaseProduct(models.Model):
     desc = models.TextField(_('description'), blank=True)
     date_added = models.DateField(_('date added'), auto_now_add=True)
     last_modified = models.DateTimeField(_('last modified'), auto_now=True)
-    is_active = models.BooleanField(_('active'), default=True,
-        help_text=_('The product will appear in the store.'))
+    is_active = models.BooleanField(
+        _('active'), default=True, help_text=_('The product will appear in the store.')
+    )
     base_price = models.DecimalField(_('base price'), max_digits=6, decimal_places=2)
 
     class Meta:
@@ -108,23 +130,37 @@ class BaseProduct(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return ('store_product_detail', (), {
-            'slug': self.slug,
-        })
-
+        return (
+            'store_product_detail',
+            (),
+            {
+                'slug': self.slug,
+            },
+        )
 
 
 class Product(BaseProduct):
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_('category'))
-    is_featured = models.BooleanField(_('featured'), default=False,
-        help_text=_('The product will be featured on the front page.'))
-    stock = models.IntegerField(_('stock'), default=0,
-        help_text=_('Number of items in stock.'))
-    weight = models.PositiveIntegerField(_('weight'), default=0,
-        help_text=_('Defined in kilograms.'))
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name=_('category'),
+    )
+    is_featured = models.BooleanField(
+        _('featured'),
+        default=False,
+        help_text=_('The product will be featured on the front page.'),
+    )
+    stock = models.IntegerField(
+        _('stock'), default=0, help_text=_('Number of items in stock.')
+    )
+    weight = models.PositiveIntegerField(
+        _('weight'), default=0, help_text=_('Defined in kilograms.')
+    )
     taxes = models.ManyToManyField(Tax, blank=True, verbose_name=_('taxes'))
 
-    #objects = ActiveProductManager()
+    # objects = ActiveProductManager()
 
     class Meta(BaseProduct.Meta):
         abstract = False
@@ -144,23 +180,31 @@ class Product(BaseProduct):
     def _get_images(self):
         images = self.productimage_set.all()
         return images
+
     images = property(_get_images)
 
     def _get_price(self):
         tax_factors = [tax.factor for tax in self.taxes.all()]
-        taxed_product = (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+        taxed_product = (
+            self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)
+        ).quantize(Decimal('.01'), rounding=ROUND_UP)
         return taxed_product
 
     def _get_discounted_price(self):
         tax_factors = [tax.factor for tax in self.taxes.all()]
-        taxed_product = (self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)).quantize(Decimal('.01'), rounding=ROUND_UP)
+        taxed_product = (
+            self.base_price * reduce(lambda x, y: x * y, tax_factors, 1)
+        ).quantize(Decimal('.01'), rounding=ROUND_UP)
         if self.category.categorypercentagediscount:
-            category_discount = Decimal(self.category.categorypercentagediscount.discount)/Decimal('100.0')
-            return taxed_product - (taxed_product * category_discount).quantize(Decimal('.01'), rounding=ROUND_UP)
+            category_discount = Decimal(
+                self.category.categorypercentagediscount.discount
+            ) / Decimal('100.0')
+            return taxed_product - (taxed_product * category_discount).quantize(
+                Decimal('.01'), rounding=ROUND_UP
+            )
 
         else:
             return taxed_product
-
 
     def has_discount(self):
         if self.category and self.category.categorypercentagediscount:
@@ -199,21 +243,32 @@ class BaseProductImage(models.Model):
 
 
 class ProductImage(BaseProductImage):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('product'))
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        verbose_name=_('product'),
+    )
 
 
 class Collection(models.Model):
     if settings.IS_MULTILINGUAL:
+
         class Translation(multilingual.Translation):
             name = models.CharField(_('name'), max_length=80)
             desc = models.TextField(_('description'), blank=True)
+
     else:
         name = models.CharField(_('name'), max_length=80)
         desc = models.TextField(_('description'), blank=True)
 
     slug = models.SlugField(unique=True, max_length=80)
-    is_active = models.BooleanField(_('active'), default=True,
-        help_text=_('The collection will be available in the store.'))
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
+        help_text=_('The collection will be available in the store.'),
+    )
     products = models.ManyToManyField(Product)
 
     class Meta:
@@ -224,15 +279,19 @@ class Collection(models.Model):
         return self.name or ''
 
     def get_absolute_url(self):
-        return('store_collection_list', (), {
-            'collection': self.slug,
-        })
+        return (
+            'store_collection_list',
+            (),
+            {
+                'collection': self.slug,
+            },
+        )
 
 
-#try:
+# try:
 #    from paypal.standard.ipn.signals import payment_was_successful
 #    def paypal_successful(sender, **kwargs):
 #        ipn_obj = sender
 #    payment_was_successful.connect(paypal_successful)
-#except:
+# except:
 #    pass

@@ -22,10 +22,11 @@ class Cart(dict):
     >>> cart = Cart()
     >>> cart.add_product(id=1, quantity=20)
     """
+
     version = 1
 
     def __init__(self, user=AnonymousUser, **products):
-    # def __init__(self, **products):
+        # def __init__(self, **products):
         super(Cart, self).__init__(products)
         self.user = user
 
@@ -35,11 +36,13 @@ class Cart(dict):
 
         If product already in ``Cart`` add to the quantity.
         """
-        #if self.has_key(product_id):
+        # if self.has_key(product_id):
         if product_id in self:
             self[product_id]['quantity'] += quantity
         else:
-            self[product_id] = CartLine(user=self.user, id=product_id, quantity=quantity)
+            self[product_id] = CartLine(
+                user=self.user, id=product_id, quantity=quantity
+            )
 
     def remove_product(self, product_id):
         del self[product_id]
@@ -80,8 +83,8 @@ class Cart(dict):
 
 
 class CartLine(dict):
-    """
-    """
+    """"""
+
     # def __init__(self, request=None, **line):
     def __init__(self, user=AnonymousUser, **line):
         super(CartLine, self).__init__(line)
