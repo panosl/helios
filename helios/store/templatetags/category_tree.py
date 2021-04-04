@@ -8,5 +8,5 @@ register = Library()
 
 @register.inclusion_tag('categories.html')
 def show_categories():
-	categories = Category.objects.all()
-	return {'categories': categories}
+    categories = Category.objects.all()
+    return {'categories': categories}

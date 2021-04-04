@@ -9,10 +9,7 @@ register = Library()
 
 @register.inclusion_tag('product.html', takes_context=True)
 def show_products(context, product_list):
-    return {
-        'product_list': product_list,
-        'currency': context['currency']
-    }
+    return {'product_list': product_list, 'currency': context['currency']}
 
 
 @register.filter(name='legacy_truncatechars')

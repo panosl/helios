@@ -15,4 +15,5 @@ def cart_required(view_func):
             return HttpResponseRedirect(reverse('store_cart'))
         else:
             return view_func(*args, **kwargs)
+
     return wrapped
