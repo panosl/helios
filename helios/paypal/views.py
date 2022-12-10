@@ -1,28 +1,30 @@
 # -*- coding: utf-8 -*-
-import pickle
-
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.contrib.sites.models import Site
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.utils.translation import ugettext_lazy as _
 
+from django.core.urlresolvers import reverse
 from helios.paypal.forms import MyPayPalForm
-from helios.store.decorators import cart_required
-from helios.store.cart import cart
 from helios.shipping.models import ShippingMethodRegions
+from helios.store.cart import cart
+from helios.store.decorators import cart_required
 
 
 @cart_required
 @login_required
 def paypal_purchase(request, template_name='paypal/payment.html'):
     try:
-        shipping_choice = ShippingMethodRegions.objects.get(pk=request.session['shipping_choice'])
+        shipping_choice = ShippingMethodRegions.objects.get(
+            pk=request.session['shipping_choice']
+        )
     except KeyError:
-        request.user.message_set.create(message=_(u'%s you haven\'t chosen a shipping method.') % (request.user.username,))
+        request.user.message_set.create(
+            message=_(u'%s you haven\'t chosen a shipping method.')
+            % (request.user.username,)
+        )
         return HttpResponseRedirect(reverse('store_checkout'))
 
     customer = request.user.customer
@@ -54,9 +56,7 @@ def paypal_purchase(request, template_name='paypal/payment.html'):
     if request.session['currency']:
         paypal_dict['currency_code'] = request.session['currency'].code
 
-    #form = PayPalPaymentsForm(initial=paypal_dict)
+    # form = PayPalPaymentsForm(initial=paypal_dict)
     form = MyPayPalForm(initial=paypal_dict)
 
-    return render_to_response(template_name,
-        {'form': form},
-        context_instance=RequestContext(request))
+    return render(request, template_name, {'form': form})

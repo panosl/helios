@@ -3,24 +3,16 @@ from __future__ import with_statement
 from decimal import Decimal
 from importlib import import_module
 
-from django.core.exceptions import FieldError
-from django.core.mail import send_mail, mail_managers
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response, get_object_or_404
-from django.template import RequestContext
-from django.template.loader import render_to_string
+from django.core.exceptions import FieldError
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import ListView, DetailView
-
+from django.views.generic import DetailView, ListView
 from helios.conf import settings
-from helios.store.models import Product, Category, Collection
-
-# from helios.store.cart import cart
-# from helios.orders.forms import OrderForm
-# from helios.payment.forms import PaymentForm
 from helios.store.decorators import cart_required
+from helios.store.models import Category, Collection, Product
 
 
 module_name, model_name = settings.PRODUCT_MODEL.rsplit('.', 1)
@@ -225,15 +217,15 @@ def checkout(request, template_name='checkout.html'):
         # payment_form = PaymentForm()
         pass
 
-    return render_to_response(
+    return render(
+        request,
         template_name,
         {
             'customer': customer,
             # 'shipping_form': shipping_form,
             # 'payment_form': payment_form,
             'order_total': order_total,
-        },
-        context_instance=RequestContext(request),
+        }
     )
 
 
@@ -246,15 +238,15 @@ def unshippable(request, template_name='store/unshippable.html'):
         if url is None:
             url = reverse('store')
         return HttpResponseRedirect(url)
-    return render_to_response(
+
+    return render(
         template_name,
         {
             'customer': request.user.customer,
-        },
-        context_instance=RequestContext(request),
+        }
     )
 
 
 @login_required
 def success(request, template_name='store/success.html'):
-    return render_to_response(template_name, context_instance=RequestContext(request))
+    return render(request, template_name)

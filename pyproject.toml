@@ -1,0 +1,11 @@
+[project]
+name = 'Helios'
+version = '0.3.0'
+
+[project.urls]
+homepage = 'https://github.com/panosl/helios'
+repository = 'https://github.com/panosl/helios'
+
+[tool.black]
+skip-string-normalization = true
+exclude = '(.*/migrations/.*\.py)'
